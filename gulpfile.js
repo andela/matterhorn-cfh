@@ -47,7 +47,7 @@ gulp.task('jade', function(){
       .pipe(mocha({
         reporter: 'spec'
       }))
-      .pipe(gulp.dest('build/test/'));;
+      .pipe(gulp.dest('build/test/'));
   });
 
   gulp.task('server', function(){
@@ -99,7 +99,20 @@ gulp.task('jade', function(){
       gulp.task('default', ['nodemon']);
     break;
     case "production":
-      gulp.task('default', ['jade', 'js-public', 'js-app', 'sass', 'server', 'html', 'css', 'config', 'app', 'public']);
+      gulp.task('default', [
+        'jade', 
+        'js-public', 
+        'js-app', 
+        'sass', 
+        'server', 
+        'html', 
+        'css', 
+        'config', 
+        'app', 
+        'public',
+        'bower', 
+        'build'
+      ]);
     break;
     default:
     gulp.task('default', ['nodemon']);
