@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     // Project Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -11,7 +11,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['public/js/**', 'app/**/*.js'],
-                tasks: ['jshint'],
+                tasks: ['eslint'],
                 options: {
                     livereload: true,
                 },
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
                 }
             }
         },
-        jshint: {
+        eslint: {
             all: ['gruntfile.js', 'public/js/**/*.js', 'test/**/*.js', 'app/**/*.js']
         },
         nodemon: {
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
 
     //Load NPM tasks 
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
@@ -102,7 +102,7 @@ module.exports = function(grunt) {
     grunt.option('force', true);
 
     //Default task(s).
-    grunt.registerTask('default', ['jshint', 'concurrent', 'sass']);
+    grunt.registerTask('default', ['eslint', 'concurrent', 'sass']);
 
     //Test task.
     grunt.registerTask('test', ['mochaTest']);
