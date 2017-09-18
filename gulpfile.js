@@ -111,7 +111,6 @@ gulp.task('jade', function(){
         'app', 
         'public',
         'bower', 
-        'build'
       ]);
     break;
     default:
