@@ -50,29 +50,29 @@ gulp.task('jade', function(){
       .pipe(gulp.dest('build/test/'));
   });
 
-  gulp.task('server', function(){
-    return gulp.src('./server.js')
-      .pipe(gulp.dest('./build'));
-  });
+  // gulp.task('server', function(){
+  //   return gulp.src('./server.js')
+  //     .pipe(gulp.dest('.'));
+  // });
 
   gulp.task('bower', function(){
     return bower()
-    .pipe(gulp.dest('./build/public/lib'));
+    .pipe(gulp.dest('./public/lib'));
   });
 
   gulp.task('config', function(){
     return gulp.src('./config/**')
-    .pipe(gulp.dest('./build/config'));
+    .pipe(gulp.dest('./config'));
   });
 
   gulp.task('public', function(){
     return gulp.src('./public/**')
-    .pipe(gulp.dest('./build/public'));
+    .pipe(gulp.dest('./public'));
   });
 
   gulp.task('app', function(){
     return gulp.src('./app/**')
-    .pipe(gulp.dest('./build/app'));
+    .pipe(gulp.dest('./app'));
   });
 
   gulp.task('nodemon', function(){
