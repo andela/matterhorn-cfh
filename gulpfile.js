@@ -104,7 +104,6 @@ gulp.task('jade', function(){
         'js-public', 
         'js-app', 
         'sass', 
-        'server', 
         'html', 
         'css', 
         'config', 
