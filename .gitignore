@@ -3,5 +3,8 @@ public/lib
 .sass-cache/
 .DS_store
 c4h_keys.txt
+build/
 .env
-
+bower_components
+public/lib
+matterhorn-cfh-staging
