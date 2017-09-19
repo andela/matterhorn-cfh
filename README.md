@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/andela/matterhorn-cfh.svg?branch=master)](https://travis-ci.org/andela/matterhorn-cfh)
+
+
 Cards for Humanity - [http://cfh.io](http://cfh.io)
 ===========
 Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.
@@ -27,6 +30,18 @@ Our Tech Stack
 Cards for Humanity uses AngularJS and Sass on the front-end, with Node.js/Express.js, MongoDB and Socket.io on the back-end. It's currently deployed to Amazon EC2. 
 
 ![alt-text](https://dl.dropboxusercontent.com/u/7390609/tech.png "Tech Stack Overview")
+
+## Installation
+- Clone the Repository `git clone git@github.com:andela/matterhorn-cfh.git`
+- cd into Project directory and install all dependencies
+- Create a **.env** file in the root of the project
+- Enter in `PORT=27017` and `HOST=127.0.0.1` in the **.env** file
+- Install **dotenv** to save config information in project environment
+- Add this line to start of **server.js** file located in the root of the project
+  - `require ('dotenv').config();`
+- Install mongodb locally https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#install-mongodb-community-edition
+- Start up mongodb server locally on computer
+- in Project directory run `npm start` at terminal to boot up project
 
 
 ## License
