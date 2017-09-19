@@ -1,3 +1,4 @@
+require('dotenv').config();
 /**
  * Module dependencies.
  */
@@ -11,8 +12,6 @@ var express = require('express'),
  * Main application entry file.
  * Please note that the order of loading is important.
  */
-
- require('dotenv').config();
 
 //Load configurations
 //if test env, load example file
