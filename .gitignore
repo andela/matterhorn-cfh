@@ -7,3 +7,4 @@ build/
 .env
 bower_components
 public/lib
+matterhorn-cfh-staging
