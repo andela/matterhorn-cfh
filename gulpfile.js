@@ -5,6 +5,7 @@ sass = require('gulp-sass');
 nodemon = require('nodemon');
 mocha = require('gulp-mocha');
 bower = require('gulp-bower');
+eslint = require('gulp-eslint');
 
 require('dotenv').config();
 
@@ -48,6 +49,13 @@ gulp.task('jade', function(){
         reporter: 'spec'
       }))
       .pipe(gulp.dest('build/test/'));
+  });
+
+  gulp.task('lint', function(){
+    return gulp.src(['app/**/*.js', 'config/**/*.js'])
+      .pipe(eslint({config: '.eslintrc.json' }))
+      .pipe(eslint.format())
+      .pipe(eslint.failOnError());
   });
 
   // gulp.task('server', function(){
@@ -113,7 +121,7 @@ gulp.task('jade', function(){
       ]);
     break;
     default:
-    gulp.task('default', ['nodemon']);
+    gulp.task('default', ['lint', 'nodemon']);
     break;
   }
   
