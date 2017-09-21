@@ -67,7 +67,8 @@ export default () => {
   passport.use(new TwitterStrategy(
     {
       consumerKey: process.env.TWITTER_CONSUMER_KEY || config.twitter.clientID,
-      consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.twitter.clientSecret,
+      consumerSecret:
+      process.env.TWITTER_CONSUMER_SECRET || config.twitter.clientSecret,
       callbackURL: config.twitter.callbackURL
     },
     ((token, tokenSecret, profile, done) => {
@@ -168,7 +169,8 @@ export default () => {
   passport.use(new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID || config.google.clientID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.google.clientSecret,
+      clientSecret:
+      process.env.GOOGLE_CLIENT_SECRET || config.google.clientSecret,
       callbackURL: config.google.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
