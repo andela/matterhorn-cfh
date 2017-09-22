@@ -2,8 +2,11 @@
  * Module dependencies.
  */
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import { all } from './avatars';
 
+mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 
 const avatarsAll = all();
@@ -115,6 +118,50 @@ export const create = (req, res, next) => {
   }
 };
 
+
+/**
+* @param {req} req The request.
+* @param {res} res The response.
+* @returns {done} done Token generated on login.
+ */
+export const login = (req, res) => {
+  const {
+    email,
+    password
+  } = req.body;
+  const { TOKEN_SECRET } = process.env;
+  // checks if user exists
+  return User
+    .findOne({ email })
+    .then((user) => {
+      if (!user) {
+        res.redirect('/#!/signin?error=invalid');
+      } else {
+      // check if password is correct
+        bcrypt.compare(password, user.hashed_password, (err, result) => {
+          if (result) {
+          // generate token upon login
+            const token = jwt.sign(
+              { user: user.id, username: user.name },
+              TOKEN_SECRET,
+              { expiresIn: 72 * 60 * 60 }
+            );
+            // return done(null, user);
+
+            return res.json(200, {
+              success: true,
+              token: `${token}`,
+              userName: user.username,
+              message: 'You have logged in Successfully. Welcome to Cards for Humanity!!!'
+            });
+            // return res.redirect('/#!/app');
+          }
+          res.redirect('/#!/signin?error=invalid');
+        });
+      }
+    })
+    .catch(error => res.status(400).send(error));
+};
 /**
  * Assign avatar to user
  */

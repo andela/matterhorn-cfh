@@ -8,6 +8,8 @@ import { signin,
   addDonation,
   session,
   me,
+  login,
+  register,
   show,
   authCallback,
   user
@@ -15,6 +17,7 @@ import { signin,
 
 import { allJSON } from '../app/controllers/avatars';
 import { all, showAnswer, answer } from '../app/controllers/answers';
+import 
 import {
   allQuestions,
   showQuestion,
@@ -33,6 +36,7 @@ export default () => {
 
   // Setting up the users api
   app.post('/users', create);
+  app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
 
   // Donation Routes
