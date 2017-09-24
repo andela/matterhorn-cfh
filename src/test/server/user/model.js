@@ -3,6 +3,9 @@
  */
 import should from 'should';
 import mongoose from 'mongoose';
+import chai from 'chai';
+
+import app from '../../../server';
 
 const User = mongoose.model('User');
 
@@ -43,6 +46,24 @@ describe('<Unit Test>', () => {
         }
       );
     });
+
+    describe('POST /api/auth/signin', () => {
+      it('it responds with 401 status code if bad username or password', (done) => {
+        chai
+          .request(app)
+          .post('/api/auth/signin')
+          .set('Accept', 'application/x-www-form-urlencoded')
+          .send({
+            email: 'chujggggg@yahoo.com',
+            password: 'hkjkljklklk'
+          })
+          .end((err, res) => {
+            expect(401);
+            done();
+          });
+      });
+    });
+
 
     after((done) => {
       done();

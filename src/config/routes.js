@@ -17,7 +17,6 @@ import { signin,
 
 import { allJSON } from '../app/controllers/avatars';
 import { all, showAnswer, answer } from '../app/controllers/answers';
-import 
 import {
   allQuestions,
   showQuestion,

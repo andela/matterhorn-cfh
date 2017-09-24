@@ -19,15 +19,22 @@ angular.module('mean.system')
     $scope.signIn = () => {
        $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
-          console.log(data)
        if (data.success === true) {
-         $window.localStorage.setItem('user-token', data.token);
+         $window.localStorage.setItem('token', data.token);
          $window.location.href = '/';
        } else {
          $scope.showMessage = data.message;
-      }
-    })
-  }
+       }
+       })
+      .error(() => {
+             $scope.showMessage = "Wrong email and/or password";
+      });
+    }
+    
+    $scope.signOut = () => {
+      $window.localStorage.removeItem("token");
+      $window.location.href = '/';
+    }
 
     $scope.avatars = [];
     AvatarService.getAvatars()
