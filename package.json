@@ -50,6 +50,7 @@
     "jsonwebtoken": "^8.0.1",
     "mean-logger": "~0.0.1",
     "mongoose": "^4.11.12",
+    "mpromise": "^0.5.5",
     "nodemon": "^1.12.1",
     "passport": "~0.1.17",
     "passport-facebook": "~2.0.0",
