@@ -16,7 +16,7 @@
     "build": "node node_modules/gulp/bin/gulp build",
     "build:dev": "node node_modules/gulp/bin/gulp build:dev",
     "start:dev": "nodemon --watch build build/server.js",
-    "start": "node src/server.js",
+    "start": "node build/server.js",
     "pretest": "npm run build",
     "test": "node node_modules/gulp/bin/gulp test",
     "postinstall": "node node_modules/gulp/bin/gulp install"
