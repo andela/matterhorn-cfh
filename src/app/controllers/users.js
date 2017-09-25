@@ -2,8 +2,11 @@
  * Module dependencies.
  */
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import { all } from './avatars';
 
+mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 
 const avatarsAll = all();
@@ -63,9 +66,9 @@ export const session = (req, res) => {
  */
 
 export const checkAvatar = (req, res) => {
-  if (req.user && req.user._id) {
+  if (req.user && req.user.id) {
     User.findOne({
-      _id: req.user._id
+      id: req.user.id
     })
       .exec((err, user) => {
         if (user.avatar !== undefined) {
@@ -115,16 +118,67 @@ export const create = (req, res, next) => {
   }
 };
 
+
+/**
+* @param {req} req The request.
+* @param {res} res The response.
+* @returns {done} done Token generated on login.
+ */
+export const login = (req, res) => {
+  const {
+    email,
+    password
+  } = req.body;
+  const { TOKEN_SECRET } = process.env;
+  // checks if user exists
+  return User
+    .findOne({ email })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send({
+          success: false,
+          message: 'Invalid login credentials'
+        });
+      } else {
+      // check if password is correct
+        bcrypt.compare(password, user.hashed_password, (err, result) => {
+          if (result) {
+          // generate token upon login
+            const token = jwt.sign(
+              { user: user.id, email: user.email },
+              TOKEN_SECRET,
+              { expiresIn: 72 * 60 * 60 }
+            );
+
+            return res.send(200, {
+              id: user.id,
+              success: true,
+              token: `${token}`,
+              name: user.name,
+              email: user.email,
+              message: `You have logged in Successfully.
+               Welcome to Cards for Humanity!!!`
+            });
+          }
+          res.status(400).json({
+            success: false,
+            message: 'Invalid login credentials'
+          });
+        });
+      }
+    })
+    .catch(error => res.status(400).send(error));
+};
 /**
  * Assign avatar to user
  */
 
 export const avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
-  if (req.user && req.user._id && req.body.avatar !== undefined &&
+  if (req.user && req.user.id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatarsAll[req.body.avatar]) {
     User.findOne({
-      _id: req.user._id
+      _id: req.user.id
     })
       .exec((err, user) => {
         user.avatar = avatarsAll[req.body.avatar];
@@ -135,11 +189,11 @@ export const avatars = (req, res) => {
 };
 
 export const addDonation = (req, res) => {
-  if (req.body && req.user && req.user._id) {
+  if (req.body && req.user && req.user.id) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
       User.findOne({
-        _id: req.user._id
+        _id: req.user.id
       })
         .exec((err, user) => {
         // Confirm that this object hasn't already been entered
@@ -150,7 +204,6 @@ export const addDonation = (req, res) => {
             }
           }
           if (!duplicate) {
-            console.log('Validated donation');
             user.donations.push(req.body);
             user.premium = 1;
             user.save();

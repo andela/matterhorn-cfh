@@ -8,6 +8,7 @@ import { signin,
   addDonation,
   session,
   me,
+  login,
   show,
   authCallback,
   user
@@ -33,6 +34,7 @@ export default () => {
 
   // Setting up the users api
   app.post('/users', create);
+  app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
 
   // Donation Routes
