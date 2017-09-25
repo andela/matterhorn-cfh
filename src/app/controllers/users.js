@@ -58,8 +58,12 @@ exports.sendMail = (req, res) => {
   const html = `
     <h3>Hi there</h3>
     <p>You have an invitation to play Card For Humanity (CFH). </p>
-    <p>Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.</p><br />
-    <p>Follow this link to join <a href="https://matterhorn-cfh-staging.herokuapp.com">MATTERHORN CFH</a>
+    <p>Cards for Humanity is a fast-paced online version of the
+    popular card game, Cards Against Humanity, that gives you
+    the opportunity to donate to children in need - all while
+    remaining as despicable and awkward as you naturally are.</p><br />
+    <p>Follow this link to join
+    <a href="https://matterhorn-cfh-staging.herokuapp.com">MATTERHORN CFH</a>
       Get in the game now.</p>
       <p>Copyright &copy; 2017</p>
   `;
