@@ -39,25 +39,26 @@
       </div>
       <p id="create">Or create a username/password and select an avatar:</p>
 
-      <div class="sign-body">
+      <div class="sign-body" ng-controller="authController">
         <div class="more-sign">
-          <form class="signup form-horizontal" action="/users" method="post">
+          <form class="signup form-horizontal">
+            <span ng-bind="errorMessage">{{errorMessage}}</span>
             <div class="control-group">
               <label for="name" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="name" type="text" name="name" placeholder="Full name" required novalidate />
+                <input class="input-info" id="name" type="text" name="name" placeholder="Full name" ng-model="name" required novalidate />
               </div>
             </div>
             <div class="control-group">
               <label for="email" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="email" type="email" name="email" placeholder="Email" required novalidate />
+                <input class="input-info" id="email" type="email" name="email" placeholder="Email" ng-model="email" required novalidate />
               </div>
             </div>
             <div class="control-group">
               <label for="password" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="password" type="password" name="password" placeholder="Password" required novalidate />
+                <input class="input-info" id="password" type="password" name="password" placeholder="Password" ng-model="password" required novalidate />
               </div>
             </div>
             <div id="contain-avatars">
@@ -70,7 +71,7 @@
               </ul>
             </div>
             <div class="form-actions">
-              <button id="sign-up-btn-other" type='submit'>Sign Up</button>
+              <button id="sign-up-btn-other" type='submit' ng-click=signUp()>Sign Up</button>
             </div>
           </form>
         </div>
