@@ -135,7 +135,10 @@ export const login = (req, res) => {
     .findOne({ email })
     .then((user) => {
       if (!user) {
-        res.status(400).send({ success: false, message: 'Invalid login credentials' });
+        res.status(400).send({
+          success: false,
+          message: 'Invalid login credentials'
+        });
       } else {
       // check if password is correct
         bcrypt.compare(password, user.hashed_password, (err, result) => {
@@ -153,10 +156,14 @@ export const login = (req, res) => {
               token: `${token}`,
               name: user.name,
               email: user.email,
-              message: 'You have logged in Successfully. Welcome to Cards for Humanity!!!'
+              message: `You have logged in Successfully.
+               Welcome to Cards for Humanity!!!`
             });
           }
-          res.status(400).json({ success: false, message: 'Invalid login credentials' });
+          res.status(400).json({
+            success: false,
+            message: 'Invalid login credentials'
+          });
         });
       }
     })

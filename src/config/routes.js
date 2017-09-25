@@ -9,7 +9,6 @@ import { signin,
   session,
   me,
   login,
-  register,
   show,
   authCallback,
   user
