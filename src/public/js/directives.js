@@ -71,7 +71,7 @@ angular.module('mean.directives', [])
       link: function(scope, elem, attr) {
         
         if( window.localStorage.token) {
-          $scope.showOptions = false
+          scope.showOptions = false
         }
         else{
           scope.showOptions = true;
