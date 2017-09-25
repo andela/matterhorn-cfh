@@ -71,8 +71,10 @@ angular.module('mean.directives', [])
       link: function(scope, elem, attr) {
         scope.showOptions = true;
 
-        if (scope.$$childHead.global.authenticated === true) {
+        if (window.localStorage.jwtToken) {
           scope.showOptions = false;
+        } else {
+          scope.showOptions = true;
         }
       }
     };

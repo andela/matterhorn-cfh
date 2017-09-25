@@ -3,8 +3,6 @@ angular.module('mean.system')
     function ($scope, $location, $http, $window) {
 
       $scope.errorMessage = ''
-      $scope.hideErrorMessage = 'hidden'
-
 
       $scope.signUp = () => {
         const payload = {
@@ -16,9 +14,9 @@ angular.module('mean.system')
         $http.post('/api/auth/signup', payload)
           .then(
           (response) => {
+            $scope.errorMessage = ''
             $window.localStorage.setItem('jwtToken', response.data.token)
             $location.path('/#!/')
-            $window.location.reload()
           },
           (error) => {
             if (error.status === 409) {
@@ -29,7 +27,17 @@ angular.module('mean.system')
               $scope.errorMessage = `An internal server error just occured.
                   Please try again.`
             }
+
+            if (error.status === 401) {
+              $scope.errorMessage = error.data.message
+            }
           }
           );
       }
+
+      $scope.signOut = () => {
+        $window.localStorage.removeItem('jwtToken')
+        $location.path('/#!/')
+      }
+
     }]);
