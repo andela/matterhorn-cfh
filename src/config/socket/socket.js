@@ -123,6 +123,7 @@ module.exports = (io) => {
           game.sendUpdate();
           game.sendNotification(`${player.username} has joined the game!`);
           if (game.players.length >= game.playerMaxLimit) {
+            game.sendNotification('Players cannot be more thsn 12!');
             gamesNeedingPlayers.shift();
             game.prepareGame();
           }
