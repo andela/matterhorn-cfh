@@ -14,7 +14,7 @@ $(document).ready(function() {
 </script>
 
 <script></script>
-<div landing id="main-bod">
+<div landing id="main-bod" >
   <!-- Fixed Logo & Menu Bar Start -->
   <div id="top-part">
     <div class="wpb-top-bar">
@@ -27,7 +27,7 @@ $(document).ready(function() {
               <span id="second-word"> for</span>
               <span id="third-word">Humanity</span>
             </div>
-            <div class="col-md-9 wpb-menu-container" ng-controller="authController">
+            <div class="col-md-9 wpb-menu-container"  ng-controller="IndexController">
               <ul class="wpb-main-menu">
                 <li><a onClick="scroll(0,0)">Home</a></li>
                 <li><a onClick="scroll(0,742);">How to Play</a></li>
@@ -38,7 +38,7 @@ $(document).ready(function() {
                   <li><a href="#!/signin">Sign In</a></li>
                 </span>
                 <span ng-hide="showOptions">
-                  <li><a ng-click=signOut()>Sign Out</a></li>
+                  <li><a ng-click="signOut()">Sign Out</a></li>
                 </span>
               </ul>
             </div>
@@ -54,7 +54,7 @@ $(document).ready(function() {
     <div class="background-opacity"></div>
     <div class="container">
       <div class="row" id="main-text">
-        <div class="col-md-12" id="avatars" ng-controller="IndexController">
+        <div class="col-md-12" id="avatars">
           <img ng-repeat="avatar in avatars" ng-src="{{avatar}}" id="avatar-face">
         </div>
         <!-- Teaser Slogan Start -->

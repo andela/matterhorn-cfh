@@ -15,7 +15,7 @@ angular.module('mean.system')
           .then(
           (response) => {
             $scope.errorMessage = ''
-            $window.localStorage.setItem('jwtToken', response.data.token)
+            $window.localStorage.setItem('token', response.data.token)
             $location.path('/#!/')
           },
           (error) => {
@@ -25,7 +25,7 @@ angular.module('mean.system')
 
             if (error.status === 500) {
               $scope.errorMessage = `An internal server error just occured.
-                  Please try again.`
+                Please try again.`
             }
 
             if (error.status === 401) {
@@ -34,10 +34,4 @@ angular.module('mean.system')
           }
           );
       }
-
-      $scope.signOut = () => {
-        $window.localStorage.removeItem('jwtToken')
-        $location.path('/#!/')
-      }
-
     }]);
