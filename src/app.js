@@ -21,6 +21,7 @@ dotEnv.config();
 
 // Bootstrap db connection
 mongoose.connect(config.db);
+// const dbCon = mongoose.connect(config.db);
 
 // Bootstrap models
 const modelsPath = `${__dirname}/app/models`;
