@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/andela/matterhorn-cfh.svg?branch=master)](https://travis-ci.org/andela/matterhorn-cfh)
+[![Build Status](https://travis-ci.org/andela/matterhorn-cfh.svg?branch=master)]
+(https://travis-ci.org/andela/matterhorn-cfh)
+[![Coverage Status](https://coveralls.io/repos/github/andela/matterhorn-cfh/badge.svg?branch=staging)](https://coveralls.io/github/andela/matterhorn-cfh?branch=staging)
 
 
 Cards for Humanity - [http://cfh.io](http://cfh.io)

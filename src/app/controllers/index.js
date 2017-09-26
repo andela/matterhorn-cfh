@@ -19,3 +19,4 @@ export const render = (req, res) => {
     user: req.user ? JSON.stringify(req.user) : 'null'
   });
 };
+

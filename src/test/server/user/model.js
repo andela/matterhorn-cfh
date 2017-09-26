@@ -5,6 +5,7 @@ import should from 'should';
 import mongoose from 'mongoose';
 import app from '../../../app';
 
+
 const User = mongoose.model('User');
 
 // Globals
@@ -44,6 +45,7 @@ describe('<Unit Test>', () => {
         }
       );
     });
+
 
     after((done) => {
       done();
