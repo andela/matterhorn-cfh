@@ -29,10 +29,10 @@ const UserSchema = new Schema({
 /**
  * Virtuals
  */
-UserSchema.virtual('password').set((password) => {
+UserSchema.virtual('password').set(function (password) {
   this._password = password;
   this.hashed_password = this.encryptPassword(password);
-}).get(() => this._password);
+}).get(function () { return this._password; });
 
 /**
  * Validations
