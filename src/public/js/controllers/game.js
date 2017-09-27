@@ -125,7 +125,7 @@ angular.module('mean.system')
         const myModal = $('#theModal');
         myModal
           .find('.modal-title')
-          .text('My Modal title');
+          .text('You cannot start game now!');
         myModal
           .find('.modal-body')
           .text(`You need ${game.playerMinLimit - game.players.length} more players`);
