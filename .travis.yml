@@ -10,7 +10,7 @@ env:
   - NODE_ENV=test
 before_script:
   - npm install -g gulp-cli
-  
+
 script: npm test
 
 after_success:
