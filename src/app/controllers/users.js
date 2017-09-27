@@ -4,11 +4,15 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import localStorage from 'localStorage';
 import { all } from './avatars';
+import validateInput from '../../config/middlewares/validateInput';
 
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
-
+mongoose.Promise = global.Promise;
+require('dotenv').config();
+/* eslint-disable no-underscore-dangle */
 const avatarsAll = all();
 /**
  * Auth callback
@@ -16,11 +20,25 @@ const avatarsAll = all();
 
 
 export const authCallback = (req, res) => {
+  const { TOKEN_SECRET } = process.env;
   if (!req.user) {
     res.redirect('/#!/signin?error=emailRequired');
   } else {
+    const token = jwt.sign(
+      { user: req.user.id, name: req.user.name },
+      TOKEN_SECRET,
+      { expiresIn: 72 * 60 * 60 }
+    );
+    res.cookie('token', token);
     res.redirect('/#!/app');
   }
+};
+
+export const getToken = (req, res) => {
+  const cookie = req.cookies.token;
+  res.send({
+    cookie
+  });
 };
 
 /**
@@ -86,6 +104,64 @@ export const checkAvatar = (req, res) => {
     // If user doesn't even exist, redirect to /
     res.redirect('/');
   }
+};
+
+/**
+ * Register User
+ */
+
+export const register = (req, res) => {
+  const { error, isValid } = validateInput(req.body);
+  if (!isValid) {
+    return res.status(401).send({
+      message: error
+    });
+  }
+
+  User.findOne({
+    $or: [{ name: req.body.name }, { email: req.body.email }]
+  })
+    .then((existingUser) => {
+      if (existingUser) {
+        if (existingUser.name === req.body.name) {
+          return res.status(409).send({
+            message: 'Sorry, that name is in use already!'
+          });
+        }
+        if (existingUser.email === req.body.email) {
+          return res.status(409).send({
+            message: 'Sorry, that email is in use already!'
+          });
+        }
+      }
+      const user = new User(req.body);
+      // Switch the user's avatar index to an actual avatar url
+      user.avatar = avatarsAll[user.avatar];
+      user.provider = 'local';
+      user.save()
+        .then(() => {
+          const token = jwt.sign(
+            { user: user._id, name: user.name },
+            process.env.TOKEN_SECRET,
+            { expiresIn: 72 * 60 * 60 }
+          );
+          res.status(201).send({
+            token,
+            user: { id: user._id, name: user.name, email: user.email },
+            message: 'Welcome to Matterhorn CFH',
+          });
+        })
+        .catch(() => {
+          res.status(500).send({
+            message: 'Internal Server Error'
+          });
+        });
+    })
+    .catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
 };
 
 /**
@@ -201,7 +277,7 @@ export const addDonation = (req, res) => {
         _id: req.user.id
       })
         .exec((err, user) => {
-        // Confirm that this object hasn't already been entered
+          // Confirm that this object hasn't already been entered
           let duplicate = false;
           for (let i = 0; i < user.donations.length; i++) {
             if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {

@@ -1,5 +1,5 @@
 angular.module('mean.system')
-.controller('IndexController', ['$scope', 'Global', '$location', '$http', '$window','socket', 'game',  'AvatarService', function ($scope,Global,$location, $http, $window, socket,  game, AvatarService) {
+.controller('IndexController', ['$scope', 'Global', '$cookieStore', '$location', '$http', '$window','socket', 'game',  'AvatarService', function ($scope,Global, $cookieStore, $location, $http, $window, socket,  game, AvatarService) {
     $scope.global = Global;
     $scope.formData = {};
 
@@ -33,6 +33,7 @@ angular.module('mean.system')
     
     $scope.signOut = () => {
       $window.localStorage.removeItem("token");
+      $cookieStore.remove('token');
       $window.location.href = '/';
     }
 
@@ -41,6 +42,4 @@ angular.module('mean.system')
       .then(function(data) {
         $scope.avatars = data;
       });
-
-
 }]);
