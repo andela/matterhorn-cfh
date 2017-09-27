@@ -6,7 +6,6 @@ import passportGithub from 'passport-github';
 import passportGoogle from 'passport-google-oauth';
 import passport from 'passport';
 import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
 import config from './config';
 
 const User = mongoose.model('User');
