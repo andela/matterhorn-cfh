@@ -122,15 +122,16 @@ angular.module('mean.system')
 
     $scope.startGame = function () {
       if (game.players.length < game.playerMinLimit) {
-        const popupModal = $('#myModal');
-        popupModal
-        .find('.modal-title')
-        .text('You cannot start the game now');
-        popupModal
-        .find('.modal-body')
-        .text(`You need ${game.playerMinLimit - game.players.length} more player(s) to start the game`);
-        popupModal.modal('show')
+        const myModal = $('#theModal');
+        myModal
+          .find('.modal-title')
+          .text('My Modal title');
+        myModal
+          .find('.modal-body')
+          .text(`You need ${game.playerMinLimit - game.players.length} more players`);
+        myModal.modal('show');
       } else {
+
         game.startGame();
       }
     };

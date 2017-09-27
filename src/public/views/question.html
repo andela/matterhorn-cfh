@@ -13,7 +13,8 @@
       <div id="loading-container">
         <div id="loading-gif"><img ng-src="../img/loader.gif" /></div>
       </div>
-      <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
+      <!-- start Game conditionally -->
+      <div id="start-game-container" ng-click="startGame()">
         <div id='start-game-button'>
           Start Game
         </div>
@@ -38,18 +39,16 @@
   </div>
 </div>
 
-
-<div id="myModal" class="modal fade" role="dialog">
+<div id="theModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button class="close" data-dismiss="modal">
-  &times;
-        </button>
+        <!-- close button-->
+        <button type="button" class="close" data-dismiss="modal">&times;
+          </button>
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-
       </div>
     </div>
   </div>
