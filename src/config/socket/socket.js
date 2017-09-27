@@ -66,7 +66,8 @@ module.exports = (io) => {
         game.assignGuestNames();
         game.sendUpdate();
         game.sendNotification(`${player.username} has joined the game!`);
-        if (game.players.length >= game.playerMaxLimit) {
+        if (game.players.length === game.playerMaxLimit) {
+          game.sendNotification('Players can no longer join. Starting game...');
           gamesNeedingPlayers.shift();
           game.prepareGame();
         }
@@ -123,11 +124,12 @@ module.exports = (io) => {
           game.sendUpdate();
           game.sendNotification(`${player.username} has joined the game!`);
           if (game.players.length >= game.playerMaxLimit) {
-            game.sendNotification('Players cannot be more thsn 12!');
             gamesNeedingPlayers.shift();
-            game.prepareGame();
+            game.state = 'kkkkkkk';
+            // game.prepareGame();
           }
         } else {
+          game.sendNotification('Players cannot be more thsn 12!');
           // TODO: Send an error message back to this user saying the game has already started
         }
       } else {
