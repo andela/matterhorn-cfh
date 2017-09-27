@@ -20,7 +20,7 @@ const paths = {
   js: ['src/public/js/**', 'src/app/**/*.js'],
   images: 'src/public/img/**/*',
   html: 'src/public/views/**',
-  serverTests: ['./src/tests/server/**/**.js'],
+  serverTests: ['build/test/server/**/**.js'],
   css: 'src/public/css/**.css',
   sass: 'src/public/css/**.scss',
   entry: 'src/server.js',
@@ -34,7 +34,7 @@ const paths = {
     'src/public/js'
   ],
   watch: '',
-  clientTests: 'build/test/**/*.js',
+  clientTests: 'build/test/client/**/*.js',
   configJson: './src/config/**/**.json',
   lib: './src/public/lib/**'
 };
@@ -94,7 +94,7 @@ gulp.task('sass', () => {
 });
 
 gulp.task('test', () =>
-  gulp.src(paths.clientTests, { read: false })
+  gulp.src(paths.serverTests, { read: false })
     .pipe(mocha({
       reporter: 'spec'
     })));
