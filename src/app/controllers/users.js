@@ -4,7 +4,6 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import localStorage from 'localStorage';
 import { all } from './avatars';
 import validateInput from '../../config/middlewares/validateInput';
 
@@ -17,7 +16,6 @@ const avatarsAll = all();
 /**
  * Auth callback
  */
-
 
 export const authCallback = (req, res) => {
   const { TOKEN_SECRET } = process.env;
@@ -34,12 +32,19 @@ export const authCallback = (req, res) => {
   }
 };
 
+/**
+ *  Retrieves the token from cookie
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing the token
+ */
 export const getToken = (req, res) => {
   const cookie = req.cookies.token;
   res.send({
     cookie
   });
 };
+
 
 /**
  * Show login form
