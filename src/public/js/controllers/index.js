@@ -41,6 +41,4 @@ angular.module('mean.system')
       .then(function(data) {
         $scope.avatars = data;
       });
-
-
 }]);

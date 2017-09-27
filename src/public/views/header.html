@@ -11,7 +11,7 @@
 </div>
 
 <!-- Collect the nav links, forms, and other content for toggling -->
-<div class="collapse navbar-collapse navbar-ex1-collapse">
+<div class="collapse navbar-collapse navbar-ex1-collapse" ng-controller="IndexController">
   <ul class="nav navbar-nav">
     <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}"><a href="#!/{{item.link}}">{{item.title}}</a></li>
   </ul>
