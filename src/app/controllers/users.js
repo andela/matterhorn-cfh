@@ -14,8 +14,13 @@ const avatarsAll = all();
  * Auth callback
  */
 
+
 export const authCallback = (req, res) => {
-  res.redirect('/chooseavatars');
+  if (!req.user) {
+    res.redirect('/#!/signin?error=emailRequired');
+  } else {
+    res.redirect('/#!/app');
+  }
 };
 
 /**

@@ -110,11 +110,11 @@ export default () => {
         if (err) {
           return done(err);
         }
-        if (!user) {
+        if (!user && profile.email) {
           user = new User({
             name: profile.displayName,
-            email: (profile.emails && profile.emails[0].value) || '',
-            username: profile.username,
+            email: (profile.email && profile.emails[0].value) || '',
+            username: profile.displayName.split(' ').join('_').toLowerCase(),
             provider: 'facebook',
             facebook: profile._json
           });
@@ -146,15 +146,15 @@ export default () => {
           return done(err);
         }
         if (!user) {
+          console.log('<=====', profile.username, '========>theee');
           user = new User({
             name: profile.displayName,
-            email: profile.emails[0].value,
             username: profile.username,
             provider: 'github',
             github: profile._json
           });
           user.save((err) => {
-            if (err) console.log(err);
+            if (err) console.log('<----------------', err, '------------>');
             return done(err, user);
           });
         } else {

@@ -61,7 +61,7 @@ export default () => {
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'

@@ -47,11 +47,11 @@ UserSchema.path('name').validate((name) => {
   return name.length;
 }, 'Name cannot be blank');
 
-UserSchema.path('email').validate((email) => {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true;
-  return email.length;
-}, 'Email cannot be blank');
+// UserSchema.path('email').validate((email) => {
+//   // if you are authenticating by any of the oauth strategies, don't validate
+//   if (authTypes.indexOf(this.provider) !== -1) return true;
+//   return email.length;
+// }, 'Email cannot be blank');
 
 UserSchema.path('username').validate((username) => {
   // if you are authenticating by any of the oauth strategies, don't validate
