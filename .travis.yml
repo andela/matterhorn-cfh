@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - node
+  - "7"
 
 services:
   - mongodb
@@ -15,3 +15,4 @@ script: npm test
 
 after_success:
   - npm run coverage
+  - coveralls < coverage/lcov.info
