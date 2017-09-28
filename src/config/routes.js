@@ -1,5 +1,6 @@
 import passport from 'passport';
-import { signin,
+import {
+  signin,
   signup,
   sendMail,
   searchUser,
@@ -13,7 +14,8 @@ import { signin,
   login,
   show,
   authCallback,
-  user
+  user,
+  register
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -21,7 +23,8 @@ import { all, showAnswer, answer } from '../app/controllers/answers';
 import {
   allQuestions,
   showQuestion,
-  question } from '../app/controllers/questions';
+  question
+} from '../app/controllers/questions';
 import { play, render } from '../app/controllers/index';
 
 import app from '../app';
@@ -40,6 +43,7 @@ export default () => {
   app.post('/users', create);
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
+  app.post('/api/auth/signup', register);
 
   // Donation Routes
   app.post('/donations', addDonation);
