@@ -148,6 +148,7 @@ angular.module('mean.system')
         $scope.showTable = true;
       }
     });
+    
     $scope.setToken = () => {
       $http.get('/users/token')
        .success((data) => {
