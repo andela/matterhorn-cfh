@@ -1,3 +1,5 @@
+import app from '../../../app';
+
 const io = require('socket.io-client');
 const server = require('socket.io').listen(5000);
 
