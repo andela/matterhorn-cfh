@@ -8,4 +8,6 @@ build/
 bower_components
 public/lib
 matterhorn-cfh-staging
-npm-debug.log
+.nyc-output
+build
+coverage
