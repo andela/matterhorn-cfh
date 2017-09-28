@@ -13,6 +13,9 @@ mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
 const avatarsAll = all();
+
+const helper = require('sendgrid').mail;
+const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 /**
  * Auth callback
  */
@@ -43,6 +46,65 @@ export const signup = (req, res) => {
   } else {
     res.redirect('/#!/app');
   }
+};
+
+/**
+ * Send invite mails to users
+ * @function sendMail
+ * @param {any} req -
+ * @param {object} req.params - Contains the user's data
+ * @param {any} res -
+ * @returns {any} - sends mail
+ */
+exports.sendMail = (req, res) => {
+  const { email } = req.params;
+  const fromEmail = new helper.Email('matterhorn-cfh@andela.com');
+  const toEmail = new helper.Email(email);
+  const subject = 'CFH - Invitation to Play Game';
+  const html = `
+    <h3>Hi there</h3>
+    <p>You have an invitation to play Card For Humanity (CFH). </p>
+    <p>Cards for Humanity is a fast-paced online version of the
+    popular card game, Cards Against Humanity, that gives you
+    the opportunity to donate to children in need - all while
+    remaining as despicable and awkward as you naturally are.</p><br />
+    <p>Follow this link to join
+    <a href="https://matterhorn-cfh-staging.herokuapp.com">MATTERHORN CFH</a>
+      Get in the game now.</p>
+      <p>Copyright &copy; 2017</p>
+  `;
+  const content = new helper.Content('text/html', html);
+  const mail = new helper.Mail(fromEmail, subject, toEmail, content);
+  const request = sg.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: mail.toJSON()
+  });
+
+  sg.API(request, (error, response) => {
+    if (error) return res.jsonp(error);
+    return res.jsonp(response);
+  });
+};
+
+/**
+ * Gets the list of users in the database
+ * @function search
+ * @param {any} req -
+ * @param {string} req.params - the query string
+ * @param {any} res -
+ * @returns {object} - users
+ */
+exports.searchUser = (req, res) => {
+  const { username } = req.params;
+  User.find({
+    name: { $regex: `^${username}`, $options: 'i' }
+  }).exec((err, user) => {
+    if (err) {
+      res.jsonp({ error: '403' });
+    }
+    res.jsonp(user);
+  });
 };
 
 /**

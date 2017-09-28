@@ -1,3 +1,5 @@
+import app from '../../../app';
+
 const io = require('socket.io-client');
 
 const socketURL = 'http://localhost:3000';

@@ -2,6 +2,8 @@ import passport from 'passport';
 import {
   signin,
   signup,
+  sendMail,
+  searchUser,
   checkAvatar,
   signout,
   avatars,
@@ -34,6 +36,8 @@ export default () => {
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
+  app.get('/api/sendmail/:email', sendMail);
+  app.get('/api/search/users/:username', searchUser);
 
   // Setting up the users api
   app.post('/users', create);
