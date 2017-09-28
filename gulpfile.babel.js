@@ -20,6 +20,7 @@ const paths = {
   js: ['src/public/js/**', 'src/app/**/*.js'],
   images: 'src/public/img/**/*',
   html: 'src/public/views/**',
+  serverTests: ['build/test/server/**/**.js'],
   css: 'src/public/css/**.css',
   sass: 'src/public/css/**.scss',
   entry: 'src/server.js',
@@ -33,7 +34,6 @@ const paths = {
     'src/public/js'
   ],
   watch: '',
-  serverTests: ['build/test/server/**/**.js'],
   clientTests: 'build/test/client/**/*.js',
   configJson: './src/config/**/**.json',
   lib: './src/public/lib/**'
@@ -93,7 +93,7 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('src/public/css/'));
 });
 
-gulp.task('serverTest', () =>
+gulp.task('test', () =>
   gulp.src(paths.serverTests, { read: false })
     .pipe(mocha({
       reporter: 'spec'
