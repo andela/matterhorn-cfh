@@ -59,9 +59,8 @@ export default () => {
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: ['email'],
-    failureRedirect: '/signin'
-  }), authCallback);
+    scope: ['email']
+  }));
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
