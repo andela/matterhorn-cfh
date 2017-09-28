@@ -79,7 +79,7 @@ export default () => {
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/signin'
@@ -92,7 +92,7 @@ export default () => {
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'
