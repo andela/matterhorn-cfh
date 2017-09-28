@@ -15,7 +15,19 @@ angular.module('mean.system')
         return false;
       }
     }
-
+    $scope.setToken = () => {
+      $http.get('/users/token')
+        .success((data) => {
+          if (data.cookie) {
+            $window.localStorage.setItem('token', data.cookie);
+          } else {
+            $scope.showMessage = data.message;
+          }
+        })
+        .error(() => {
+          $scope.showMessage = "Failed to authenticate user";
+        });
+    }
     $scope.signIn = () => {
        $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
