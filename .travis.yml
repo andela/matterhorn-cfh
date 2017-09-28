@@ -7,7 +7,7 @@ env:
   - NODE_ENV=test
 before_script:
   - npm install -g gulp-cli
-script: npm test=
+script: npm test
 after_success:
   - npm run coverage
   - coveralls < coverage/lcov.info
