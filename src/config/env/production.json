@@ -5,21 +5,21 @@
     "facebook": {
         "clientID": "FACEBOOK_APP_ID",
         "clientSecret": "FACEBOOK_APP_SECRET",
-        "callbackURL": "http://cfh.io/auth/facebook/callback"
+        "callbackURL": "https://matterhorn-cfh-test.herokuapp.com/auth/facebook/callback"
     },
     "twitter": {
         "clientID": "CONSUMER_KEY",
         "clientSecret": "CONSUMER_SECRET",
-        "callbackURL": "http://cfh.io/auth/twitter/callback"
+        "callbackURL": "hhttps://matterhorn-cfh-test.herokuapp.com/auth/twitter/callback"
     },
     "github": {
         "clientID": "APP_ID",
         "clientSecret": "APP_SECRET",
-        "callbackURL": "http://cfh.io/auth/github/callback"
+        "callbackURL": "https://matterhorn-cfh-test.herokuapp.com/auth/github/callback"
     },
     "google": {
         "clientID": "APP_ID",
         "clientSecret": "APP_SECRET",
-        "callbackURL": "http://cfh.io/auth/google/callback"
+        "callbackURL": "https://matterhorn-cfh-test.herokuapp.com/auth/google/callback"
     }
 }
