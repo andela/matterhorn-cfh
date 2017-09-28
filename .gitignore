@@ -8,6 +8,6 @@ build/
 bower_components
 public/lib
 matterhorn-cfh-staging
-.nyc-output
+.nyc_output
 build
 coverage
