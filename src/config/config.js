@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import configAll from './env/all';
 import configDevelopment from './env/development.json';
-import configProduction from './env/production.json';
+import configProduction from './env/production';
 import configTest from './env/test.json';
 // Load app configuration
 

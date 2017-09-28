@@ -15,6 +15,7 @@ import {
   show,
   authCallback,
   user,
+  getToken,
   register
 } from '../app/controllers/users';
 
@@ -28,7 +29,6 @@ import {
 import { play, render } from '../app/controllers/index';
 
 import app from '../app';
-
 
 export default () => {
   // User Routes
@@ -53,6 +53,7 @@ export default () => {
     failureFlash: 'Invalid email or password.'
   }), session);
 
+  app.get('/users/token', getToken);
   app.get('/users/me', me);
   app.get('/users/:userId', show);
 
@@ -69,7 +70,7 @@ export default () => {
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'

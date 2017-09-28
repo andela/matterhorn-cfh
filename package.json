@@ -49,6 +49,7 @@
     "gulp-uglify": "^3.0.0",
     "jade": "~0.35.0",
     "jsonwebtoken": "^8.0.1",
+    "localStorage": "^1.0.3",
     "lodash": "^4.17.4",
     "mean-logger": "~0.0.1",
     "mongoose": "^4.11.12",
@@ -65,6 +66,7 @@
     "sinon": "~1.7.3",
     "socket.io": "~0.9.16",
     "socket.io-client": "~0.9.16",
+    "store": "^2.0.12",
     "underscore": "~1.5.2",
     "validator": "^8.2.0",
     "view-helpers": "~0.1.3"

@@ -21,8 +21,33 @@ const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
  */
 
 export const authCallback = (req, res) => {
-  res.redirect('/chooseavatars');
+  const { TOKEN_SECRET } = process.env;
+  if (!req.user) {
+    res.redirect('/#!/signin?error=emailRequired');
+  } else {
+    const token = jwt.sign(
+      { user: req.user.id, name: req.user.name },
+      TOKEN_SECRET,
+      { expiresIn: 72 * 60 * 60 }
+    );
+    res.cookie('token', token);
+    res.redirect('/#!/app');
+  }
 };
+
+/**
+ *  Retrieves the token from cookie
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing the token
+ */
+export const getToken = (req, res) => {
+  const cookie = req.cookies.token;
+  res.send({
+    cookie
+  });
+};
+
 
 /**
  * Show login form
