@@ -121,7 +121,18 @@ angular.module('mean.system')
     };
 
     $scope.startGame = function () {
-      game.startGame();
+      if (game.players.length < game.playerMinLimit) {
+        const myModal = $('#theModal');
+        myModal
+          .find('.modal-title')
+          .text('You cannot start game now!');
+        myModal
+          .find('.modal-body')
+          .text(`You need ${game.playerMinLimit - game.players.length} more players`);
+        myModal.modal('show');
+      } else {
+        game.startGame();
+      }
     };
 
     $scope.abandonGame = function () {
