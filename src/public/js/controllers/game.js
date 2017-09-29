@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+  .controller('GameController', ['$scope', 'game', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -131,7 +131,6 @@ angular.module('mean.system')
           .text(`You need ${game.playerMinLimit - game.players.length} more players`);
         myModal.modal('show');
       } else {
-
         game.startGame();
       }
     };
@@ -160,7 +159,19 @@ angular.module('mean.system')
         $scope.showTable = true;
       }
     });
-
+    $scope.setToken = () => {
+      $http.get('/users/token')
+        .success((data) => {
+          if (data.cookie) {
+            $window.localStorage.setItem('token', data.cookie);
+          } else {
+            $scope.showMessage = data.message;
+          }
+        })
+        .error(() => {
+          $scope.showMessage = "Failed to authenticate user";
+        });
+    }
     $scope.$watch('game.gameID', function () {
       if (game.gameID && game.state === 'awaiting players') {
         if (!$scope.isCustomGame() && $location.search().game) {

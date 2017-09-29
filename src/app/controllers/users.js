@@ -31,7 +31,7 @@ export const authCallback = (req, res) => {
       { expiresIn: 72 * 60 * 60 }
     );
     res.cookie('token', token);
-    res.redirect('/#!/app');
+    res.redirect('/');
   }
 };
 

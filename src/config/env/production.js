@@ -14,7 +14,7 @@ export default {
   twitter: {
     clientID: process.env.CONSUMER_KEY,
     clientSecret: process.env.CONSUMER_SECRET,
-    callbackURL: 'hhttps://matterhorn-cfh-test.herokuapp.com/auth/twitter/callback'
+    callbackURL: 'https://matterhorn-cfh-test.herokuapp.com/auth/twitter/callback'
   },
   github: {
     clientID: process.env.APP_ID,
