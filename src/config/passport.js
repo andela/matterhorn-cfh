@@ -5,10 +5,12 @@ import passportFacebook from 'passport-facebook';
 import passportGithub from 'passport-github';
 import passportGoogle from 'passport-google-oauth';
 import passport from 'passport';
+import dotenv from 'dotenv';
 import config from './config';
 
 const User = mongoose.model('User');
 
+dotenv.load();
 
 export default () => {
   const LocalStrategy = passportLocal.Strategy;
@@ -66,9 +68,9 @@ export default () => {
   // Use twitter strategy
   passport.use(new TwitterStrategy(
     {
-      consumerKey: process.env.TWITTER_CONSUMER_KEY || config.twitter.clientID,
+      consumerKey: process.env.CONSUMER_KEY || config.twitter.clientID,
       consumerSecret:
-      process.env.TWITTER_CONSUMER_SECRET || config.twitter.clientSecret,
+      process.env.CONSUMER_SECRET || config.twitter.clientSecret,
       callbackURL: config.twitter.callbackURL
     },
     ((token, tokenSecret, profile, done) => {
@@ -111,11 +113,9 @@ export default () => {
           return done(err);
         }
         if (!user) {
-          console.log(profile);
           user = new User({
             name: profile.displayName,
-            email: (profile.emails && profile.emails[0].value) || '',
-            username: profile.username,
+            username: profile.displayName.split(' ').join('_').toLowerCase(),
             provider: 'facebook',
             facebook: profile._json
           });
@@ -149,15 +149,11 @@ export default () => {
         if (!user) {
           user = new User({
             name: profile.displayName,
-            email: profile.emails[0].value,
             username: profile.username,
             provider: 'github',
             github: profile._json
           });
-          user.save((err) => {
-            if (err) console.log(err);
-            return done(err, user);
-          });
+          user.save(() => done(err, user));
         } else {
           return done(err, user);
         }
@@ -168,9 +164,9 @@ export default () => {
   // Use google strategy
   passport.use(new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID || config.google.clientID,
+      clientID: process.env.APP_ID || config.google.clientID,
       clientSecret:
-      process.env.GOOGLE_CLIENT_SECRET || config.google.clientSecret,
+      process.env.APP_SECRET || config.google.clientSecret,
       callbackURL: config.google.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {

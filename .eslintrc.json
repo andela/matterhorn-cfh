@@ -5,7 +5,7 @@
     "node": true,
     "es6": true,
     "mocha": true
-  },
+    },
   "rules": {
     "max-len": [1, 80, 2],
     "one-var": 0,

@@ -1,61 +1,61 @@
-/**
- * Module dependencies.
- */
-import mongoose from 'mongoose';
-import should from 'should';
+// /**
+//  * Module dependencies.
+//  */
+// import mongoose from 'mongoose';
+// import should from 'should';
 
-const User = mongoose.model('User');
-const Article = mongoose.model('Article');
+// const User = mongoose.model('User');
+// const Article = mongoose.model('Article');
 
-// Globals
-let user;
-let article;
+// // Globals
+// let user;
+// let article;
 
-// The tests
-describe('<Unit Test>', () => {
-  describe('Model Article:', () => {
-    beforeEach((done) => {
-      user = new User({
-        name: 'Full name',
-        email: 'test@test.com',
-        username: 'user',
-        password: 'password'
-      });
+// // The tests
+// describe('<Unit Test>', () => {
+//   describe('Model Article:', () => {
+//     beforeEach((done) => {
+//       user = new User({
+//         name: 'Full name',
+//         email: 'test@test.com',
+//         username: 'user',
+//         password: 'password'
+//       });
 
-      user.save(() => {
-        article = new Article({
-          title: 'Article Title',
-          content: 'Article Content',
-          user
-        });
+//       user.save(() => {
+//         article = new Article({
+//           title: 'Article Title',
+//           content: 'Article Content',
+//           user
+//         });
 
-        done();
-      });
-    });
+//         done();
+//       });
+//     });
 
-    describe('Method Save', () => {
-      it(
-        'should be able to save whithout problems',
-        done => article.save((err) => {
-          should.not.exist(err);
-          done();
-        })
-      );
+//     describe('Method Save', () => {
+//       it(
+//         'should be able to save whithout problems',
+//         done => article.save((err) => {
+//           should.not.exist(err);
+//           done();
+//         })
+//       );
 
-      it(
-        'should be able to show an error when try to save witout title',
-        (done) => {
-          article.title = '';
-          return article.save((err) => {
-            should.exist(err);
-            done();
-          });
-        }
-      );
-    });
+//       it(
+//         'should be able to show an error when try to save witout title',
+//         (done) => {
+//           article.title = '';
+//           return article.save((err) => {
+//             should.exist(err);
+//             done();
+//           });
+//         }
+//       );
+//     });
 
-    afterEach((done) => {
-      done();
-    });
-  });
-});
+//     afterEach((done) => {
+//       done();
+//     });
+//   });
+// });

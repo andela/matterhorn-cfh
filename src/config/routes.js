@@ -1,6 +1,9 @@
 import passport from 'passport';
-import { signin,
+import {
+  signin,
   signup,
+  sendMail,
+  searchUser,
   checkAvatar,
   signout,
   avatars,
@@ -11,7 +14,9 @@ import { signin,
   login,
   show,
   authCallback,
-  user
+  user,
+  getToken,
+  register
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -19,11 +24,11 @@ import { all, showAnswer, answer } from '../app/controllers/answers';
 import {
   allQuestions,
   showQuestion,
-  question } from '../app/controllers/questions';
+  question
+} from '../app/controllers/questions';
 import { play, render } from '../app/controllers/index';
 
 import app from '../app';
-
 
 export default () => {
   // User Routes
@@ -31,11 +36,14 @@ export default () => {
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
+  app.get('/api/sendmail/:email', sendMail);
+  app.get('/api/search/users/:username', searchUser);
 
   // Setting up the users api
   app.post('/users', create);
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
+  app.post('/api/auth/signup', register);
 
   // Donation Routes
   app.post('/donations', addDonation);
@@ -45,6 +53,7 @@ export default () => {
     failureFlash: 'Invalid email or password.'
   }), session);
 
+  app.get('/users/token', getToken);
   app.get('/users/me', me);
   app.get('/users/:userId', show);
 
@@ -61,7 +70,7 @@ export default () => {
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'
