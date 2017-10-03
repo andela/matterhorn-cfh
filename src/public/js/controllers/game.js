@@ -158,6 +158,17 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
+
+      if ($scope.game.state === 'game ended') {
+        const gameData = { 
+          gameId: $scope.game.gameID,
+          gameOwner: $scope.game.players[0].username,
+          gameWinner: $scope.game.players[game.gameWinner].username,
+          gamePlayers: $scope.game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+      }
+    
     });
     $scope.setToken = () => {
       $http.get('/users/token')

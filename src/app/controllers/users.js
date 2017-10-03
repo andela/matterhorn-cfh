@@ -9,6 +9,7 @@ import validateInput from '../../config/middlewares/validateInput';
 
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
+const Game = mongoose.model('Game');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -34,6 +35,25 @@ export const authCallback = (req, res) => {
     res.redirect('/#!/');
   }
 };
+
+
+export const saveGameData = (req, res) => {
+  const game = new Game();
+
+  game.gameOwner = req.body.gameOwner;
+  game.gameId = req.params.id;
+  game.gameWinner = req.body.gameWinner;
+  game.date = new Date();
+  game.gamePlayers = req.body.gamePlayers;
+
+  game.save((error) => {
+    if (error) {
+      return error;
+    }
+    res.json(game);
+  });
+};
+
 
 /**
  *  Retrieves the token from cookie
