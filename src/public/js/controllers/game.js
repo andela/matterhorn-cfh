@@ -158,7 +158,8 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-
+      
+    // When game ends, send game data to the database
       if ($scope.game.state === 'game ended') {
         const gameData = { 
           gameId: $scope.game.gameID,
