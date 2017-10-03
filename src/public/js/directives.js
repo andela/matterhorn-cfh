@@ -52,7 +52,14 @@ angular.module('mean.directives', [])
         });
       }
     };
-  }).directive('question', function() {
+  }).directive('chat', function() {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/chat.html',
+      link: function(scope, elem, attr) {}
+    };
+  })
+  .directive('question', function() {
     return {
       restrict: 'EA',
       templateUrl: '/views/question.html',

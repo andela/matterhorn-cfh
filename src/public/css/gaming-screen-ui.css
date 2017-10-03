@@ -326,3 +326,35 @@ body {
   width: 65%;
   cursor: pointer;
 }
+
+/* Chat Window */
+.chat-window {
+  background: rgba(29, 42, 49, 0.67);
+  border: 2px solid #fff;
+  border-radius: 5px;
+  bottom: 0;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  width: 300px;
+  z-index: 3;
+}
+
+.chat-window .chat-box {
+  height: 150px;
+}
+
+.chat-window p {
+  background: #fff;
+  text-align: center;
+  font-family: "marker felt";
+  text-transform: uppercase;
+}
+
+.chat-window .text-left {
+  text-align: right;
+  background: none;
+  color: #fff;
+  margin: 0;
+  font-size: 30px;
+}
