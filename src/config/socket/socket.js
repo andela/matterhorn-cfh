@@ -1,8 +1,11 @@
 import consoleStamp from 'console-stamp';
 import mongoose from 'mongoose';
+
 import Game from './game';
 import Player from './player';
+
 import { all } from '../../app/controllers/avatars';
+
 
 const User = mongoose.model('User');
 consoleStamp(console, 'm/dd HH:MM:ss');
@@ -122,6 +125,7 @@ module.exports = (io) => {
           game.assignPlayerColors();
           game.assignGuestNames();
           game.sendUpdate();
+          // socket.broadcast.to('game').emit('message', 'nice game');
           game.sendNotification(`${player.username} has joined the game!`);
           if (game.players.length >= game.playerMaxLimit) {
             gamesNeedingPlayers.shift();
@@ -129,7 +133,7 @@ module.exports = (io) => {
             // game.prepareGame();
           }
         } else {
-          game.sendNotification('Players cannot be more thsn 12!');
+          game.sendNotification('Players cannot be more than 12!');
           // TODO: Send an error message back to this user saying the game has already started
         }
       } else {
@@ -200,6 +204,7 @@ module.exports = (io) => {
       socket.leave(socket.gameID);
     };
 
+
     socket.on('joinNewGame', (data) => {
       exitGame(socket);
       joinGame(socket, data);
@@ -220,6 +225,12 @@ module.exports = (io) => {
           thisGame.sendNotification('The game has begun!');
         }
       }
+    });
+
+    socket.on('newChat', () => {
+      const thisGame = allGames[socket.gameID];
+
+      thisGame.sendChat();
     });
 
     socket.on('leaveGame', () => {

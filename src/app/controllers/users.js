@@ -7,11 +7,14 @@ import bcrypt from 'bcrypt';
 import { all } from './avatars';
 import validateInput from '../../config/middlewares/validateInput';
 
+
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
+
+
 const avatarsAll = all();
 
 const helper = require('sendgrid').mail;
@@ -33,6 +36,20 @@ export const authCallback = (req, res) => {
     res.cookie('token', token);
     res.redirect('/#!/');
   }
+};
+
+
+export const chatMessage = (req, res) => {
+  const firebaseRef = firebase.database().ref();
+  firebaseRef.child(`chat/${req.body.gameId}`).push(req.body);
+};
+
+
+export const getChatMessage = (req, res) => {
+  const messages = firebase.database().ref(`chat/${req.params.gameId}`);
+  messages.on('value', (snapshot) => {
+    res.send([snapshot.val()][0]);
+  });
 };
 
 /**

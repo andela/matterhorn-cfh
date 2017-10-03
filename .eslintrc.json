@@ -4,7 +4,8 @@
   "env": {
     "node": true,
     "es6": true,
-    "mocha": true
+    "mocha": true,
+    "jquery": true
     },
   "rules": {
     "max-len": [1, 80, 2],
