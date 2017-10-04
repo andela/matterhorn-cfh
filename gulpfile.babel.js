@@ -88,7 +88,7 @@ gulp.task('move_svg', () =>
     .pipe(gulp.dest('./build/public/svg')));
 
 
-gulp.task('babel', ['lint'], () => {
+gulp.task('babel', () => {
   gulp
     .src(paths.allJs)
     .pipe(babel())
