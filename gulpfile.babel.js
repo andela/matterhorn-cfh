@@ -5,6 +5,7 @@ import gulpSequence from 'gulp-sequence';
 import nodemon from 'nodemon';
 import mocha from 'gulp-mocha';
 import bower from 'gulp-bower';
+import eslint from 'gulp-eslint';
 import gulpRimraf from 'gulp-rimraf';
 
 import dotEnv from 'dotenv';
@@ -20,7 +21,7 @@ const paths = {
   js: ['src/public/js/**', 'src/app/**/*.js'],
   images: 'src/public/img/**/*',
   html: 'src/public/views/**',
-  serverTests: ['./src/tests/server/**/**.js'],
+  serverTests: ['build/test/server/**/**.js'],
   css: 'src/public/css/**.css',
   sass: 'src/public/css/**.scss',
   entry: 'src/server.js',
@@ -34,7 +35,7 @@ const paths = {
     'src/public/js'
   ],
   watch: '',
-  clientTests: 'build/test/**/*.js',
+  clientTests: 'build/test/client/**/*.js',
   configJson: './src/config/**/**.json',
   lib: './src/public/lib/**'
 };
@@ -80,7 +81,7 @@ gulp.task('move_json', () =>
     .src(paths.configJson)
     .pipe(gulp.dest('./build/config')));
 
-gulp.task('babel', () => {
+gulp.task('babel', ['lint'], () => {
   gulp
     .src(paths.allJs)
     .pipe(babel())
@@ -94,13 +95,21 @@ gulp.task('sass', () => {
 });
 
 gulp.task('test', () =>
-  gulp.src(paths.clientTests, { read: false })
+  gulp.src(paths.serverTests, { read: false })
     .pipe(mocha({
       reporter: 'spec'
     })));
 
 gulp.task('bower', () => bower()
   .pipe(gulp.dest('./src/public/lib')));
+
+gulp.task('lint', () => {
+  gulp.src(paths.allJs)
+    .pipe(eslint({ config: '.eslintrc.json' }))
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
+});
+
 
 gulp.task('remove_bower_components', () => {
   gulp.src('./bower_components')
@@ -118,7 +127,6 @@ gulp.task('nodemon', ['transpile'], () => {
   });
 });
 
-
 gulp
   .task(
     'build',
@@ -131,7 +139,7 @@ gulp
     )
   );
 
-gulp.task('build:dev', ['build'], () => {
+gulp.task('build:dev', ['build', 'lint'], () => {
   gulp.watch(['src/**', '!src/public/lib/**'], ['babel']);
   gulp.watch([paths.configJson], ['move_json']);
   gulp.watch([paths.jade], ['move_jade']);

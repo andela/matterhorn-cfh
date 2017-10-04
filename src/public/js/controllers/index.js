@@ -1,5 +1,12 @@
 angular.module('mean.system')
-.controller('IndexController', ['$scope', 'Global', '$location', '$http', '$window','socket', 'game',  'AvatarService', function ($scope,Global,$location, $http, $window, socket,  game, AvatarService) {
+.controller('IndexController', ['$scope', 'Global', '$cookieStore', '$cookies', '$location', '$http', '$window','socket', 'game',  'AvatarService', function ($scope,Global, $cookieStore, $cookies, $location, $http, $window, socket,  game, AvatarService) {
+
+    $scope.checkAuth = () => {
+          if ($cookies.token) {
+          $window.localStorage.setItem('token', $cookies.token);
+        }
+    };
+    $scope.checkAuth();
     $scope.global = Global;
     $scope.formData = {};
 
@@ -15,7 +22,6 @@ angular.module('mean.system')
         return false;
       }
     }
-
     $scope.signIn = () => {
        $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
@@ -30,9 +36,17 @@ angular.module('mean.system')
              $scope.showMessage = "Wrong email and/or password";
       });
     }
-    
+
     $scope.signOut = () => {
+      $http.get('/logout')
+      .success(() => {
+       $window.location.href = '/';
+     }) 
+      angular.forEach($cookies, function (v, k) {
+        $cookieStore.remove(k);
+    });
       $window.localStorage.removeItem("token");
+      // $cookieStore.remove('token');
       $window.location.href = '/';
     }
 
@@ -41,6 +55,4 @@ angular.module('mean.system')
       .then(function(data) {
         $scope.avatars = data;
       });
-
-
 }]);

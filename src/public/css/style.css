@@ -882,6 +882,10 @@
    margin: 0;
  }
 
+ .error-message {
+  color: red;
+ }
+
  /**** Contact Us ****/
  .wpb-contact-us {
    min-height: 540px;

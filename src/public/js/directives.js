@@ -69,11 +69,11 @@ angular.module('mean.directives', [])
     return {
       restrict: 'EA',
       link: function(scope, elem, attr) {
-        
-        if( window.localStorage.token) {
+        scope.showOptions = true;
+
+        if ( window.localStorage.token) {
           scope.showOptions = false
-        }
-        else{
+        } else {
           scope.showOptions = true;
         }
       }
