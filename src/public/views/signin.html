@@ -4,8 +4,8 @@
   <div class="row main-wrapper">
    <!-- Sidebar with social signup options and login options-->
     <div class="col s12 m4 l3 sidebar-social">
-     <h5>SIGN IN WITH</h5>
       <div class="divider"></div>
+     <h5>SIGN IN WITH</h5>
       <div class="row">
         <div class="col s6 m6 l12">
       <a href="/auth/google" class="waves-effect waves-light btn-large social google">
@@ -29,8 +29,14 @@
       <div class="divider"></div>
       <p>Don't have an account?</p>
       <div>
-        <a class="waves-effect waves-light btn-large social github">
-         SIGN UP</a>
+          <div class="col s6 m6 l12">
+              <a class="waves-effect waves-light btn-large social github" href="#!/signup">
+              SIGN UP
+              </a>
+             </div>
+            <div class="col s6 m6 l12">
+              <a href="/" class="waves-effect waves-light btn-large">HOME</a>
+            </div>
       </div>
 
     </div>
@@ -41,8 +47,7 @@
     </div>
      <!-- End of image between the two sidebars-->
      <!-- Start of signup with email option -->
-    <div class="col s12 m8 l9 sidebar-content">
-      <div>HOME</div>
+    <div class="col s12 m8 l9 sidebar-content"> 
       <div class="col m10 offset-m1 s12">
         <div class="welcome-text center-align">Ready to do some good?</div>
         <div class="welcome-text2 center-align">Sign in & Let's Play!</div>
@@ -50,8 +55,8 @@
             <div class="sign-error" ng-show="showError() === 'invalid'">
                 Please check your username/password and try again.
               </div>
-              <div class="sign-error">{{ showMessage }}</div>
-            <form class="col s12" class="signup form-horizontal" action="/users" method="post">
+              <div class="sign-error red-text">{{ showMessage }}</div>
+            <form class="col s12" class="signup form-horizontal">
               <div class="row">
                 <div class="row">
                     <div class="input-field col s12">
@@ -64,17 +69,17 @@
                 <div class="input-field col s12">
                   <i class="material-icons prefix">vpn_key</i>
                   <input id="password" type="password" class="validate" ng-model="formData.password" name="password" required novalidate>
-                  <span class="red-eye"><i class="material-icons prefix">remove_red_eye</i></span>
                   <label for="password">Password</label>
                 </div>
               </div>
-
+              
               <div class="center-align">
-                <button id="sign-up-btn-other" class="btn waves-effect waves-light " type="submit" name="action" ng-click="signIn()">LOGIN
+                <button id="sign-up-btn-other" class="btn waves-effect waves-light btn-large" type="submit" name="action" ng-click="signIn()">LOGIN
                   <i class="material-icons right">send</i>
                 </button>
               </div>
             </form>
+           
           </div>
         <!-- End of signup with email option -->
     </div>

@@ -34,4 +34,8 @@ angular.module('mean.system')
           }
           );
       }
+
+      $scope.togglePassword = () => {
+        $scope.typePassword = !$scope.typePassword;
+      }
     }]);

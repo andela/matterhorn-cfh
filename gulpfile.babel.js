@@ -81,7 +81,7 @@ gulp.task('move_json', () =>
     .src(paths.configJson)
     .pipe(gulp.dest('./build/config')));
 
-gulp.task('babel', ['lint'], () => {
+gulp.task('babel', () => {
   gulp
     .src(paths.allJs)
     .pipe(babel())
