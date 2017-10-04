@@ -76,9 +76,6 @@ angular.module('mean.directives', [])
         else{
           scope.showOptions = true;
         }
-        // if (scope.$$childHead.global.authenticated === true) {
-        //   scope.showOptions = false;
-        // }
       }
     };
   });
