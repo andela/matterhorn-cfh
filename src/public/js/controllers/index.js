@@ -1,5 +1,12 @@
 angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', '$cookieStore', '$cookies', '$location', '$http', '$window','socket', 'game',  'AvatarService', function ($scope,Global, $cookieStore, $cookies, $location, $http, $window, socket,  game, AvatarService) {
+
+    $scope.checkAuth = () => {
+          if ($cookies.token) {
+          $window.localStorage.setItem('token', $cookies.token);
+        }
+    };
+    $scope.checkAuth();
     $scope.global = Global;
     $scope.formData = {};
 
@@ -15,7 +22,6 @@ angular.module('mean.system')
         return false;
       }
     }
-
     $scope.signIn = () => {
        $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {

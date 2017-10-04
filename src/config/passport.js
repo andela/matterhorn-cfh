@@ -8,6 +8,8 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import config from './config';
 
+/* eslint-disable no-underscore-dangle */
+
 const User = mongoose.model('User');
 
 dotenv.load();

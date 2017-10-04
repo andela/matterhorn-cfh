@@ -31,7 +31,7 @@ export const authCallback = (req, res) => {
       { expiresIn: 72 * 60 * 60 }
     );
     res.cookie('token', token);
-    res.redirect('/#!/app');
+    res.redirect('/#!/');
   }
 };
 
@@ -320,7 +320,7 @@ export const login = (req, res) => {
 /**
  * Assign avatar to user
  */
-
+/* eslint-disable no-plusplus */
 export const avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user.id && req.body.avatar !== undefined &&

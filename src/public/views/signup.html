@@ -21,24 +21,25 @@
       </div>
     </div>
   </div>
-<!-- Fixed Logo & Menu Bar End -->
+  <!-- Fixed Logo & Menu Bar End -->
 
-<!-- Landing Start -->
-<div class="wpb-teaser parallax-background" id="homer">
-  <div class="background-opacity"></div>
-  <div class="modified-container">
-    <div class="row" id="main-text">
-    <!-- Teaser Text Start -->
-    <div id="landing-logo"> 
-      <h2 id="slogan">Sign Up with:</h2>
-      <div id="login-buttons">
-        <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
-        <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
-        <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
-        <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
-      </div>
-      <p id="create">Or create a username/password and select an avatar:</p>
+  <!-- Landing Start -->
+  <div class="wpb-teaser parallax-background" id="homer">
+    <div class="background-opacity"></div>
+    <div class="modified-container">
+      <div class="row" id="main-text">
+        <!-- Teaser Text Start -->
+        <div id="landing-logo">
+          <h2 id="slogan">Sign Up with:</h2>
+          <div id="login-buttons">
+            <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
+            <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
+            <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
+            <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
+          </div>
+          <p id="create">Or create a username/password and select an avatar:</p>
 
+<<<<<<< HEAD
       <div class="sign-body" ng-controller="authController">
         <div class="more-sign">
           <form class="signup form-horizontal">
@@ -72,12 +73,47 @@
             </div>
             <div class="form-actions">
               <button id="sign-up-btn-other" type='submit' ng-click=signUp()>Sign Up</button>
+=======
+          <div class="sign-body" ng-controller="authController">
+            <div class="more-sign">
+              <form class="signup form-horizontal">
+                <p class="error-message">{{errorMessage}}</p>
+                <div class="control-group">
+                  <label for="name" class="control-label"></label>
+                  <div class="controls">
+                    <input class="input-info" id="name" type="text" name="name" placeholder="Full name" ng-model="name" />
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label for="email" class="control-label"></label>
+                  <div class="controls">
+                    <input class="input-info" id="email" name="email" placeholder="Email" ng-model="email" />
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label for="password" class="control-label"></label>
+                  <div class="controls">
+                    <input class="input-info" id="password" type="password" name="password" placeholder="Password" ng-model="password" />
+                  </div>
+                </div>
+                <div id="contain-avatars">
+                  <ul ng-controller="IndexController" class="avatar-list">
+                    <li ng-repeat="avatar in avatars" class="avatars ng-scope">
+                      <input name="avatar" type='radio' value="{{$index}}">
+                      <img ng-src="{{avatar}}">
+                      </input>
+                    </li>
+                  </ul>
+                </div>
+                <div class="form-actions">
+                  <button id="sign-up-btn-other" type='submit' ng-click=signUp()>Sign Up</button>
+                </div>
+              </form>
+>>>>>>> 0037fd08130100104e00f84c48361abb241f6371
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
     </div>
   </div>
 </div>

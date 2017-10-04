@@ -59,9 +59,8 @@ export default () => {
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: ['email'],
-    failureRedirect: '/signin'
-  }), signin);
+    scope: ['email']
+  }));
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
@@ -79,7 +78,7 @@ export default () => {
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/signin'
@@ -92,7 +91,7 @@ export default () => {
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'

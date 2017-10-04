@@ -8,6 +8,10 @@ build/
 bower_components
 public/lib
 matterhorn-cfh-staging
+<<<<<<< HEAD
 .nyc-output
+=======
+.nyc_output
+>>>>>>> 0037fd08130100104e00f84c48361abb241f6371
 build
 coverage
