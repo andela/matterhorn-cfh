@@ -5,18 +5,18 @@
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
     <div class="row" id="startGame" ng-show="game.state === 'awaiting players'">
-      <div class="col-md-12 text-center finding-players">Finding Players</div>
-      <div class="col-md-4" id="player-count-container">
+      <div class="col m12 center-align finding-players">Finding Players</div>
+      <div class="col m4" id="player-count-container">
         <div id="player-count">{{game.players.length}} / 12 </div>
         <div id="the-word-players"> Players </div>
       </div>
-      <div class="col-md-4" id="loading-container">
-        <div class="text-center" id="loading-gif"><img ng-src="../img/loader.gif" /></div>
+      <div class="col m4" id="loading-container">
+        <div class="center-align" id="loading-gif"><img ng-src="../img/loader.gif" /></div>
       </div>
       <!-- start Game conditionally -->
-      <div class="col-md-4 text-right" id="start-game-container" ng-click="startGame()">
+      <div class="col m4 right-align" id="start-game-container" ng-click="startGame()">
         <div class="start-game-button btn btn-large btn-success">
-          Start Game  
+          Start Game
         </div>
       </div>
     </div>

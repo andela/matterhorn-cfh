@@ -1,31 +1,33 @@
-<div  class="col-md-8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
-  <div class='row'>
-    <div class="cards" class='hand'>
+<div class='row'>
+  <div  class="col offset-l2 offset-m2 l8 m8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
+    <div class='row'>
+      <div class="cards" class='hand'>
 
-      <span ng-show="winnerPicked()"></span>
+        <span ng-show="winnerPicked()"></span>
 
-      <div ng-style="{'cursor':'pointer'}" class="col-md-2 col-xs-12 game-card" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
-      ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
-          <span ng-bind-html-unsafe="card.text"></span>
-          <span id='selection-number' ng-show="showFirst(card)"> 1 </span>
-          <span id='selection-number' ng-show="showSecond(card)"> 2 </span>
+        <div ng-style="{'cursor':'pointer'}" class="col l2 m2 s12 game-card" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
+        ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
+            <span ng-bind-html-unsafe="card.text"></span>
+            <span id='selection-number' ng-show="showFirst(card)"> 1 </span>
+            <span id='selection-number' ng-show="showSecond(card)"> 2 </span>
+        </div>
+
+        <span ng-repeat="answer in game.table">
+            <div class="game-card col l2 m2 s12" ng-style="pointerCursorStyle()" id='table' ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
+            ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
+                <span ng-bind-html-unsafe="card.text"></span>
+                <span id='selection-number' ng-show="firstAnswer($index)"> 1 </span>
+                <span id='selection-number' ng-show="secondAnswer($index)"> 2 </span>
+            </div>
+        </span>
+
       </div>
-
-      <span ng-repeat="answer in game.table">
-          <div class="game-card" ng-style="pointerCursorStyle()" id='table' ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
-          ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
-              <span ng-bind-html-unsafe="card.text"></span>
-              <span id='selection-number' ng-show="firstAnswer($index)"> 1 </span>
-              <span id='selection-number' ng-show="secondAnswer($index)"> 2 </span>
-          </div>
-      </span>
-
     </div>
   </div>
 </div>
 
 <div class="row" id="info-container" ng-show="game.state === 'awaiting players'">
-  <div class="col-md-offset-2 col-md-8 col-xs-12" id="inner-info">
+  <div class="col offset-m2 offset-l2 l8 m8 s12" id="inner-info">
     <div class="lead lobby-how-to-play">HOW TO PLAY</div>
     <ol class="oh-el">
       <li>1. Each player begins with, and will always have, 10 white answer cards.</li>
@@ -39,27 +41,27 @@
 
 <div class="row">
   <br>
-  <div id="game-end-container" class="col-md-offset-2 col-md-8" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
+  <div id="game-end-container" class="col s12 offset-m2 m8 offset-l2 l8" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
     <div id="inner-info-exit">
-      <div class="game-end-answer-text text-center" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
+      <div class="game-end-answer-text center-align" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
         <h2>What would you like to do now?</h2>
         You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely crown on your avatar's head.
       </div>
-      <div class="game-end-answer-text text-center" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
+      <div class="game-end-answer-text center-align" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
         <h2>What would you like to do now?</h2>
         Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
       </div>
     </div>
-    <a class="join-new-game col-md-4" href='/#!/app'>
+    <a class="join-new-game col m4 l4 s12" href='/#!/app'>
       <div id="join-new-game" ng-click="game.joinGame('joinNewGame')">
         Join a New Game
       </div></a>
-    <a class="exit-match col-md-4" href='/'>
+    <a class="exit-match col m4 l4 s12" href='/'>
       <div id="exit-match">
       Return to Lobby
       </div>
     </a>
-    <div id="charity-widget-container" class="col-md-4">
+    <div id="charity-widget-container" class="m4 l4 s12">
         <!-- This is real -->
         <a href="http://www.crowdrise.com" id="crowdriseStaticLink-fundraiser-121142" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a>
         <script type="text/javascript" src="https://www.crowdrise.com/widgets/donate/fundraiser/121142/?callback=userDonationCb"></script>
@@ -70,7 +72,7 @@
   </div>
 </div>
 
-<div id="czar-blank-container"  ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+<div class="col offset-l2 l8 m8" id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
   <div id="czar-blank-inner">
     You are the Card Czar. <br>
     <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
@@ -90,7 +92,7 @@
 </div>
 <div class='row game-players-container'>
   <br>
-  <div class='col-md-offset-3 col-md-8'>
+  <div class='col offset-m3 m8 offset-l3 l8'>
     <player></player>
   </div>
 </div>

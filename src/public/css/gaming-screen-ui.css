@@ -49,8 +49,12 @@ body {
 
 .question-container-outer {
   background: rgba(29, 42, 49, 0.67);
-  padding: 20px 0 130px 30px;
+  padding: 20px 0 130px 30px !important;
   color: #fff;
+}
+
+col.l8.m8.s12.question-container-outer {
+  margin-bottom: 10px;
 }
 
 .longBlacks span {
