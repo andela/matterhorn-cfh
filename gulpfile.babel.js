@@ -82,15 +82,12 @@ gulp.task('move_json', () =>
     .src(paths.configJson)
     .pipe(gulp.dest('./build/config')));
 
-<<<<<<< HEAD
 gulp.task('move_svg', () =>
   gulp
     .src(paths.svg)
     .pipe(gulp.dest('./build/public/svg')));
 
 
-=======
->>>>>>> 0037fd08130100104e00f84c48361abb241f6371
 gulp.task('babel', ['lint'], () => {
   gulp
     .src(paths.allJs)
