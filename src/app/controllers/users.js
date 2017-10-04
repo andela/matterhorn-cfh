@@ -320,7 +320,7 @@ export const login = (req, res) => {
 /**
  * Assign avatar to user
  */
-
+/* eslint-disable no-plusplus */
 export const avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user.id && req.body.avatar !== undefined &&
