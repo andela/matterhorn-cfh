@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 const validatePresenceOf = value => value && value.length;
