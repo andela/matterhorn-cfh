@@ -52,6 +52,7 @@ export const isLoggedIn = (req, res, next) => {
   } else {
     token = tokenAvailable;
   }
+
   if (token) {
     jwt.verify(token, key, (error) => {
       if (error) {
@@ -102,7 +103,6 @@ export const getToken = (req, res) => {
     cookie
   });
 };
-
 
 /**
  * Show login form

@@ -15,6 +15,24 @@ angular.module('mean.system')
       $location.path('/app');
     }
 
+    $scope.getStarted = () => {
+        swal({
+          title: "Are you sure??",
+          text: "Clicking the Start button will start a new game session",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Go back',
+          confirmButtonText: 'Start Game'
+        })
+          .then((willPlay) => {
+            if (willPlay) {
+              window.location.href = '/play';
+            }
+          })
+          .catch(() => swal("Game was not started"))
+      }
+
     $scope.showError = () => {
       if ($location.search().error) {
         return $location.search().error;
