@@ -5,6 +5,7 @@ import gulpSequence from 'gulp-sequence';
 import nodemon from 'nodemon';
 import mocha from 'gulp-mocha';
 import bower from 'gulp-bower';
+import eslint from 'gulp-eslint';
 import gulpRimraf from 'gulp-rimraf';
 
 import dotEnv from 'dotenv';
@@ -87,7 +88,7 @@ gulp.task('move_svg', () =>
     .pipe(gulp.dest('./build/public/svg')));
 
 
-gulp.task('babel', () => {
+gulp.task('babel', ['lint'], () => {
   gulp
     .src(paths.allJs)
     .pipe(babel())
@@ -109,6 +110,14 @@ gulp.task('test', () =>
 gulp.task('bower', () => bower()
   .pipe(gulp.dest('./src/public/lib')));
 
+gulp.task('lint', () => {
+  gulp.src(paths.allJs)
+    .pipe(eslint({ config: '.eslintrc.json' }))
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
+});
+
+
 gulp.task('remove_bower_components', () => {
   gulp.src('./bower_components')
     .pipe(gulpRimraf({ force: true }));
@@ -125,7 +134,6 @@ gulp.task('nodemon', ['transpile'], () => {
   });
 });
 
-
 gulp
   .task(
     'build',
@@ -138,7 +146,7 @@ gulp
     )
   );
 
-gulp.task('build:dev', ['build'], () => {
+gulp.task('build:dev', ['build', 'lint'], () => {
   gulp.watch(['src/**', '!src/public/lib/**'], ['babel']);
   gulp.watch([paths.configJson], ['move_json']);
   gulp.watch([paths.jade], ['move_jade']);
