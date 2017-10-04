@@ -8,7 +8,7 @@ $mq-desktop: 1100px !default;
 $mq-custom-wide : 1200px !default;
 
 $color-background: #fff;
-
+$color-bg: #252525;
 @mixin gradient-bg {
 /* IE10 Consumer Preview */
 background-image: -ms-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
@@ -129,7 +129,7 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
     }
 }
 
-@mixin br{
+@mixin br {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
@@ -208,7 +208,7 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
     border-bottom-left-radius: 8px;
     text-indent: 0;
     display: inline-block;
-    color: #252525;
+    color: $color-bg;
     font-size: 39px;
     font-weight: bold;
     font-style: normal;
@@ -277,7 +277,7 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
     color: #4e4e4e;
 }
 
-@mixin soft-button{
+@mixin soft-button {
     text-align: center;
     position: relative;
     font-weight: bold;
@@ -306,7 +306,7 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
 
     border-radius: 8px;
 
-    color: #252525;
+    color: $color-bg;
     font-family: Arial;
     font-size: 20px;
     font-weight: bold;
@@ -331,13 +331,13 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
     }
 
     &.black {
-        background: #252525;
+        background: $color-bg;
         border-color: white;
         color: white;
     }
 
     &.longBlack {
-        background: #252525;
+        background: $color-bg;
         border-color: white;
         color: white;
         height: 100%;
@@ -383,11 +383,11 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
     }
 }
 
-html, body, .main-container, .cont, #first-section, #inner-container{
+html, body, .main-container, .cont, #first-section, #inner-container {
     height: 100%;
 }
 
-html{
+html {
     background-image: -ms-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
     /* Mozilla Firefox */
     background-image: -moz-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
@@ -403,12 +403,12 @@ html{
     background-repeat: no-repeat;  
     position: relative;
 
-    @include mobile-only{
+    @include mobile-only {
         //margin: 3px;
         margin-top: 0px;
     }
 }
-body{
+body {
     font-family: $main-font;
     background: transparent;
     margin: 0px;
@@ -433,7 +433,7 @@ body{
 }
 
 
-#main-container{
+#main-container { 
     height: 100%;
     #app-container {
         height: 100%;
@@ -441,22 +441,22 @@ body{
         margin: 0px auto;
         position: relative;
 
-        #menu-container{
+        #menu-container {
             width: 100%;
             -webkit-border-radius: 8px;
             -moz-border-radius: 8px;
             border-radius: 8px;
-            background: #252525;
+            background: $color-bg;
             margin-bottom: 10px;
             margin-top: 5px;
             padding: 5px;
 
-            @include mobile-only{
+            @include mobile-only {
                 margin-bottom: 1px;
                 margin-top: 0px;
             }
 
-            #logo{
+            #logo {
                 display: inline-block;
                 margin-left: 10px;
                 font-size: 28px;
@@ -466,20 +466,20 @@ body{
                     font-size: 20px;
                 }
 
-                #first-word{
+                #first-word {
                     color: #7CE4E8;
                 }
 
-                #second-word{
+                #second-word {
                     color: #FFFFA5;
                 }
 
-                #third-word{
+                #third-word { 
                     color: #FC575E;
                 }
             }
 
-            #abandon-game-button{
+            #abandon-game-button {
                 display: inline-block;
                 float:right;
                 border-radius: 8px;
@@ -507,11 +507,11 @@ body{
                 }
             }
 
-            #abandon-game-button:hover{
+            #abandon-game-button:hover {
                background:#F34444;
             }
 
-            #tweet-container{
+            #tweet-container {
                 float: right;
                 padding-top: 10px;
                 width: 77px;
@@ -525,12 +525,12 @@ body{
                     margin-right: 11px;
                 }
 
-                .hcount .count-o{
+                .hcount .count-o {
                     display: none !important;
                     width: 0 !important;
                 }
 
-                .count-0{
+                .count-0 {
                     width: 0 !important;
                 }
 
@@ -541,14 +541,14 @@ body{
             }
         }
 
-        #social-bar-container{
+        #social-bar-container {
             width: 20%;
             height: 63%;
             position: absolute;
             right: 0;
             top: 60px;
 
-            @include mobile-only{
+            @include mobile-only {
                 top: auto;
                 width: 100%;
                 height: 50px;
@@ -558,7 +558,7 @@ body{
                 // background: white;
             }
 
-            #player-container{
+            #player-container {
                 height: 13.166667%;
                 position: relative;
                 padding-top: 4%;
@@ -578,11 +578,11 @@ body{
                     padding-bottom: 0;
                 }
 
-                #above-czar-container{
+                #above-czar-container {
                     height: 65%;
                     width: 100%;
 
-                    @include mobile-only{
+                    @include mobile-only {
                         height: 100%;
                     }
 
@@ -621,13 +621,13 @@ body{
                             min-width: 40px;
                             min-height: 40px;
 
-                            @include tablet-portrait-only{
+                            @include tablet-portrait-only {
                                 width: 100%;
                                 height: 100%;
                                 margin-left: 3px;
                             }
 
-                            @include mobile-only{
+                            @include mobile-only {
                                 height: 69%;
                                 width: 100%;
                                 min-height: 0;
@@ -636,7 +636,7 @@ body{
                             }
                         }
                     }
-                    #player-container-inner{
+                    #player-container-inner {
                         float: left;
                         position: relative;
                         bottom: 8px;
@@ -644,7 +644,7 @@ body{
                         max-width: 62%;
                         overflow: hidden;
 
-                        @include tablet-portrait-only{
+                        @include tablet-portrait-only {
                             left: 3px;
                         }
 
@@ -655,7 +655,7 @@ body{
                             width: 60%;
                         }
 
-                        #player-name{
+                        #player-name {
 
                             h4{
                                 font-family: 'Lobster', cursive;
@@ -676,7 +676,7 @@ body{
                             }
                         }
 
-                        #player-score{
+                        #player-score {
                             float: left;
 
                             h2{
@@ -696,12 +696,12 @@ body{
                             }
                         }
 
-                        #player-star{
+                        #player-star {
                         float: left;
                         margin-top: 3px;
                         margin-left: 10px;
 
-                        @include tablet-portrait-only{
+                        @include tablet-portrait-only {
                             margin-top: 1px;
                             margin-left: 5px;
                         }
@@ -713,7 +713,7 @@ body{
                             img {
                                 width: 22px;
 
-                                @include tablet-portrait-only{
+                                @include tablet-portrait-only {
                                     width: 18px;
                                 }
                             }
@@ -730,16 +730,16 @@ body{
                     background: black;
                     opacity:0.4;
 
-                    @include mobile-only{
+                    @include mobile-only {
                         overflow: auto;
                     }
 
-                    #the-czar{
+                    #the-czar {
                         color: #fff;
                         font-weight: bold;
                         font-size: 20px;
 
-                        @include mobile-only{
+                        @include mobile-only {
                             display: none;
                         }
                     }
@@ -747,11 +747,11 @@ body{
             }
         }
 
-        #gameplay-container{
+        #gameplay-container {
             height: 100%;
             width: 80%;
 
-            @include mobile-only{
+            @include mobile-only {
                 width: 100%;
                 height: 91%;
             }
@@ -762,34 +762,34 @@ body{
                 min-height: 220px;
                 max-height: 220px;
 
-                @include mobile-only{
+                @include mobile-only {
                     min-height: 140px;
                     max-height: 140px;
 
                 }
 
-                @include tablet-portrait-only{
+                @include tablet-portrait-only {
                     height: 16%;
                     min-height: 180px;
                     max-height: 180px;
                 }
 
-                #menu-timeremaining-container{
+                #menu-timeremaining-container {
                     float: left;
                     width: 19%;
                     height: 100%;
                     margin-right: 2%;
 
-                    @include tablet-portrait-only{
+                    @include tablet-portrait-only {
                         width: 21%;
                     }
 
-                    @include mobile-only{
+                    @include mobile-only {
                         width: 27%;
                         margin-right: 1%;
                     }
 
-                    #menu-container{
+                    #menu-container {
                         display: none;
                         @include soft-button;
                         height: 20%;
@@ -797,7 +797,7 @@ body{
                         line-height: 20%;
                         @include br;
 
-                        #menu-button{
+                        #menu-button {
                             position: absolute;
                             top: 50%;
                             left: 0;
@@ -808,7 +808,7 @@ body{
                     #timer-container {
                         height: 100%;
 
-                        #inner-timer-container{
+                        #inner-timer-container {
                             text-align: center;
                             @include soft-button;
                             background: #FFF;
@@ -820,7 +820,7 @@ body{
                             height: 100%;
                             color: #000;
 
-                            #timer-status-round, #timer-status-czar-choosing{
+                            #timer-status-round, #timer-status-czar-choosing {
                                 position: absolute;
                                 left: 0;
                                 right: 0;
@@ -828,16 +828,16 @@ body{
                                 padding-bottom: 8px;
                                 bottom: 0;
 
-                                @include tablet-landscape-and-below{
+                                @include tablet-landscape-and-below {
                                     font-size: 13px;
                                 }
 
-                                @include mobile-only{
+                                @include mobile-only {
                                     font-size: 12px;
                                 }
                             }
 
-                            #time{
+                            #time {
                                 font-family: 'Lobster', cursive;
                                 font-size: 110px;
                                 position: absolute;
@@ -845,11 +845,11 @@ body{
                                 left: 0;
                                 right: 0;
 
-                                @include tablet-landscape-and-below{
+                                @include tablet-landscape-and-below {
                                     font-size: 90px;
                                 }
 
-                                @include mobile-only{
+                                @include mobile-only {
                                     font-size: 73px;
                                 }
                             }
@@ -862,18 +862,18 @@ body{
                     float: left;
                     width: 79%;
 
-                    @include tablet-portrait-only{
+                    @include tablet-portrait-only {
                         width: 77%;
                         float: right;
                     }
 
-                    @include mobile-only{
+                    @include mobile-only {
                         float: left;
                         width: 71%;
                         margin-left: 1%;
                     }
 
-                    #question-container-inner{
+                    #question-container-inner {
                         width: 100%;
                         height: 100%;
                         .card{
@@ -888,7 +888,7 @@ body{
                                 padding: 10px;
                             }
 
-                            #startGame{
+                            #startGame {
                                 width: 100%;
                                 overflow: hidden;
                                 height: 100%;
@@ -900,43 +900,43 @@ body{
                                     text-align: center;
                                     margin-top: 15px;
 
-                                    @include mobile-only{
+                                    @include mobile-only {
                                         font-size: 21px;
                                         margin-top: 0;
                                     }
                                 }
 
-                                #player-count-container, #loading-container, #start-game-container{
+                                #player-count-container, #loading-container, #start-game-container {
                                     width: 33.333%;
                                     float: left;
                                     text-align: center;
                                 }
 
-                                #player-count-container{
+                                #player-count-container {
                                     #player-count{
                                         font-size: 33px;
 
-                                        @include mobile-only{
+                                        @include mobile-only {
                                             font-size: 21px;
                                         }
                                     }
-                                    #the-word-players{
+                                    #the-word-players {
                                         font-size: 17px;
                                     }
                                 }
 
-                                #loading-gif{
+                                #loading-gif {
                                     margin: 20px;
 
-                                    @include mobile-only{
+                                    @include mobile-only {
                                         margin-top: 5px;
                                     }
                                 }
 
-                                #start-game-container{
+                                #start-game-container {
                                     color: #333;
 
-                                    #start-game-button{
+                                    #start-game-button {
                                         border-radius: 8px;
                                         -moz-border-radius: 5px;
                                         -webkit-border-radius: 5px;
@@ -950,36 +950,36 @@ body{
                                         width: 65%;
                                         cursor: pointer;
 
-                                        @include tablet-portrait-only{
+                                        @include tablet-portrait-only {
                                             padding: 0.65em 2px;
                                             font-size: 1.1rem;
                                         }
 
-                                        @include mobile-only{
+                                        @include mobile-only {
                                             padding: 0.65em 1px;
                                             font-size: 1rem;
                                         }
                                     }
 
-                                    #start-game-button:hover{
+                                    #start-game-button:hover {
                                        background:#41C2CA;
                                     }
                                 }
                             }
 
-                            #game-end-info{
+                            #game-end-info {
                                 text-align: center;
                                 font-size: 16px;
 
-                                @include mobile-only{
+                                @include mobile-only {
                                     font-size: 13px;
                                 }
 
-                                .game-end-headline{
+                                .game-end-headline {
                                     font-size: 24px;
                                     margin-bottom: 10px;
 
-                                    @include mobile-only{
+                                    @include mobile-only {
                                         font-size: 18px;
                                     }
                                 }
@@ -989,9 +989,9 @@ body{
                     }
                 }
             }
-            #info-container{
+            #info-container {
                 width: 100%;
-                background: #252525;
+                background: $color-bg;
                 color: white;
                 @include br;
                 text-align: center;
@@ -999,19 +999,19 @@ body{
                 height: 50%;
                 margin-top: 10px;
 
-                @include tablet-portrait-only{
+                @include tablet-portrait-only {
                     padding-top: 5px;
                     height: auto;
                 }
 
-                @include mobile-only{
+                @include mobile-only {
                     width: 100%;
                     padding: 1px;
                     margin: 0px auto;
                     height: 72%;
                 }
 
-                #inner-info{
+                #inner-info {
                     width: 90%;
                     margin: 0 5%;
 
@@ -1024,18 +1024,18 @@ body{
                         }
                     }
 
-                    ol{
+                    ol {
                         margin-top: 10px;
                         font-family: $main-font;
                         text-align: left;
                         font-size: 17px;
 
-                        li{
+                        li {
                             list-style-type: decimal;
                             margin-bottom: 5px;
                         }
 
-                        @include mobile-only{
+                        @include mobile-only {
                             font-size: 13px;
                             padding: 0px 10px 10px 10px;
                         }
@@ -1043,29 +1043,29 @@ body{
                 }
             }
 
-            #game-end-container{
+            #game-end-container {
                 width: 100%;
-                background: #252525;
+                background: $color-bg;
                 @include br;
                 text-align: center;
                 overflow: hidden;
                 height: 50%;
                 margin-top: 10px;
 
-                @include mobile-only{
+                @include mobile-only {
                     height: 65%;
                 }
 
-                #charity-widget-container{
+                #charity-widget-container {
                     width: 40%;
                     float: left;
 
-                    @include mobile-only{
+                    @include mobile-only {
                         display: none;
                     }
                 }
 
-                #inner-info-exit{
+                #inner-info-exit {
                     width: 60%;
                     position: relative;
                     overflow: hidden;
@@ -1073,33 +1073,33 @@ body{
                     color: white;
                     float: left;
 
-                    @include mobile-only{
+                    @include mobile-only {
                         float: none;
                         width: 80%;
                     }
 
-                    .game-end-answer-text{
+                    .game-end-answer-text {
                         color: white;
 
-                        @include mobile-only{
+                        @include mobile-only {
                             padding: 6px;
                             font-size: 22px;
                         }
                     }
 
-                    @include mobile-only{
+                    @include mobile-only {
                         width: 100%;
                     }
 
-                    #inner-text-container{
+                    #inner-text-container {
                         overflow: hidden;
                         height: 100%;
 
-                        @include mobile-only{
+                        @include mobile-only {
                             height: auto;
                         }
 
-                        #join-new-game{
+                        #join-new-game {
                             float: left;
                             @include button-smaller;
                             width: 40%;
@@ -1109,12 +1109,12 @@ body{
                             line-height: 155%;
                             padding-top: 5%;
 
-                             &:hover{
+                             &:hover {
                                 @include button-hover-smaller;
                             }
                         }
 
-                        #exit-match{
+                        #exit-match {
                             float: left;
                             @include button-smaller;
                             width: 40%;
@@ -1124,7 +1124,7 @@ body{
                             line-height: 155%;
                             padding-top: 5%;
 
-                             &:hover{
+                             &:hover {
                                 @include button-hover-smaller;
                             }
                         }
@@ -1133,10 +1133,10 @@ body{
                 }
             }
 
-            #czar-blank-container{
+            #czar-blank-container {
                 color: white;
                 width: 100%;
-                background: #252525;
+                background: $color-bg;
                 @include br;
                 text-align: center;
                 overflow: hidden;
@@ -1145,13 +1145,13 @@ body{
                 margin-top: 10px;
                 font-size: 30px;
 
-                @include mobile-only{
+                @include mobile-only {
                     width: 100%;
                     font-size: 16px;
                     margin: 0px auto;
                 }
 
-                #czar-blank-inner{
+                #czar-blank-inner {
                     position: absolute;
                     left: 10%;
                     right: 10%;
@@ -1159,12 +1159,12 @@ body{
                     height: 50px;
                     margin-top: 5%;
 
-                    #smaller-text{
+                    #smaller-text {
                         font-size: 18px;
                     }
                 }
 
-                #charity-fact-container{
+                #charity-fact-container {
                     @include br;
                     background-color: #fff;
                     color: black;
@@ -1176,47 +1176,47 @@ body{
                     padding: 3px;
                     text-align: left;
 
-                    @include mobile-only{
+                    @include mobile-only {
                         height: 40%;
                         display: none;
                     }
 
-                    #charity-fact-tagline{
+                    #charity-fact-tagline {
                         font-family: 'Lobster', cursive;
                         font-size: 22px;
                         margin-left: 2%;
                         margin-bottom: 3px;
                         color: #000;
 
-                        @include mobile-only{
+                        @include mobile-only {
                             font-size: 16px;
                         }
                     }
 
-                    #charity-fact{
+                    #charity-fact {
                         font-size: 14px;
                         font-style: italic;
                         text-align: center;
                         width: 90%;
                         margin: 0 5% 3px 5%;
 
-                        @include mobile-only{
+                        @include mobile-only {
                             font-size: 12px;
                         }
                     }
 
-                    #charity-logo-container{
+                    #charity-logo-container {
 
-                        @include mobile-only{
+                        @include mobile-only {
                             position: absolute;
-                            top: 1px;
                             right: 0;
+                            top: 1px;
                         }
 
-                        img{
+                        img {
                             float: right;
-                            margin-right: 2%;
                             margin-bottom: 3px;
+                            margin-right: 2%;
 
                             @include mobile-only{
                                 width: 53%;
@@ -1226,25 +1226,25 @@ body{
                 }
             }
 
-            #cards-container{
-                width: 100%;
-                background: #252525;
-                margin-top: 11px;
+            #cards-container {
                 @include br;
+                margin-top: 11px;
+                width: 100%;
+                background: $color-bg;         
 
-                @include mobile-only{
+                @include mobile-only {
                     background: transparent;
                     margin-top: 2px;
                 }
 
                 #cards {
-                    width: 100%;
-                    height: 100%;
                     font-size: 18px;
+                    height: 100%;           
                     padding-left: 5px;
+                    width: 100%;
 
-                    @include mobile-only{
-                        background: #252525;
+                    @include mobile-only {
+                        background: $color-bg;
                         -webkit-border-radius: 8px;
                         -moz-border-radius: 8px;
                         border-radius: 8px;
@@ -1256,9 +1256,9 @@ body{
     }
 }
 
-#notifications{
+#notifications {
 
-    @include tablet-portrait-only{
+    @include tablet-portrait-only {
         font-size: 18px;
     }
     @include mobile-only{
@@ -1287,37 +1287,37 @@ body{
     margin: 0px 0px !important;
 }
 
-.crDonated{
+.crDonated {
     margin-top: 2px !important;
 }
 
-.crImageAndTitle{
+.crImageAndTitle {
     display: none;
 }
 
-.crImageAndTitleOuter{
+.crImageAndTitleOuter {
     display: none;
 }
 
-.startFundraiser{
+.startFundraiser {
     display: none;
 }
 
-#crDonateWidget_cfhio_cards4humanity{
+#crDonateWidget_cfhio_cards4humanity {
     width: 90% !important;
     margin-top: 67px !important;
 
-    .crDonateTriangle{
+    .crDonateTriangle {
         right: 6px !important;
     }
-    h4{
+    h4 {
         margin-bottom: 8px !important;
     }
 }
 
 
 
-.gradientButton{
+.gradientButton {
     width: 80% !important;
     margin-top: 8px !important;
     background: rgb(244,120,31) !important;
@@ -1325,7 +1325,7 @@ body{
     -moz-border-radius: 8px !important;
     border-radius: 8px !important;
     text-transform: none !important;
-    .donateNow{
+    .donateNow {
         border-top: 0px solid black !important;
     }
 }
