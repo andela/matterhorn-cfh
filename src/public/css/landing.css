@@ -273,3 +273,7 @@ footer {
   width: calc(100% - 80px);
   top: 56px;
   width: 250px; }
+
+  .side-nav li>a:hover {
+    color: rgba(0,0,0,0.87) !important;
+  }
