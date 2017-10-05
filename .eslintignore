@@ -5,4 +5,5 @@ src/app/views/**
 src/config/env/**.json
 src/public/**/**.css
 src/public/**/**
+src/public/**/**.scss
 npm-debug.log

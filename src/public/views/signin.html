@@ -1,71 +1,96 @@
-<div id="main-bod" ng-controller="IndexController">
-  <!-- Fixed Logo & Menu Bar Start -->
-  <div id="top-part">
-    <div class="wpb-top-bar">
-      <div class="mod-contain" id="navver">
+<div id="main-bod" class="authpage" ng-controller="IndexController">
+
+
+  <div class="row main-wrapper">
+   <!-- Sidebar with social signup options and login options-->
+    <div class="col s12 m4 l3 sidebar-social">
+      <div class="divider"></div>
+     <h5>SIGN IN WITH</h5>
+      <div class="row">
+        <div class="col s6 m6 l12">
+      <a href="/auth/google" class="waves-effect waves-light btn-large social google">
+        <i class="fa fa-google"></i> google
+      </a>
+    </div>
+      <div class="col s6 m6 l12">
+      <a href="/auth/facebook" class="waves-effect waves-light btn-large social facebook">
+        <i class="fa fa-facebook"></i> facebook</a>
+      </div>
+      <div class="col s6 m6 l12">
+      <a href="/auth/twitter" class="waves-effect waves-light btn-large social twitter">
+        <i class="fa fa-twitter"></i> twitter</a>
+      </div>
+      <div class="col s6 m6 l12">
+      <a href="/auth/github" class="waves-effect waves-light btn-large social github">
+        <i class="fa fa-github"></i> github
+      </a>
+      </div>
+    </div>
+      <div class="divider"></div>
+      <p>Don't have an account?</p>
+      <div>
+          <div class="col s6 m6 l12">
+              <a class="waves-effect waves-light btn-large social github" href="#!/signup">
+              SIGN UP
+              </a>
+             </div>
+            <div class="col s6 m6 l12">
+              <a href="/" class="waves-effect waves-light btn-large">HOME</a>
+            </div>
+      </div>
+
+    </div>
+    <!-- End of social signup and login options -->
+    <!-- Start of image between the two sidebars-->
+    <div class="container mid-image">
+        <span class="center-image"><img src="img/md.png"></span>
+    </div>
+     <!-- End of image between the two sidebars-->
+     <!-- Start of signup with email option -->
+    <div class="col s12 m8 l9 sidebar-content"> 
+      <div class="col m10 offset-m1 s12">
+        <div class="welcome-text center-align">Ready to do some good?</div>
+        <div class="welcome-text2 center-align">Sign in & Let's Play!</div>
         <div class="row">
-          <!-- Logo -->
-          <div class="wpb-logo-container">
-            <div id="landing-logo">
-              <span id="first-word">Cards</span>
-              <span id="second-word"> for</span>
-              <span id="third-word">Humanity</span>
-            </div>
-            <div class="col-md-9 wpb-menu-container">
-              <ul class="wpb-main-menu">
-                <li><a href="/">Home</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Fixed Logo & Menu Bar End -->
-
-<!-- Landing Start -->
-<div class="wpb-teaser parallax-background" id="homer">
-  <div class="background-opacity"></div>
-  <div class="modified-container">
-    <div class="row" id="main-text">
-    <!-- Teaser Text Start -->
-    <div id="landing-logo">
-      <h2 id="slogan">Sign in with:</h2>
-      <div id="login-buttons">
-        <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
-        <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
-        <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
-        <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
-      </div>
-      <p id="create">Or log in below:</p>
-
-      <div class="sign-body">
-        <div class="more-sign">
-          <div class="sign-error" ng-show="showError() === 'invalid'">
-            Please check your username/password and try again.
-          </div>
-          <div class="sign-error">{{ showMessage }}</div>
-          <form class="signup form-horizontal">
-            <div class="control-group">
-              <label for="email" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="email" type="text"  ng-model="formData.email" name="email" placeholder="Email" required novalidate />
+            <div class="sign-error" ng-show="showError() === 'invalid'">
+                Please check your username/password and try again.
               </div>
-            </div>
-            <div class="control-group">
-              <label for="password" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="password" type="password" ng-model="formData.password" name="password" placeholder="Password" required novalidate />
+              <div class="sign-error red-text">{{ showMessage }}</div>
+            <form class="col s12" class="signup form-horizontal">
+              <div class="row">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                      <input id="email" type="email" class="validate" ng-model="formData.email" name="email" required novalidate>
+                      <label for="email">Email</label>
+                    </div>
+                </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">vpn_key</i>
+                  <input id="password" type="password" class="validate" ng-model="formData.password" name="password" required novalidate>
+                  <label for="password">Password</label>
+                </div>
               </div>
-            </div>
-            <div class="form-actions top-margin">
-              <button id="sign-up-btn-other" type='submit' ng-click="signIn()">Sign In</button>
-            </div>
-          </form>
-        </div>
+              
+              <div class="center-align">
+                <button id="sign-up-btn-other" class="btn waves-effect waves-light btn-large" type="submit" name="action" ng-click="signIn()">LOGIN
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
+            </form>
+           
+          </div>
+        <!-- End of signup with email option -->
+    </div>
+   </div>
+   </div>
+   <!-- Start of footer -->
+   <div class="page-footer-custom">
+      <div class="row">
+        <div class="col s6 m4 l3 footer-social" > </div>
+        <div class="col s6 m8 l9 footer-content"> </div>
       </div>
-    </div>
-    </div>
-    </div>
-  </div>
-</div>
+   <!-- End of footer -->
+  <!-- jQuery first, then Tether, then Bootstrap JS. -->
+   <!-- Compiled and minified JavaScript -->

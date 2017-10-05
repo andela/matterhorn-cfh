@@ -8,9 +8,7 @@ import User from './../../../app/models/user';
 mongoose.connect(
   'mongodb://localhost/crudwithredux',
   { useMongoClient: true, promiseLibrary: global.Promise },
-  () => {
-    console.log('Connected to mongodb.');
-  },
+  () => ('Connected to mongodb.'),
 );
 
 mongoose.Promise = global.Promise;
