@@ -1319,6 +1319,8 @@
   height: 100%;
 }
 .col.s12.sidebar-content { /* use "vh" instead of % */
+  display: flex;
+  align-items: center;
   background-color: #282F38;
   color: #ffffff;
 }
