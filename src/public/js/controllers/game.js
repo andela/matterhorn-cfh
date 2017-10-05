@@ -129,7 +129,7 @@ angular.module('mean.system')
         myModal
           .find('.modal-body')
           .text(`You need ${game.playerMinLimit - game.players.length} more players`);
-        myModal.modal('show');
+        myModal.show();
       } else {
         game.startGame();
         swal({

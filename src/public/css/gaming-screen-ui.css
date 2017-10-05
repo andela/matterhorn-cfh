@@ -1,0 +1,364 @@
+html {
+  background: url('../img/polygonal-bg.jpg');
+  background-attachment: fixed;
+  background-size: 100%;
+  position: relative;
+}
+
+body {
+  margin:0;
+}
+/* Background Overlay */
+#layer {
+  background-color: rgba(40, 47, 56, 0.87);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -10;
+}
+
+/* Navigation */
+.first-word, .second-word, .third-word {
+  color: #fff;
+  font-family: "Luminari";
+  font-size: 36px;
+}
+
+.logo {
+  display: block;
+  padding-left: 20px;
+}
+
+.tweet-container {
+  left: 84%;
+  position: relative;
+  top: 0;
+}
+
+.menu-container {
+  border-radius: 0;
+  margin: 0 0 10px 0;
+  width: 100%;
+}
+
+.main-container .app-container {
+  max-width: 1368px;
+}
+
+.question-container-outer {
+  background: rgba(29, 42, 49, 0.67);
+  padding: 20px 0 130px 30px !important;
+  color: #fff;
+}
+
+col.l8.m8.s12.question-container-outer {
+  margin-bottom: 10px;
+}
+
+.longBlacks span {
+  font-size: 24px;
+}
+
+.inner-timer-container {
+  padding: 0;
+  border: 3px solid #fff;
+  color: #fff;
+  height: 201px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.timer-container .time {
+  font-size: 100px;
+}
+
+.finding-players {
+  font-size: 36px;
+  font-family: 'Arial';
+  color: #fff;
+  padding-bottom: 20px;
+}
+
+@media only screen and (max-width: 780px) {
+  .timer-container .time {
+    font-size: 10px;
+  }
+
+  .finding-players {
+    font-size: 20px;
+  }
+
+  .inner-timer-container {
+    padding: 20px;
+    border: 3px solid #fff;
+    color: #fff;
+    height: 100px;
+    text-align: center;
+    border-radius: 50%;
+  }
+
+  #timer-status-round {
+    font-size:12px;
+  }
+}
+
+.lobby-how-to-play, #oh-el li {
+  font-family: "Arial";
+}
+
+.lobby-how-to-play {
+  font-size: 30px;
+}
+
+.oh-el li {
+  font-size: 18px;
+}
+
+#theModal {
+  color: #000;
+}
+
+.main-container #app-container #gameplay-container #info-container,
+.main-container #app-container #gameplay-container #cards-container,
+.card.longBlack,
+.menu-container {
+  background: rgba(29, 42, 49, 0.67);
+}
+
+.main-container #app-container #gameplay-container #info-container,
+.main-container #app-container #gameplay-container #cards-container,
+.menu-container {
+  background: rgba(31, 149, 156, 1);;
+}
+
+
+.game-actions-container {
+  background: rgba(29, 42, 49, 0.67);
+  color: #fff;
+  padding: 30px;
+  font-size: 29px;
+  cursor: pointer;
+}
+
+.game-actions-container img {
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 30px;
+}
+
+@media only screen and (max-width: 780px) {
+  .game-actions-container {
+    background: rgba(29, 42, 49, 0.67);
+    color: #fff;
+    padding: 30px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .question-container-outer {
+    background: rgba(29, 42, 49, 0.67);
+    padding: 10px 0 50px 3 0px;
+    color: #fff;
+  }
+}
+
+.card.longBlack {
+  background: #252525;
+  border-color: white;
+  color: white;
+  height: 100%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+#main-container #app-container #social-bar-container {
+  width: 20%;
+  height: 27%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cards-container {
+  background: rgba(29, 42, 49, 0.67);
+  margin-top: 11px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.game-card {
+  height: 215px;
+  padding: 1%;
+  margin: 1%;
+  background-color: #fff;
+  border-radius: 8px;
+  color: #252525;
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+#inner-info {
+  background: rgba(29, 42, 49, 0.67);
+  color: white;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-align: center;
+  padding: 15px;
+}
+
+#info-container #inner-info ol {
+  margin-top: 10px;
+  font-family: "helvetica neue", helvetica, sans-serif;
+  text-align: left;
+  font-size: 17px;
+}
+
+#main-container #app-container #gameplay-container {
+  height: 25%;
+  width: 80%;
+}
+
+.game-players-container {
+  width: 80%;
+  margin-top:20px;
+  height: 155px;
+  clear: both;
+  position: relative;
+}
+
+#player-container {
+  /* width: 100px;
+  margin-right: 10px; */
+  height: 157px;
+  float:left;
+  text-align: center;
+  border-radius: 8px;
+}
+
+#player-container h4, #player-container h2 {
+  font-size: 14px;
+  margin: 0;
+  padding:0;
+}
+
+#czar-blank-container {
+  color: white;
+  width: 100%;
+  background: rgba(29, 42, 49, 0.67);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-align: center;
+  overflow: hidden;
+  height: 300px;
+  position: relative;
+  margin-top: 30px;
+  font-size: 30px;
+}
+
+#czar-blank-container #charity-fact-container {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background-color: #fff;
+  color: black;
+  position: absolute;
+  bottom: 4%;
+  margin: 0 2%;
+  width: 96%;
+  padding: 3px;
+  text-align: left;
+}
+
+#czar-blank-container #czar-blank-inner #smaller-text {
+  font-size: 18px;
+}
+
+#czar-blank-container #charity-fact-container #charity-fact-tagline {
+  font-family: 'Lobster', cursive;
+  font-size: 22px;
+  margin-left: 2%;
+  margin-bottom: 3px;
+  color: #000;
+}
+
+#czar-blank-container #charity-fact-container #charity-fact {
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+  width: 90%;
+  margin: 0 5% 3px 5%;
+}
+
+#game-end-container {
+  background: rgba(29, 42, 49, 0.67);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.join-new-game, .exit-match {
+  background: #fff;
+  color: #000;
+  line-height: 5;
+  margin-top: 80px;
+  font-size: 20px;
+  border-radius: 8px;
+}
+
+.exit-match {
+  box-sizing: border-box;
+  border-left: 5px solid #000;
+}
+
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #start-game-container #start-game-button {
+  border-radius: 8px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-size: 20px;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: white;
+  background: rgba(96, 177, 88, 1);
+  padding: 0.65em 20px;
+  margin: 10px;
+  width: 65%;
+  cursor: pointer;
+}
+
+/* Chat Window */
+.chat-window {
+  background: rgba(29, 42, 49, 0.67);
+  border: 2px solid #fff;
+  border-radius: 5px;
+  bottom: 0;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  width: 300px;
+  z-index: 3;
+}
+
+.chat-window .chat-box {
+  height: 150px;
+}
+
+.chat-window p {
+  background: #fff;
+  text-align: center;
+  font-family: "marker felt";
+  text-transform: uppercase;
+}
+
+.chat-window .text-left {
+  text-align: right;
+  background: none;
+  color: #fff;
+  margin: 0;
+  font-size: 30px;
+}

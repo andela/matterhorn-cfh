@@ -3,6 +3,6 @@ node_modules/
 src/public/**
 src/app/views/**
 src/config/env/**.json
-src/public/css/**.scss
-src/public/css/**.css
-npm-debug.log
+src/public/**/**.css
+src/public/**/**
+npm-debug.log`
