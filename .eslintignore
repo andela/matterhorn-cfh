@@ -5,3 +5,4 @@ src/app/views/**
 src/config/env/**.json
 src/public/**/**.css
 src/public/**/**
+npm-debug.log
