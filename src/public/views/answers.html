@@ -41,7 +41,7 @@
 
 <div class="row">
   <br>
-  <div id="game-end-container" class="col s12 offset-m2 m8 offset-l2 l8" >
+  <div id="game-end-container" class="col s12 offset-m2 m8 offset-l2 l8" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
     <div id="inner-info-exit">
       <div class="game-end-answer-text center-align" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
         <h2>What would you like to do now?</h2>
