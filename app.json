@@ -1,0 +1,44 @@
+{
+    "name": "matterhorn-cfh",
+    "scripts": {},
+    "env": {
+      "APP_ID": {
+        "required": true
+      },
+      "APP_SECRET": {
+        "required": true
+      },
+      "CONSUMER_KEY": {
+        "required": true
+      },
+      "CONSUMER_SECRET": {
+        "required": true
+      },
+      "FACEBOOK_APP_ID": {
+        "required": true
+      },
+      "FACEBOOK_APP_SECRET": {
+        "required": true
+      },
+      "GITHUB_CLIENT_ID": {
+        "required": true
+      },
+      "GITHUB_CLIENT_SECRET": {
+        "required": true
+      },
+      "MONGOHQ_URL": {
+        "required": true
+      },
+      "TOKEN_SECRET": {
+        "required": true
+      }
+    },
+    "formation": {},
+    "addons": [],
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ]
+  }
+  

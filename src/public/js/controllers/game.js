@@ -8,7 +8,7 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
-    
+
     $scope.setHttpHeader = () => {
       const token = $window.localStorage.getItem('token')
       $http.defaults.headers.common.Authorization = token;
@@ -134,9 +134,24 @@ angular.module('mean.system')
         myModal
           .find('.modal-body')
           .text(`You need ${game.playerMinLimit - game.players.length} more players`);
-        myModal.modal('open');
+        myModal.show();
       } else {
         game.startGame();
+        swal({
+          title: "Are you sure??",
+          text: "Clicking the Start button will start the game for every users in this session",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Go back',
+          confirmButtonText: 'Start Game'
+        })
+          .then((willPlay) => {
+            if (willPlay) {
+              game.startGame();
+            }
+          })
+          .catch(() => swal("Game was not started"))
       }
     };
 
@@ -240,6 +255,18 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
+
+      // When game ends, send game data to the database
+      if ($scope.game.state === 'game ended') {
+        const gameData = {
+          gameId: $scope.game.gameID,
+          gameOwner: $scope.game.players[0].username,
+          gameWinner: $scope.game.players[game.gameWinner].username,
+          gamePlayers: $scope.game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+      }
+
     });
     $scope.setToken = () => {
       $http.get('/users/token')

@@ -9,6 +9,7 @@ import validateInput from '../../config/middlewares/validateInput';
 
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
+const Game = mongoose.model('Game');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -31,24 +32,38 @@ export const authCallback = (req, res) => {
       { expiresIn: 72 * 60 * 60 }
     );
     res.cookie('token', token);
+    req.headers.authorization = `Bearer ${token}`;
     res.redirect('/#!/');
   }
 };
 
+/** Checks if logged in user has valid AUTH token
+ * @param  {object} req - request
+ * @param  {object} res - response
+ */
 
 export const isLoggedIn = (req, res, next) => {
-  const token = req.headers.authorization || req.headers['x-access-token'];
+  const key = 'mySecret';
+  let token;
+  const tokenAvailable = req.headers.authorization ||
+    req.headers['x-access-token'];
+  if (req.headers.authorization) {
+    [, token] = req.headers.authorization.split(' ');
+  } else {
+    token = tokenAvailable;
+  }
+
   if (token) {
-    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
+    jwt.verify(token, key, (error) => {
       if (error) {
-        return res.status(401)
+        res.status(401)
           .send({
             message: 'Failed to Authenticate Token',
             error
           });
+      } else {
+        next();
       }
-      req.decoded = decoded;
-      next();
     });
   } else {
     return res.status(401)
@@ -123,6 +138,23 @@ export const removeFriend = (req, res) => {
       });
     });
 };
+export const saveGameData = (req, res) => {
+  const game = new Game();
+
+  game.gameOwner = req.body.gameOwner;
+  game.gameId = req.params.id;
+  game.gameWinner = req.body.gameWinner;
+  game.date = new Date();
+  game.gamePlayers = req.body.gamePlayers;
+
+  game.save((error) => {
+    if (error) {
+      return error;
+    }
+    res.json(game);
+  });
+};
+
 
 /**
  *  Retrieves the token from cookie
@@ -136,7 +168,6 @@ export const getToken = (req, res) => {
     cookie
   });
 };
-
 
 /**
  * Show login form
@@ -301,6 +332,7 @@ export const register = (req, res) => {
             process.env.TOKEN_SECRET,
             { expiresIn: 72 * 60 * 60 }
           );
+          req.headers.authorization = `Bearer ${token}`;
           res.status(201).send({
             token,
             user: { id: user._id, name: user.name, email: user.email },
@@ -386,7 +418,7 @@ export const login = (req, res) => {
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );
-
+            req.headers.authorization = `Bearer ${token}`;
             return res.send(200, {
               id: user.id,
               success: true,
@@ -409,7 +441,7 @@ export const login = (req, res) => {
 /**
  * Assign avatar to user
  */
-
+/* eslint-disable no-plusplus */
 export const avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user.id && req.body.avatar !== undefined &&
@@ -428,7 +460,8 @@ export const avatars = (req, res) => {
 export const addDonation = (req, res) => {
   if (req.body && req.user && req.user.id) {
     // Verify that the object contains crowdrise data
-    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
+    if (req.body.amount && req.body.crowdrise_donation_id &&
+      req.body.donor_name) {
       User.findOne({
         _id: req.user.id
       })
@@ -436,7 +469,8 @@ export const addDonation = (req, res) => {
           // Confirm that this object hasn't already been entered
           let duplicate = false;
           for (let i = 0; i < user.donations.length; i++) {
-            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
+            if (user.donations[i].crowdrise_donation_id ===
+               req.body.crowdrise_donation_id) {
               duplicate = true;
             }
           }
