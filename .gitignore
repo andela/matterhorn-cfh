@@ -8,3 +8,4 @@ build/
 bower_components
 public/lib
 matterhorn-cfh-staging
+./src/app/seeders
