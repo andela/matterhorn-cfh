@@ -131,11 +131,22 @@ angular.module('mean.system')
           .text(`You need ${game.playerMinLimit - game.players.length} more players`);
         myModal.modal('show');
       } else {
-<<<<<<< HEAD
-
-=======
->>>>>>> 0037fd08130100104e00f84c48361abb241f6371
         game.startGame();
+        swal({
+          title: "Are you sure??",
+          text: "Clicking the Start button will start the game for every users in this session",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Go back',
+          confirmButtonText: 'Start Game'
+        })
+          .then((willPlay) => {
+            if (willPlay) {
+              game.startGame();
+            }
+          })
+          .catch(() => swal("Game was not started"))
       }
     };
 
@@ -162,10 +173,19 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-    });
-<<<<<<< HEAD
 
-=======
+    // When game ends, send game data to the database
+      if ($scope.game.state === 'game ended') {
+        const gameData = { 
+          gameId: $scope.game.gameID,
+          gameOwner: $scope.game.players[0].username,
+          gameWinner: $scope.game.players[game.gameWinner].username,
+          gamePlayers: $scope.game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+      }
+    
+    });
     $scope.setToken = () => {
       $http.get('/users/token')
         .success((data) => {
@@ -179,7 +199,6 @@ angular.module('mean.system')
           $scope.showMessage = "Failed to authenticate user";
         });
     }
->>>>>>> 0037fd08130100104e00f84c48361abb241f6371
     $scope.$watch('game.gameID', function () {
       if (game.gameID && game.state === 'awaiting players') {
         if (!$scope.isCustomGame() && $location.search().game) {
