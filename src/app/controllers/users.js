@@ -352,7 +352,7 @@ export const login = (req, res) => {
           if (result) {
             // generate token upon login
             const token = jwt.sign(
-              { user: user.id, email: user.email },
+              { name: user.name, user: user.id, email: user.email },
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );
