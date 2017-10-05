@@ -14,7 +14,7 @@ $(document).ready(function() {
 </script>
 
 <script></script>
-<div landing id="main-bod" >
+<div landing id="main-bod" ng-controller="IndexController">
   <!-- Fixed Logo & Menu Bar Start -->
   <div id="top-part">
     <div class="wpb-top-bar">
@@ -27,7 +27,7 @@ $(document).ready(function() {
               <span id="second-word"> for</span>
               <span id="third-word">Humanity</span>
             </div>
-            <div class="col-md-9 wpb-menu-container" ng-controller="IndexController">
+            <div class="col-md-9 wpb-menu-container">
               <ul class="wpb-main-menu">
                 <li><a onClick="scroll(0,0)">Home</a></li>
                 <li><a onClick="scroll(0,742);">How to Play</a></li>
@@ -101,7 +101,7 @@ $(document).ready(function() {
         </span>
         <span ng-hide="showOptions">
           <a href="/play"><div id="sign-up-btn-landing">Play Game with Strangers</div></a>
-          <a href="/play?custom"><div id="sign-up-btn-landing">Play Game with Friends</div></a>
+          <a  href="/play?custom"><div id="sign-up-btn-landing">Play Game with Friends</div></a>
               <span id='twitter-facebook'>
                 <span id="tweet-container-index">
                   <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>

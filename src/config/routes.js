@@ -16,7 +16,9 @@ import {
   authCallback,
   user,
   getToken,
-  register
+  register,
+  saveGameData,
+  isLoggedIn
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -45,6 +47,9 @@ export default () => {
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
+
+  // Save ended game data
+  app.post('/api/games/:id/start', isLoggedIn, saveGameData);
 
   // Donation Routes
   app.post('/donations', addDonation);

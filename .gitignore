@@ -11,3 +11,4 @@ matterhorn-cfh-staging
 .nyc-output
 build
 coverage
+.nyc_output/
