@@ -37,7 +37,8 @@ const paths = {
   watch: '',
   clientTests: 'build/test/client/**/*.js',
   configJson: './src/config/**/**.json',
-  lib: './src/public/lib/**'
+  lib: './src/public/lib/**',
+  svg: './src/public/svg/**.svg'
 };
 
 
@@ -81,7 +82,13 @@ gulp.task('move_json', () =>
     .src(paths.configJson)
     .pipe(gulp.dest('./build/config')));
 
-gulp.task('babel', ['lint'], () => {
+gulp.task('move_svg', () =>
+  gulp
+    .src(paths.svg)
+    .pipe(gulp.dest('./build/public/svg')));
+
+
+gulp.task('babel', () => {
   gulp
     .src(paths.allJs)
     .pipe(babel())
@@ -135,7 +142,7 @@ gulp
       'move_html', 'move_css',
       'move_lib', 'move_json',
       'move_images', 'move_public_js',
-      'move_public_txt'
+      'move_public_txt', 'move_svg'
     )
   );
 
@@ -150,6 +157,7 @@ gulp.task('build:dev', ['build', 'lint'], () => {
   gulp.watch([paths.images], ['move_images']);
   gulp.watch([paths.publicJs], ['move_public_js']);
   gulp.watch([paths.publicTxt], ['move_public_txt']);
+  gulp.watch([paths.svg], ['move_svg']);
 });
 
 
