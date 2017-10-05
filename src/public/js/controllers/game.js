@@ -37,6 +37,7 @@ angular.module('mean.system')
     };
 
     $scope.sendPickedCards = function () {
+      console.log('hey man see the sent card', game)
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
     };
@@ -81,7 +82,20 @@ angular.module('mean.system')
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
 
+    $scope.showCzarModal = () => {
+      swal({
+        title: 'Sweet!',
+        text: 'Modal with a custom image.',
+        imageUrl: 'https://unsplash.it/400/200',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        animation: false
+      })
+    }
+
     $scope.isCzar = function () {
+      console.log('you are now the czar')
       return game.czar === game.playerIndex;
     };
 
@@ -124,11 +138,11 @@ angular.module('mean.system')
       if (game.players.length < game.playerMinLimit) {
         const popupModal = $('#myModal');
         popupModal
-        .find('.modal-title')
-        .text('You cannot start the game now');
+          .find('.modal-title')
+          .text('You cannot start the game now');
         popupModal
-        .find('.modal-body')
-        .text(`You need ${game.playerMinLimit - game.players.length} more player(s) to start the game`);
+          .find('.modal-body')
+          .text(`You need ${game.playerMinLimit - game.players.length} more player(s) to start the game`);
         popupModal.modal('show')
       } else {
         game.startGame();
@@ -158,6 +172,8 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
+      console.log('hey man', game.state, game.table)
+      // Trigger for czar
     });
 
     $scope.$watch('game.gameID', function () {
