@@ -1,6 +1,11 @@
 angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', '$cookieStore', '$cookies', '$location', '$http', '$window','socket', 'game',  'AvatarService', function ($scope,Global, $cookieStore, $cookies, $location, $http, $window, socket,  game, AvatarService) {
 
+  $scope.scrollTo = function(id){
+      // Scroll
+    $('html,body').animate({
+        scrollTop: $("#"+id).offset().top}, 'slow');
+  }
     $scope.checkAuth = () => {
           if ($cookies.token) {
           $window.localStorage.setItem('token', $cookies.token);
