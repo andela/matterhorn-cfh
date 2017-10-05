@@ -1,4 +1,4 @@
-<div id="target-chat-window" class="chat-window">
+<div id="target-chat-window" class="chat-window" ng-controller="GameController">
   <p class="lead text-left">
     <span style="font-size: 20px; text-align: left;" >Chat Window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <a id="minimize-btn" onclick="toggle_visibility('chat-id')" style="color: #fff;" href=''>-</a>&nbsp;
@@ -6,13 +6,25 @@
   </p>
   <div id="chat-id" class='close-chat'>
     <p>cfh</p>
-    <div class='chat-box'>
+    <div class='chat-box' ng-repeat="x in messages">
+        <img ng-src="{{x.avatar}}" alt="{{x.sender}}" width="32" height="32">
+        
+        <div class="chat-message-content clearfix">
+        <span class="chat-time">{{x.time}}</span>
+     <div class="msg-container">
+        <b>{{x.sender}}</b>
+        
+        <p>{{x.message}}</p>
+    
+    </div>   
+        
+        
+        </div> 
     </div>
-    <form>
+    <form ng-submit="submitChat()">
         <div class="form-group">
-          <textarea class="form-control" name='' placeholder="Enter Message.." id=''></textarea>
+            <input id="message" type="text" placeholder="Type your message…" autofocus required>
         </div>
-        <button type="submit" class="right btn btn-default btn-block">Send</button>
       </form>
   </div>
 </div>

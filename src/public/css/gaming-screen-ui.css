@@ -333,13 +333,15 @@ col.l8.m8.s12.question-container-outer {
 
 /* Chat Window */
 .chat-window {
-  background: rgba(29, 42, 49, 0.67);
+  background: rgb(31, 149, 155);
   border: 2px solid #fff;
   border-radius: 5px;
   bottom: 0;
   padding: 20px;
   position: fixed;
   right: 0;
+  overflow-y: scroll;
+  max-height: 400px;
   width: 300px;
   z-index: 3;
 }
