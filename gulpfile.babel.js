@@ -146,7 +146,7 @@ gulp
     )
   );
 
-gulp.task('build:dev', ['build', 'lint'], () => {
+gulp.task('build:dev', ['build'], () => {
   gulp.watch(['src/**', '!src/public/lib/**'], ['babel']);
   gulp.watch([paths.configJson], ['move_json']);
   gulp.watch([paths.jade], ['move_jade']);
