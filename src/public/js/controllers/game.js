@@ -131,7 +131,6 @@ angular.module('mean.system')
           .text(`You need ${game.playerMinLimit - game.players.length} more players`);
         myModal.show();
       } else {
-        game.startGame();
         swal({
           title: "Are you sure??",
           text: "Clicking the Start button will start the game for every users in this session",
