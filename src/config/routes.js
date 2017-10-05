@@ -16,7 +16,11 @@ import {
   authCallback,
   user,
   getToken,
-  register
+  register,
+  addFriend,
+  removeFriend,
+  getFriendsList,
+  isLoggedIn
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -28,6 +32,12 @@ import {
 } from '../app/controllers/questions';
 import { play, render } from '../app/controllers/index';
 
+import {
+  addNotification,
+  loadNotification,
+  readNotification
+} from '../app/controllers/notifications';
+
 import app from '../app';
 
 export default () => {
@@ -38,6 +48,16 @@ export default () => {
   app.get('/signout', signout);
   app.get('/api/sendmail/:email', sendMail);
   app.get('/api/search/users/:username', searchUser);
+
+  // Friends Route
+  app.put('/api/user/friend', isLoggedIn, addFriend);
+  app.get('/api/user/friend', isLoggedIn, getFriendsList);
+  app.delete('/api/user/friend', isLoggedIn, removeFriend);
+
+  // Notifications Route
+  app.post('/api/notification', isLoggedIn, addNotification);
+  app.get('/api/notifications', isLoggedIn, loadNotification);
+  app.put('/api/notification/:id', isLoggedIn, readNotification);
 
   // Setting up the users api
   app.post('/users', create);

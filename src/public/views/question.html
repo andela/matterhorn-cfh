@@ -19,6 +19,11 @@
           Start Game
         </div>
       </div>
+      <div id="start-game-container" ng-click="invitePlayers()">
+        <div id='start-game-button'>
+          Invite Players
+        </div>
+      </div>
     </div>
     <!-- Game Over Stuff -->
     <div id="game-end-info">
@@ -53,3 +58,46 @@
     </div>
   </div>
 </div>
+
+
+<div id="invitePlayers" class="modal">
+  <div class="modal-content">
+    <h4>Invite Players</h4>
+    <p>
+      <input id="search" autocomplete="off" ng-model="searchTerm" ng-change="searchusers()" />
+
+      <!-- Dropdown Trigger -->
+      <a class='dropdown-button btn' ng-click="viewFriends()" data-activates='dropdown1'>Drop Me!</a>
+
+      <!-- Dropdown Structure -->
+      <ul id='dropdown1' class='dropdown-content'>
+        <li ng-repeat="x in friendsList">
+          {{x}}
+          <i class="material-icons">delete</i>
+        </li>
+      </ul>
+
+      <div class="row">
+        <!-- <div ng-repeat="x in usernames">
+          <li class="col s8 collection-item">
+            {{x}}
+
+          </li>
+          <a class="btn col s2">Add as Friend</a>
+          <a class="btn col s2" ng-click="inviteToGame()">Invite Player</a>
+        </div> -->
+      </div>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('.modal').modal();
+    $('.dropdown-button').dropdown()
+  });
+
+</script>

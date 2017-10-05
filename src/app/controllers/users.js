@@ -35,6 +35,95 @@ export const authCallback = (req, res) => {
   }
 };
 
+
+export const isLoggedIn = (req, res, next) => {
+  const token = req.headers.authorization || req.headers['x-access-token'];
+  if (token) {
+    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
+      if (error) {
+        return res.status(401)
+          .send({
+            message: 'Failed to Authenticate Token',
+            error
+          });
+      }
+      req.decoded = decoded;
+      next();
+    });
+  } else {
+    return res.status(401)
+      .send({
+        message: 'Access denied, Authentication token does not exist'
+      });
+  }
+};
+
+
+export const addFriend = (req, res) => {
+  const { friendId, friendName } = req.body;
+  const friendData = { friendId, friendName };
+  const userId = req.decoded.user;
+
+  User.findOneAndUpdate(
+    {
+      _id: userId
+    },
+    { $push: { friends: friendData } }
+  )
+    .then(() => {
+      res.status(200).send({
+        message: 'Friend Added Successfully'
+      });
+    })
+    .catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
+};
+
+export const getFriendsList = (req, res) => {
+  const userId = req.decoded.user;
+
+  User.find({
+    _id: userId
+  })
+    .then((user) => {
+      if (user) {
+        res.status(200).send(user[0].friends);
+      } else {
+        res.status(404).send({ message: 'User Not Found' });
+      }
+    })
+    .catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
+};
+
+export const removeFriend = (req, res) => {
+  const { friendId } = req.body;
+  const userId = req.decoded.user;
+
+  User.findOneAndUpdate(
+    {
+      _id: userId
+    },
+    { $pull: { friends: { friendId } } }
+  )
+    .then(() => {
+      res.status(200).send({
+        message: 'Friend Deleted Successfully'
+      });
+    })
+    .catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
+};
+
 /**
  *  Retrieves the token from cookie
  * @param {object} req -request
@@ -288,10 +377,10 @@ export const login = (req, res) => {
           message: 'Invalid login credentials'
         });
       } else {
-      // check if password is correct
+        // check if password is correct
         bcrypt.compare(password, user.hashed_password, (err, result) => {
           if (result) {
-          // generate token upon login
+            // generate token upon login
             const token = jwt.sign(
               { user: user.id, email: user.email },
               TOKEN_SECRET,

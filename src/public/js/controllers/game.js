@@ -8,6 +8,11 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
+    
+    $scope.setHttpHeader = () => {
+      const token = $window.localStorage.getItem('token')
+      $http.defaults.headers.common.Authorization = token;
+    };
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {
@@ -129,10 +134,87 @@ angular.module('mean.system')
         myModal
           .find('.modal-body')
           .text(`You need ${game.playerMinLimit - game.players.length} more players`);
-        myModal.modal('show');
+        myModal.modal('open');
       } else {
         game.startGame();
       }
+    };
+
+    $scope.invitePlayers = () => {
+      const inviteModal = $('#invitePlayers');
+      inviteModal.modal('open')
+    };
+
+    $scope.viewFriends = () => {
+      const friendsDropdown = $('.dropdown-button');
+      friendsDropdown.dropdown('open')
+      $scope.getFriendsList();
+    };
+
+    // $('.dropdown-button').dropdown('open');
+
+    $scope.searchusers = () => {
+      const searchTerm = $scope.searchTerm
+      if (searchTerm.length >= 1) {
+        $http.get(`/api/search/users/${searchTerm}`)
+          .success((data) => {
+            // $scope.searchResults = data
+            $scope.usernames = data.map(user => user.name)
+          })
+          .error(() => {
+            $scope.searchResults = []
+            $scope.usernames = data.map(user => user.name)
+          })
+      } else if (searchTerm.length === 0) {
+        $scope.usernames = 'No users found'
+      }
+      // const members = users.map(user => user.id);
+    }
+
+    $scope.addFriend = () => {
+      const payload = {
+        friendId: $scope.friendId,
+        friendName: $scope.friendName
+      };
+
+      console.log('before set header........')
+      $scope.setHttpHeader();
+      console.log('afetrsethearder...........')
+      $http.post('/api/user/friend', payload)
+        .then(
+        (response) => {
+          $scope.getFriendsList();
+        },
+        (error) => {
+          console.log(error);
+        })
+    };
+
+    $scope.getFriendsList = () => {
+      $scope.setHttpHeader();
+      $http.get('/api/user/friend')
+        .then(
+        (response) => {
+          $scope.friendsList = response.data
+        },
+        (error) => {
+          console.log(error);
+        })
+    };
+
+    $scope.removeFriend = () => {
+      const payload = {
+        friendId: $scope.friendId
+      }
+      $http.delete('/api/user/friend', payload)
+        .then(
+        (response) => {
+          console.log(response, 'remove friend.............')
+          //$scope.friendsList = response
+        },
+        (error) => {
+          console.log(error);
+        })
     };
 
     $scope.abandonGame = function () {

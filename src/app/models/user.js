@@ -20,7 +20,8 @@ const UserSchema = new Schema({
   facebook: {},
   twitter: {},
   github: {},
-  google: {}
+  google: {},
+  friends: [],
 });
 
 /**
@@ -40,8 +41,8 @@ UserSchema
 
 UserSchema
   .path('username').validate(
-    Helper.validateUsername,
-    'Username cannot be blank'
+  Helper.validateUsername,
+  'Username cannot be blank'
   );
 
 UserSchema
