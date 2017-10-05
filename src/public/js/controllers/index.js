@@ -1,6 +1,11 @@
 angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', '$cookieStore', '$cookies', '$location', '$http', '$window','socket', 'game',  'AvatarService', function ($scope,Global, $cookieStore, $cookies, $location, $http, $window, socket,  game, AvatarService) {
 
+  $scope.scrollTo = function(id){
+      // Scroll
+    $('html,body').animate({
+        scrollTop: $("#"+id).offset().top}, 'slow');
+  }
     $scope.checkAuth = () => {
           if ($cookies.token) {
           $window.localStorage.setItem('token', $cookies.token);
@@ -23,7 +28,6 @@ angular.module('mean.system')
         return false;
       }
     }
-    
     $scope.signIn = () => {
        $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
@@ -35,10 +39,11 @@ angular.module('mean.system')
        }
        })
       .error(() => {
-             $scope.showMessage = "Wrong email and/or password";
+             $scope.showMessage = "Oops! Invalid email and/or password";
       });
     }
-
+    
+    
     $scope.signOut = () => {
       $http.get('/logout')
       .success(() => {

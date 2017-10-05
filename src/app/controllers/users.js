@@ -379,7 +379,7 @@ export const login = (req, res) => {
 /**
  * Assign avatar to user
  */
-
+/* eslint-disable no-plusplus */
 export const avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user.id && req.body.avatar !== undefined &&
@@ -398,7 +398,8 @@ export const avatars = (req, res) => {
 export const addDonation = (req, res) => {
   if (req.body && req.user && req.user.id) {
     // Verify that the object contains crowdrise data
-    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
+    if (req.body.amount && req.body.crowdrise_donation_id &&
+      req.body.donor_name) {
       User.findOne({
         _id: req.user.id
       })
@@ -406,7 +407,8 @@ export const addDonation = (req, res) => {
           // Confirm that this object hasn't already been entered
           let duplicate = false;
           for (let i = 0; i < user.donations.length; i++) {
-            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
+            if (user.donations[i].crowdrise_donation_id ===
+               req.body.crowdrise_donation_id) {
               duplicate = true;
             }
           }

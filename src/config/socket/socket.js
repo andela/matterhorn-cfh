@@ -1,3 +1,4 @@
+/** eslint-disable */
 import consoleStamp from 'console-stamp';
 import mongoose from 'mongoose';
 
@@ -69,8 +70,7 @@ module.exports = (io) => {
         game.assignGuestNames();
         game.sendUpdate();
         game.sendNotification(`${player.username} has joined the game!`);
-        if (game.players.length === game.playerMaxLimit) {
-          game.sendNotification('Players can no longer join. Starting game...');
+        if (game.players.length >= game.playerMaxLimit) {
           gamesNeedingPlayers.shift();
           game.prepareGame();
         }
@@ -129,11 +129,9 @@ module.exports = (io) => {
           game.sendNotification(`${player.username} has joined the game!`);
           if (game.players.length >= game.playerMaxLimit) {
             gamesNeedingPlayers.shift();
-            game.state = 'kkkkkkk';
-            // game.prepareGame();
+            game.prepareGame();
           }
         } else {
-          game.sendNotification('Players cannot be more than 12!');
           // TODO: Send an error message back to this user saying the game has already started
         }
       } else {
