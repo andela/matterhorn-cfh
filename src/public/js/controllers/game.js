@@ -14,10 +14,10 @@ angular.module('mean.system')
     $scope.makeAWishFact = makeAWishFacts.pop();
 
     setTimeout(function() { 
-      console.log(game)
+
       var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
-      
-      $scope.messages = $firebaseArray(chatRef.limitToFirst(15));
+  
+      $scope.messages = $firebaseArray(chatRef.limitToFirst(5));
      }, 1000);
    
      var indicator = $( "div.chat-close" ).text();
@@ -35,7 +35,6 @@ angular.module('mean.system')
       document.getElementById('message').value = "";
 
   }
-
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {

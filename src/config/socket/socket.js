@@ -210,6 +210,12 @@ module.exports = (io) => {
       joinGame(socket, data);
     });
 
+    socket.on('new-chat-message', () => {
+      socket.broadcast.emit('message-seen', {
+        msg: 'new'
+      });
+    });
+
     socket.on('startGame', () => {
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];

@@ -9,9 +9,10 @@
             if(indicator === '^'){
                 $( "div.chat-close" ).text('V');
             } else {
+                                // $('.chat-message-counter').fadeToggle(300, 'swing');
+
                 $( "div.chat-close" ).text('^');
             }
-            $('.chat-message-counter').fadeToggle(300, 'swing');
     
         });
     
