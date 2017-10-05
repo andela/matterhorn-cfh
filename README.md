@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/andela/matterhorn-cfh.svg?branch=staging)](https://travis-ci.org/andela/matterhorn-cfh)
-[![Coverage Status](https://coveralls.io/repos/github/andela/matterhorn-cfh/badge.svg)](https://coveralls.io/github/andela/matterhorn-cfh)
+[![Coverage Status](https://coveralls.io/repos/github/andela/matterhorn-cfh/badge.svg?branch=staging)](https://coveralls.io/github/andela/matterhorn-cfh?branch=staging)
 Cards for Humanity - [http://cfh.io](http://cfh.io)
 ===========
 Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.

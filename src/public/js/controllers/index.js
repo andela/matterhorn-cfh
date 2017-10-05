@@ -27,6 +27,7 @@ angular.module('mean.system')
         return false;
       }
     }
+
     $scope.signIn = () => {
        $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
@@ -38,10 +39,11 @@ angular.module('mean.system')
        }
        })
       .error(() => {
-             $scope.showMessage = "Wrong email and/or password";
+             $scope.showMessage = "Oops! Invalid email and/or password";
       });
     }
-
+    
+    
     $scope.signOut = () => {
       $http.get('/logout')
       .success(() => {
