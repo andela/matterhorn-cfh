@@ -15,16 +15,9 @@ export default {
   twitter: {
     clientID: process.env.CONSUMER_KEY,
     clientSecret: process.env.CONSUMER_SECRET,
-<<<<<<< HEAD
     callbackURL:
     'https://matterhorn-cfh-test.herokuapp.com/auth/twitter/callback'
-=======
-<<<<<<< HEAD
-    callbackURL: 'hhttps://matterhorn-cfh-test.herokuapp.com/auth/twitter/callback'
-=======
-    callbackURL: 'https://matterhorn-cfh-test.herokuapp.com/auth/twitter/callback'
->>>>>>> 0037fd08130100104e00f84c48361abb241f6371
->>>>>>> staging
+
   },
   github: {
     clientID: process.env.APP_ID,
@@ -39,5 +32,4 @@ export default {
     'https://matterhorn-cfh-test.herokuapp.com/auth/google/callback'
   }
 };
-// export default { config };
 

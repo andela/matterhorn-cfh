@@ -40,8 +40,6 @@
            <a href="/" class="waves-effect waves-light btn-large">HOME</a>
          </div>
       </div>
-
-<<<<<<< HEAD
     </div>
     <!-- End of social signup and login options -->
     <!-- Start of image between the two sidebars-->
@@ -62,51 +60,6 @@
                       <i class="material-icons prefix">account_circle</i>
                         <input class="input-info" id="name" type="text" name="name" ng-model="name" required novalidate />
                         <label for="name">Username</label>
-=======
-<<<<<<< HEAD
-      <div class="sign-body" ng-controller="authController">
-        <div class="more-sign">
-          <form class="signup form-horizontal">
-            <p class="error-message">{{errorMessage}}</p>
-            <div class="control-group">
-              <label for="name" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="name" type="text" name="name" placeholder="Full name" ng-model="name" required novalidate />
-              </div>
-            </div>
-            <div class="control-group">
-              <label for="email" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="email" type="email" name="email" placeholder="Email" ng-model="email" required novalidate />
-              </div>
-            </div>
-            <div class="control-group">
-              <label for="password" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="password" type="password" name="password" placeholder="Password" ng-model="password" required novalidate />
-              </div>
-            </div>
-            <div id="contain-avatars">
-              <ul ng-controller="IndexController" class="avatar-list">
-                <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                  <input name="avatar" type='radio' value="{{$index}}">
-                    <img ng-src="{{avatar}}">
-                  </input>
-                </li>
-              </ul>
-            </div>
-            <div class="form-actions">
-              <button id="sign-up-btn-other" type='submit' ng-click=signUp()>Sign Up</button>
-=======
-          <div class="sign-body" ng-controller="authController">
-            <div class="more-sign">
-              <form class="signup form-horizontal">
-                <p class="error-message">{{errorMessage}}</p>
-                <div class="control-group">
-                  <label for="name" class="control-label"></label>
-                  <div class="controls">
-                    <input class="input-info" id="name" type="text" name="name" placeholder="Full name" ng-model="name" />
->>>>>>> staging
                   </div>
                 </div>
                 <div class="row">
@@ -125,7 +78,6 @@
               </div>
               <div class="row">
                 <div id="contain-avatars">
-<<<<<<< HEAD
                 <ul ng-controller="IndexController" class="avatar-list">
                   <li ng-repeat="avatar in avatars" class="avatars ng-scope">
                     <input name="avatar" type="radio" value="{{$index}}" id="{{$index}}">
@@ -134,21 +86,6 @@
                   </li>
                 </ul>
               </div>
-=======
-                  <ul ng-controller="IndexController" class="avatar-list">
-                    <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                      <input name="avatar" type='radio' value="{{$index}}">
-                      <img ng-src="{{avatar}}">
-                      </input>
-                    </li>
-                  </ul>
-                </div>
-                <div class="form-actions">
-                  <button id="sign-up-btn-other" type='submit' ng-click=signUp()>Sign Up</button>
-                </div>
-              </form>
->>>>>>> 0037fd08130100104e00f84c48361abb241f6371
->>>>>>> staging
             </div>
               <div class="center-align">
                 <button id="sign-up-btn-other" class="btn waves-effect waves-light btn-large" type="submit" name="action" ng-click=signUp()>SIGN UP

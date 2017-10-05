@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 /* eslint-disable no-underscore-dangle */
->>>>>>> 0037fd08130100104e00f84c48361abb241f6371
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 const validatePresenceOf = value => value && value.length;
