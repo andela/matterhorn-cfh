@@ -1,5 +1,5 @@
 <div class='row'>
-  <div  class="col offset-l2 offset-m2 l8 m8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
+  <div  class="col offset-m2 l8 m8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
     <div class='row'>
       <div class="cards" class='hand'>
 
@@ -72,22 +72,24 @@
   </div>
 </div>
 
-<div class="col offset-l2 l8 m8" id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
-  <div id="czar-blank-inner">
-    You are the Card Czar. <br>
-    <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
-  </div>
-  <div id='charity-fact-container'>
-    <div id='charity-fact-tagline'>Did you know?</div>
-
-    <div id='charity-fact'>
-       {{ makeAWishFact }}
+<div class='row'>
+  <div class="col offset-m2 m8" id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+    <div id="czar-blank-inner">
+      You are the Card Czar. <br>
+      <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
     </div>
+    <div id='charity-fact-container'>
+      <div id='charity-fact-tagline'>Did you know?</div>
 
-    <div id='charity-logo-container'>
-      <img src='/img/make-a-wish-logo.png'/>
+      <div id='charity-fact'>
+         {{ makeAWishFact }}
+      </div>
+
+      <div id='charity-logo-container'>
+        <img src='/img/make-a-wish-logo.png'/>
+      </div>
+
     </div>
-
   </div>
 </div>
 <div class='row game-players-container'>

@@ -1,4 +1,4 @@
-html {
+.polygonal {
   background: url('../img/polygonal-bg.jpg');
   background-attachment: fixed;
   background-size: 100%;
@@ -67,7 +67,6 @@ col.l8.m8.s12.question-container-outer {
   color: #fff;
   height: 201px;
   text-align: center;
-  border-radius: 50%;
 }
 
 .timer-container .time {
@@ -130,7 +129,7 @@ col.l8.m8.s12.question-container-outer {
 .main-container #app-container #gameplay-container #info-container,
 .main-container #app-container #gameplay-container #cards-container,
 .menu-container {
-  background: rgba(31, 149, 156, 1);;
+  background: rgba(0, 150, 136, 1);
 }
 
 
@@ -187,6 +186,7 @@ col.l8.m8.s12.question-container-outer {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  min-height: 0 !important;
 }
 
 .game-card {
@@ -249,7 +249,6 @@ col.l8.m8.s12.question-container-outer {
 
 #czar-blank-container {
   color: white;
-  width: 100%;
   background: rgba(29, 42, 49, 0.67);
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
