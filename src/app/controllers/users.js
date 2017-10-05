@@ -9,6 +9,7 @@ import validateInput from '../../config/middlewares/validateInput';
 
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
+const Game = mongoose.model('Game');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -31,9 +32,64 @@ export const authCallback = (req, res) => {
       { expiresIn: 72 * 60 * 60 }
     );
     res.cookie('token', token);
+    req.headers.authorization = `Bearer ${token}`;
     res.redirect('/#!/');
   }
 };
+
+/** Checks if logged in user has valid AUTH token
+ * @param  {object} req - request
+ * @param  {object} res - response
+ */
+
+export const isLoggedIn = (req, res, next) => {
+  const key = 'mySecret';
+  let token;
+  const tokenAvailable = req.headers.authorization ||
+    req.headers['x-access-token'];
+  if (req.headers.authorization) {
+    [, token] = req.headers.authorization.split(' ');
+  } else {
+    token = tokenAvailable;
+  }
+
+  if (token) {
+    jwt.verify(token, key, (error) => {
+      if (error) {
+        res.status(401)
+          .send({
+            message: 'Failed to Authenticate Token',
+            error
+          });
+      } else {
+        next();
+      }
+    });
+  } else {
+    return res.status(401)
+      .send({
+        message: 'Access denied, Authentication token does not exist'
+      });
+  }
+};
+
+export const saveGameData = (req, res) => {
+  const game = new Game();
+
+  game.gameOwner = req.body.gameOwner;
+  game.gameId = req.params.id;
+  game.gameWinner = req.body.gameWinner;
+  game.date = new Date();
+  game.gamePlayers = req.body.gamePlayers;
+
+  game.save((error) => {
+    if (error) {
+      return error;
+    }
+    res.json(game);
+  });
+};
+
 
 /**
  *  Retrieves the token from cookie
@@ -47,7 +103,6 @@ export const getToken = (req, res) => {
     cookie
   });
 };
-
 
 /**
  * Show login form
@@ -212,6 +267,7 @@ export const register = (req, res) => {
             process.env.TOKEN_SECRET,
             { expiresIn: 72 * 60 * 60 }
           );
+          req.headers.authorization = `Bearer ${token}`;
           res.status(201).send({
             token,
             user: { id: user._id, name: user.name, email: user.email },
@@ -288,16 +344,16 @@ export const login = (req, res) => {
           message: 'Invalid login credentials'
         });
       } else {
-      // check if password is correct
+        // check if password is correct
         bcrypt.compare(password, user.hashed_password, (err, result) => {
           if (result) {
-          // generate token upon login
+            // generate token upon login
             const token = jwt.sign(
               { user: user.id, email: user.email },
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );
-
+            req.headers.authorization = `Bearer ${token}`;
             return res.send(200, {
               id: user.id,
               success: true,

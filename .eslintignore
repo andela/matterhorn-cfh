@@ -3,5 +3,9 @@ node_modules/
 src/public/**
 src/app/views/**
 src/config/env/**.json
+<<<<<<< HEAD
 src/public/css/**.scss
 src/public/css/**.css
+=======
+npm-debug.log
+>>>>>>> staging

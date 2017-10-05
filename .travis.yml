@@ -1,12 +1,20 @@
 language: node_js
 node_js:
   - "7"
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0037fd08130100104e00f84c48361abb241f6371
 services:
   - mongodb
 env:
   - NODE_ENV=test
 before_script:
   - npm install -g gulp-cli
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0037fd08130100104e00f84c48361abb241f6371
 script: npm test
 after_success:
   - npm run coverage
