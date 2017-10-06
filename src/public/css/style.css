@@ -1,3 +1,4 @@
+
 @media (max-width: 768px) {
   .row .col.m8 {
     width: 100%;
@@ -16,14 +17,20 @@
     position: absolute;
     left: 100%;
   }
+  .footer-content {
+    height: 1vh;
+  }
+  .footer-social {
+    height: 1vh;
+  }
 
 }
 @media (min-width: 1024px) and (max-width: 1300px) {
   .sidebar-content {
-    height: 98vh; /* Go down, bring Box B up */
+    height: 99vh; /* Go down, bring Box B up */
   }
   .sidebar-social {
-    height: 98vh;
+    height: 99vh;
   }
   .center-image {
     position: absolute;
@@ -40,14 +47,26 @@
     margin-left: 120px; 
     top: 300px;
   }
+  input {
+    width: 80% !important;
+  }
+  .sidebar-content {
+    text-align: center;
+  }
+  .input-field label {
+    text-align: center;
+  }
+  #contain-avatars {
+    margin-left: 50px;
+  }
 }
 
 @media (min-width: 800px) {
   .sidebar-content {
-    height: 98vh; /* Go down, bring Box B up */
+    height: 99vh; /* Go down, bring Box B up */
   }
   .sidebar-social {
-    height: 98vh;
+    height: 99vh;
   }
 
 }
@@ -454,9 +473,6 @@
 
   #sign-up-btn-other {
    display: inline-block;
-   border-radius: 8px;
-   -moz-border-radius: 5px;
-   -webkit-border-radius: 5px;
    font-size: 20px;
    font-size: 1.35em;
    font-weight: 400;
@@ -464,10 +480,9 @@
    color: white;
    background: #C54141;
    margin-top: 10px;
-   margin-bottom: 3px;
+   margin-bottom: 50px;
    margin-right: 10px;
-   padding: 0.1em 35px;
-   cursor: pointer;
+
  }
 
  /**** About Us ****/
@@ -1293,7 +1308,7 @@
    .avatars {
       position: relative;
       float: left;
-      margin: 2px 17px;
+      margin: 2px 20px;
    }
 
    .foot {
@@ -1312,6 +1327,13 @@
    }
  }
 
+ @media (max-width: 360px) {
+  .avatars {
+    position: relative;
+    float: left;
+    margin: 2px 6px;
+   }
+ }
  /**** authentication screen (Sign Up and Sign In)****/
  .authpage {
   background-color: #fff;
@@ -1387,6 +1409,11 @@ input {
 }
 .material-icons {
   color: #ffffff;
+  margin-top: 20px;
+}
+.material-icons.right {
+  color: #ffffff;
+  margin-top: 0px;
 }
 .img-avatar {
   height: 80px;
@@ -1395,15 +1422,16 @@ input {
 }
 
 .footer-content {
-  height: 2vh;
+  height: 1vh;
   background-color: #009688;
 }
 .footer-social {
+  height: 1vh;
   background-color: #009688;
-  height: 2vh;
 }
 
 .password-show-button:hover {
    opacity: .87;
 }
+
 /**** End of authentication screen ****/
