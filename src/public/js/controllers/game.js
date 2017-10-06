@@ -13,12 +13,12 @@ angular.module('mean.system')
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
 
-    setTimeout(function() { 
+    setTimeout(function() {
       var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
-  
+
       $scope.messages = $firebaseArray(chatRef.limitToFirst(10));
      }, 1000);
-   
+
      var indicator = $( "div.chat-close" ).text();
 
      $scope.submitChat = function () {
@@ -27,7 +27,7 @@ angular.module('mean.system')
       const sender = $scope.global.user.name;
       var message = document.getElementById('message').value,
       avatar = $scope.game.players[$scope.game.playerIndex].avatar;
-      
+
       $scope.messages.$add({ message, gameId: game.gameID, sender, time, avatar })
       .then(() => game.newChat())
 
@@ -150,7 +150,7 @@ angular.module('mean.system')
 
 
     $scope.startGame = function () {
-      
+
       if (game.players.length < game.playerMinLimit) {
         const myModal = $('#theModal');
         myModal
@@ -206,7 +206,7 @@ angular.module('mean.system')
 
     // When game ends, send game data to the database
       if ($scope.game.state === 'game ended') {
-        const gameData = { 
+        const gameData = {
           gameId: $scope.game.gameID,
           gameOwner: $scope.game.players[0].username,
           gameWinner: $scope.game.players[game.gameWinner].username,
@@ -214,13 +214,13 @@ angular.module('mean.system')
         };
         $http.post(`/api/games/${game.gameID}/start`, gameData);
       }
-    
+
     });
     if($scope.game.players.length < 1){
-      
+
     }
-    
-    $scope.setToken = () => {      
+
+    $scope.setToken = () => {
       $http.get('/users/token')
         .success((data) => {
           if (data.cookie) {

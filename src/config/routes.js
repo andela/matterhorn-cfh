@@ -28,7 +28,7 @@ import {
   showQuestion,
   question
 } from '../app/controllers/questions';
-import { play, render } from '../app/controllers/index';
+import { play, render, showDashboard } from '../app/controllers/index';
 
 import app from '../app';
 
@@ -124,4 +124,7 @@ export default () => {
   // Home route
   app.get('/play', play);
   app.get('/', render);
+
+  // Dashboard route
+  app.get('/dashboard', showDashboard);
 };
