@@ -1,5 +1,5 @@
 <div class='row'>
-  <div  class="col offset-l2 offset-m2 l8 m8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
+  <div  class="col offset-m2 m8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
     <div class='row'>
       <div class="cards" class='hand'>
 
@@ -52,47 +52,54 @@
         Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
       </div>
     </div>
-    <a class="join-new-game col m4 l4 s12" href='/#!/app'>
-      <div id="join-new-game" ng-click="game.joinGame('joinNewGame')">
-        Join a New Game
-      </div></a>
-    <a class="exit-match col m4 l4 s12" href='/'>
-      <div id="exit-match">
-      Return to Lobby
+    <div class='row'>
+      <div class='col m4 s12'>
+        <div class="center-align join-block" ng-click="game.joinGame('joinNewGame')">
+            <a href='/#!/app' class="waves-effect waves-light btn cfh-green">Join a New Game</a>
+        </div>
       </div>
-    </a>
-    <div id="charity-widget-container" class="col m4 l4 s12">
-        <!-- This is real -->
-        <a href="http://www.crowdrise.com" id="crowdriseStaticLink-fundraiser-121142" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a>
-        <script type="text/javascript" src="https://www.crowdrise.com/widgets/donate/fundraiser/121142/?callback=userDonationCb"></script>
-        <!-- This is for testing -->
-        <!-- <a href="http://www.crowdrise.com" id="crowdriseStaticLink-project-36715" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a> -->
-        <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
+      <div class='col m4 s12'>
+        <div class="center-align return-block">
+          <a class="waves-effect waves-light btn cfh-signup-red" href='/'>Return to Lobby</a>
+        </div>
+      </div>
+      <div id="charity-widget-container" class="col m4 s12">
+          <!-- This is real -->
+          <a href="http://www.crowdrise.com" id="crowdriseStaticLink-fundraiser-121142" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a>
+          <script type="text/javascript" src="https://www.crowdrise.com/widgets/donate/fundraiser/121142/?callback=userDonationCb"></script>
+          <!-- This is for testing -->
+          <!-- <a href="http://www.crowdrise.com" id="crowdriseStaticLink-project-36715" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a> -->
+          <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
+      </div>
     </div>
   </div>
 </div>
 
-<div class="col offset-l2 l8 m8" id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
-  <div id="czar-blank-inner">
-    You are the Card Czar. <br>
-    <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
-  </div>
-  <div id='charity-fact-container'>
-    <div id='charity-fact-tagline'>Did you know?</div>
-
-    <div id='charity-fact'>
-       {{ makeAWishFact }}
+<div class='row'>
+  <div class="col offset-m2 m8" id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+    <div id="czar-blank-inner">
+      You are the Card Czar. <br>
+      <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
     </div>
+    <div id='charity-fact-container'>
+      <div id='charity-fact-tagline'>Did you know?</div>
 
-    <div id='charity-logo-container'>
-      <img src='/img/make-a-wish-logo.png'/>
+      <div id='charity-fact'>
+         {{ makeAWishFact }}
+      </div>
+
+      <div id='charity-logo-container'>
+        <img src='/img/make-a-wish-logo.png'/>
+      </div>
+
     </div>
-
   </div>
 </div>
-<div class='row game-players-container'>
-  <br>
-  <div class='col offset-m3 m8 offset-l3 l8'>
-    <player></player>
+<div class='row'>
+  <div class='col offset-m2 m8 game-players-container'>
+    <br>
+    <div class='row'>
+      <player></player>
+    </div>
   </div>
 </div>
