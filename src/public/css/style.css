@@ -47,7 +47,7 @@
     margin-left: 120px; 
     top: 300px;
   }
-  input {
+  .sidebar-content input {
     width: 80% !important;
   }
   .sidebar-content {
@@ -1347,10 +1347,10 @@
   color: #ffffff;
 }
 
-input {
+.col.s12.sidebar-content input {
   position: relative;
-  color: rgb(25, 23, 23);
-  font-size: 18px;
+  color: #fff;
+  font-size: 15px;
 }
 .red-eye {
   position: absolute;
@@ -1370,9 +1370,7 @@ input {
     padding-top: 80px;
     text-align: center;
 }
-.col.s12.sidebar-social input {
-  font-size: 15px;
-}
+
 .col.s12.sidebar-social h5 {
   color: #2F6B5D;
 }

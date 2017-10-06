@@ -4,7 +4,8 @@
   "env": {
     "node": true,
     "es6": true,
-    "mocha": true
+    "mocha": true,
+    "jquery": true
     },
   "rules": {
     "max-len": [1, 80, 2],
@@ -19,7 +20,7 @@
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,
-      "requireReturnType": true,
+      "requireReturnType": true,``
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
