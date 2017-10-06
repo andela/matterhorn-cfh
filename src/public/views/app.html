@@ -1,5 +1,6 @@
 </script>
 <div id='layer'></div>
+<div class='polygonal'></div>
 <div class="menu-container">
   <div class="logo">
     <a href="/#!/">
@@ -30,7 +31,7 @@
           <div class="abandon-game-btn center-align" ng-click="abandonGame()">
             <p>Leave &nbsp;<img src='../img/exit.svg' style="width: 30px;"  alt=''></p>
           </div>
-          <div class='play-game-btn center-align' ng-click="startGame()">
+          <div class='play-game-btn center-align' ng-click="startGame()" ng-show="game.state === 'awaiting players'">
             <p>Play &nbsp;&nbsp;&nbsp;<img src='../img/play.svg' style="width: 30px;" alt=''></p>
           </div>
         </div>
