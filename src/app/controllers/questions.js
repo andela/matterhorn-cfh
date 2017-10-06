@@ -62,9 +62,8 @@ export const allQuestionsForGame = (cb) => {
     .select('-_id')
     .exec((err, questions) => {
       if (err) {
-        console.log(err);
-      } else {
-        cb(questions);
+        return (err);
       }
+      cb(questions);
     });
 };

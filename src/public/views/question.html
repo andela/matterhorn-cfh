@@ -1,17 +1,17 @@
-<div id="question-container-inner">
-  <div class="card longBlack">
+<div class="question-container-inner row">
+  <div class="cards longBlacks">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
     
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
-    
-    <div id="startGame" ng-show="game.state === 'awaiting players'">
-      <div id="finding-players">Finding Players</div>
-      <div id="player-count-container">
+
+    <div class="row" id="startGame" ng-show="game.state === 'awaiting players'">
+      <div class="col m12 center-align finding-players">Finding Players</div>
+      <div class="col m4" id="player-count-container">
         <div id="player-count">{{game.players.length}} / 12 </div>
         <div id="the-word-players"> Players </div>
       </div>
-      <div id="loading-container">
-        <div id="loading-gif"><img ng-src="../img/loader.gif" /></div>
+      <div class="col m4" id="loading-container">
+        <div class="center-align" id="loading-gif"><img ng-src="../img/loader.gif" /></div>
       </div>
       
       

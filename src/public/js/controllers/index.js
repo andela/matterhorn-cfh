@@ -11,6 +11,7 @@ angular.module('mean.system')
           $window.localStorage.setItem('token', $cookies.token);
         }
     };
+
     $scope.checkAuth();
     $scope.global = Global;
     $scope.formData = {};
@@ -38,10 +39,11 @@ angular.module('mean.system')
        }
        })
       .error(() => {
-             $scope.showMessage = "Wrong email and/or password";
+             $scope.showMessage = "Oops! Invalid email and/or password";
       });
     }
-
+    
+    
     $scope.signOut = () => {
       $http.get('/logout')
       .success(() => {

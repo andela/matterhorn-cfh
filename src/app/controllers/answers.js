@@ -50,9 +50,8 @@ export const all = (req, res) => {
 export const allAnswersForGame = (cb) => {
   Answer.find({ official: true }).select('-_id').exec((err, answers) => {
     if (err) {
-      console.log(err);
-    } else {
-      cb(answers);
+      return (err);
     }
+    cb(answers);
   });
 };

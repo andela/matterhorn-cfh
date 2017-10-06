@@ -12,6 +12,7 @@ $(document).ready(function(){
 
 var regions = (regionId = '') => {
   var regionObject = {
+    0 : 'Please choose your region',
     1 : 'Nigeria',
     2 : 'United States',
     3 : 'Kenya',

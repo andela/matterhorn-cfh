@@ -121,6 +121,9 @@ class Game {
     this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
   }
 
+  sendChat(msg) {
+    this.io.sockets.in(this.gameID).emit('newMessage');
+  }
   // Currently called on each joinGame event from socket.js
   // Also called on removePlayer IF game is in 'awaiting players' state
 
@@ -202,6 +205,7 @@ class Game {
     this.shuffleCards(this.answers);
     this.stateChoosing(this);
   }
+
 
   sendUpdate() {
     this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());

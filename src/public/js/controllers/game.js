@@ -1,57 +1,92 @@
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
-    $scope.hasPickedCards = false;
-    $scope.winningCardPicked = false;
-    $scope.showTable = false;
-    $scope.modalShown = false;
-    $scope.game = game;
-    $scope.pickedCards = [];
-    var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-    $scope.makeAWishFact = makeAWishFacts.pop();
-    $scope.regionId = parseInt(sessionStorage.getItem('userRegion'), 10);
-    $scope.regionName = regions($scope.regionId);
-    $scope.showRegionName = false;
-
-    $scope.showRegionModal = function () {
-      console.log($scope.regionId)
-      return swal({
-        title: "Choose your region",
-        input: "select",
-        inputOptions: regions(),
-        inputValue: $scope.regionId,
-        showCancelButton: true,
-        confirmButtonColor: '#009688',
-        cancelButtonColor: '#D0021B',
-        cancelButtonText: 'Cancel',
-        confirmButtonText: 'Start Game'
-      })
-        .then((regionId) => {
-          if (regionId) {
-            if (game.players.length < game.playerMinLimit) {
-              return swal({
-                title: 'You cannot start a game now!',
-                text: `You need ${game.playerMinLimit - game.players.length} more players`
-              });
-            } else {
-              $window.sessionStorage.setItem('userRegion', regionId);
-              $scope.regionName = regions(regionId);
-              $scope.showRegionName = true;
-              game.startGame();
-            }
+.controller('GameController', ['$scope', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
+  $scope.hasPickedCards = false;
+  $scope.winningCardPicked = false;
+  $scope.showTable = false;
+  $scope.modalShown = false;
+  $scope.game = game;
+  $scope.notify = false;
+  $scope.messages = {};
+  $scope.global = Global;
+  $scope.messages = [];
+  $scope.pickedCards = [];
+  var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+  $scope.makeAWishFact = makeAWishFacts.pop();
+  $scope.regionId = parseInt(sessionStorage.getItem('userRegion'), 10);
+  $scope.regionName = regions($scope.regionId);
+  $scope.showRegionName = false;
+  
+  $scope.showRegionModal = function () {
+    console.log($scope.regionId)
+    return swal({
+      title: "Choose your region",
+      input: "select",
+      inputOptions: regions(),
+      inputValue: $scope.regionId,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (parseInt(value, 10) > 1) {
+            resolve()
+          } else {
+            reject('Please choose your region')
           }
         })
-        .catch(() => {})
-    };
-
-    $scope.pickCard = function (card) {
-      if (!$scope.hasPickedCards) {
-        if ($scope.pickedCards.indexOf(card.id) < 0) {
-          $scope.pickedCards.push(card.id);
-          if (game.curQuestion.numAnswers === 1) {
-            $scope.sendPickedCards();
-            $scope.hasPickedCards = true;
-          } else if (game.curQuestion.numAnswers === 2 &&
-            $scope.pickedCards.length === 2) {
+      },
+      showCancelButton: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#D0021B',
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Start Game'
+    })
+    .then((regionId) => {
+      if (regionId) {
+        if (game.players.length < game.playerMinLimit) {
+          return swal({
+            title: 'You cannot start a game now!',
+            text: `You need ${game.playerMinLimit - game.players.length} more players`
+          });
+        } else {
+          $window.sessionStorage.setItem('userRegion', regionId);
+          $scope.regionName = regions(regionId);
+          $scope.showRegionName = true;
+          game.startGame();
+        }
+      }
+    })
+    .catch(() => {})
+  };
+  
+  setTimeout(function() { 
+    var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+    
+    $scope.messages = $firebaseArray(chatRef.limitToFirst(10));
+  }, 1000);
+  
+  var indicator = $( "div.chat-close" ).text();
+  
+  $scope.submitChat = function () {
+    var date = new Date(),
+    time = date.toString().split(' ')[4]
+    const sender = $scope.global.user.name;
+    var message = document.getElementById('message').value,
+    avatar = $scope.game.players[$scope.game.playerIndex].avatar;
+    
+    $scope.messages.$add({ message, gameId: game.gameID, sender, time, avatar })
+    .then(() => game.newChat())
+    
+    document.getElementById('message').value = "";
+    
+  }
+  
+  $scope.pickCard = function (card) {
+    if (!$scope.hasPickedCards) {
+      if ($scope.pickedCards.indexOf(card.id) < 0) {
+        $scope.pickedCards.push(card.id);
+        if (game.curQuestion.numAnswers === 1) {
+          $scope.sendPickedCards();
+          $scope.hasPickedCards = true;
+        } else if (game.curQuestion.numAnswers === 2 &&
+          $scope.pickedCards.length === 2) {
             //delay and send
             $scope.hasPickedCards = true;
             $timeout($scope.sendPickedCards, 300);
@@ -61,7 +96,7 @@ angular.module('mean.system')
         }
       }
     };
-
+    
     $scope.pointerCursorStyle = function () {
       if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
         return { 'cursor': 'pointer' };
@@ -69,12 +104,13 @@ angular.module('mean.system')
         return {};
       }
     };
-
+    
+    
     $scope.sendPickedCards = function () {
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
     };
-
+    
     $scope.cardIsFirstSelected = function (card) {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[0];
@@ -82,7 +118,7 @@ angular.module('mean.system')
         return false;
       }
     };
-
+    
     $scope.cardIsSecondSelected = function (card) {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[1];
@@ -90,7 +126,8 @@ angular.module('mean.system')
         return false;
       }
     };
-
+    
+    
     $scope.firstAnswer = function ($index) {
       if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
         return true;
@@ -98,7 +135,7 @@ angular.module('mean.system')
         return false;
       }
     };
-
+    
     $scope.secondAnswer = function ($index) {
       if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
         return true;
@@ -106,35 +143,35 @@ angular.module('mean.system')
         return false;
       }
     };
-
+    
     $scope.showFirst = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
     };
-
+    
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
-
+    
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
     };
-
+    
     $scope.isPlayer = function ($index) {
       return $index === game.playerIndex;
     };
-
+    
     $scope.isCustomGame = function () {
       return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
     };
-
+    
     $scope.isPremium = function ($index) {
       return game.players[$index].premium;
     };
-
+    
     $scope.currentCzar = function ($index) {
       return $index === game.czar;
     };
-
+    
     $scope.winningColor = function ($index) {
       if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
         return $scope.colors[game.players[game.winningCardPlayer].color];
@@ -142,26 +179,27 @@ angular.module('mean.system')
         return '#f9f9f9';
       }
     };
-
+    
     $scope.pickWinning = function (winningSet) {
       if ($scope.isCzar()) {
         game.pickWinning(winningSet.card[0]);
         $scope.winningCardPicked = true;
       }
     };
-
+    
     $scope.winnerPicked = function () {
       return game.winningCard !== -1;
     };
-
+    
+    
     $scope.startGame = function () {
     };
-
+    
     $scope.abandonGame = function () {
       game.leaveGame();
       $location.path('/');
     };
-
+    
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
     $scope.$watch('game.round', function () {
@@ -174,25 +212,41 @@ angular.module('mean.system')
       }
       $scope.pickedCards = [];
     });
-
+    
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function () {
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-      });
-    $scope.setToken = () => {
+      
+      // When game ends, send game data to the database
+      if ($scope.game.state === 'game ended') {
+        const gameData = { 
+          gameId: $scope.game.gameID,
+          gameOwner: $scope.game.players[0].username,
+          gameWinner: $scope.game.players[game.gameWinner].username,
+          gamePlayers: $scope.game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+      }
+      
+    });
+    if($scope.game.players.length < 1){
+      
+    }
+    
+    $scope.setToken = () => {      
       $http.get('/users/token')
-        .success((data) => {
-          if (data.cookie) {
-            $window.sessionStorage.setItem('token', data.cookie);
-          } else {
-            $scope.showMessage = data.message;
-          }
-        })
-        .error(() => {
-          $scope.showMessage = "Failed to authenticate user";
-        });
+      .success((data) => {
+        if (data.cookie) {
+          $window.sessionStorage.setItem('token', data.cookie);
+        } else {
+          $scope.showMessage = data.message;
+        }
+      })
+      .error(() => {
+        $scope.showMessage = "Failed to authenticate user";
+      });
     }
     $scope.$watch('game.gameID', function () {
       if (game.gameID && game.state === 'awaiting players') {
@@ -216,7 +270,7 @@ angular.module('mean.system')
         }
       }
     });
-
+    
     if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
       console.log('joining custom game');
       game.joinGame('joinGame', $location.search().game);
@@ -225,5 +279,6 @@ angular.module('mean.system')
     } else {
       game.joinGame();
     }
-
+    
   }]);
+  
