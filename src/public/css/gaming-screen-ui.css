@@ -64,7 +64,6 @@ col.l8.m8.s12.question-container-outer {
   color: #fff;
   height: 201px;
   text-align: center;
-  border-radius: 50%;
 }
 
 .timer-container .time {
@@ -127,7 +126,7 @@ col.l8.m8.s12.question-container-outer {
 .main-container #app-container #gameplay-container #info-container,
 .main-container #app-container #gameplay-container #cards-container,
 .menu-container {
-  background: rgba(31, 149, 156, 1);;
+  background: rgba(0, 150, 136, 1);
 }
 
 
@@ -152,6 +151,7 @@ col.l8.m8.s12.question-container-outer {
     padding: 30px;
     font-size: 14px;
     cursor: pointer;
+    margin-top: 5px;
   }
 
   .question-container-outer {
@@ -159,6 +159,20 @@ col.l8.m8.s12.question-container-outer {
     padding: 10px 0 50px 3 0px;
     color: #fff;
   }
+}
+#crDonateWidget_cfhio_cards4humanity {
+  margin-top: auto !important;
+}
+
+.return-block, .join-block {
+  box-sizing: border-box !important;
+  padding-top: 75px !important;
+  height: auto;
+  margin: auto;
+}
+
+.return-container, .return-container {
+  padding-top: 30px;
 }
 
 .card.longBlack {
@@ -184,6 +198,7 @@ col.l8.m8.s12.question-container-outer {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  min-height: 0 !important;
 }
 
 .game-card {
@@ -230,10 +245,9 @@ col.l8.m8.s12.question-container-outer {
 }
 
 #player-container {
-  /* width: 100px;
-  margin-right: 10px; */
-  height: 157px;
+  height: 200px;
   float:left;
+  padding: 22px;
   text-align: center;
   border-radius: 8px;
 }
@@ -246,7 +260,6 @@ col.l8.m8.s12.question-container-outer {
 
 #czar-blank-container {
   color: white;
-  width: 100%;
   background: rgba(29, 42, 49, 0.67);
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
