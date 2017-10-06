@@ -25,7 +25,7 @@ angular.module('mean.system')
       inputValue: $scope.regionId,
       inputValidator: function (value) {
         return new Promise(function (resolve, reject) {
-          if (parseInt(value, 10) > 1) {
+          if (parseInt(value, 10) > 0) {
             resolve()
           } else {
             reject('Please choose your region')
