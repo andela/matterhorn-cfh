@@ -33,6 +33,7 @@ import { play, render } from '../app/controllers/index';
 import app from '../app';
 
 export default () => {
+
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);

@@ -1,13 +1,39 @@
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
+  .controller('GameController', ['$scope', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
     $scope.modalShown = false;
     $scope.game = game;
+    $scope.notify = false;
+    $scope.messages = {};
+    $scope.global = Global;
+    $scope.messages = [];
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
+
+    setTimeout(function() { 
+      var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+  
+      $scope.messages = $firebaseArray(chatRef.limitToFirst(10));
+     }, 1000);
+   
+     var indicator = $( "div.chat-close" ).text();
+
+     $scope.submitChat = function () {
+      var date = new Date(),
+      time = date.toString().split(' ')[4]
+      const sender = $scope.global.user.name;
+      var message = document.getElementById('message').value,
+      avatar = $scope.game.players[$scope.game.playerIndex].avatar;
+      
+      $scope.messages.$add({ message, gameId: game.gameID, sender, time, avatar })
+      .then(() => game.newChat())
+
+      document.getElementById('message').value = "";
+
+  }
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {
@@ -36,6 +62,7 @@ angular.module('mean.system')
       }
     };
 
+
     $scope.sendPickedCards = function () {
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
@@ -56,6 +83,7 @@ angular.module('mean.system')
         return false;
       }
     };
+
 
     $scope.firstAnswer = function ($index) {
       if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
@@ -120,7 +148,9 @@ angular.module('mean.system')
       return game.winningCard !== -1;
     };
 
+
     $scope.startGame = function () {
+      
       if (game.players.length < game.playerMinLimit) {
         const myModal = $('#theModal');
         myModal
@@ -186,7 +216,11 @@ angular.module('mean.system')
       }
     
     });
-    $scope.setToken = () => {
+    if($scope.game.players.length < 1){
+      
+    }
+    
+    $scope.setToken = () => {      
       $http.get('/users/token')
         .success((data) => {
           if (data.cookie) {

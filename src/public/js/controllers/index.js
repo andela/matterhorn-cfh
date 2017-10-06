@@ -11,6 +11,7 @@ angular.module('mean.system')
           $window.localStorage.setItem('token', $cookies.token);
         }
     };
+
     $scope.checkAuth();
     $scope.global = Global;
     $scope.formData = {};
@@ -27,7 +28,6 @@ angular.module('mean.system')
         return false;
       }
     }
-
     $scope.signIn = () => {
        $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
