@@ -8,6 +8,40 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
+    $scope.regionId = parseInt(sessionStorage.getItem('userRegion'), 10);
+    $scope.regionName = regions($scope.regionId);
+    $scope.showRegionName = false;
+
+    $scope.showRegionModal = function () {
+      console.log($scope.regionId)
+      return swal({
+        title: "Choose your region",
+        input: "select",
+        inputOptions: regions(),
+        inputValue: $scope.regionId,
+        showCancelButton: true,
+        confirmButtonColor: '#009688',
+        cancelButtonColor: '#D0021B',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Start Game'
+      })
+        .then((regionId) => {
+          if (regionId) {
+            if (game.players.length < game.playerMinLimit) {
+              return swal({
+                title: 'You cannot start a game now!',
+                text: `You need ${game.playerMinLimit - game.players.length} more players`
+              });
+            } else {
+              $window.sessionStorage.setItem('userRegion', regionId);
+              $scope.regionName = regions(regionId);
+              $scope.showRegionName = true;
+              game.startGame();
+            }
+          }
+        })
+        .catch(() => {})
+    };
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {
@@ -121,18 +155,6 @@ angular.module('mean.system')
     };
 
     $scope.startGame = function () {
-      if (game.players.length < game.playerMinLimit) {
-        const myModal = $('#theModal');
-        myModal
-          .find('.modal-title')
-          .text('You cannot start game now!');
-        myModal
-          .find('.modal-body')
-          .text(`You need ${game.playerMinLimit - game.players.length} more players`);
-        myModal.modal('show');
-      } else {
-        game.startGame();
-      }
     };
 
     $scope.abandonGame = function () {
@@ -158,12 +180,12 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-    });
+      });
     $scope.setToken = () => {
       $http.get('/users/token')
         .success((data) => {
           if (data.cookie) {
-            $window.localStorage.setItem('token', data.cookie);
+            $window.sessionStorage.setItem('token', data.cookie);
           } else {
             $scope.showMessage = data.message;
           }

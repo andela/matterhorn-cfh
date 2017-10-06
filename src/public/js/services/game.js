@@ -182,11 +182,17 @@ angular.module('mean.system')
     room = room || '';
     createPrivate = createPrivate || false;
     var userID = !!window.user ? user._id : 'unauthenticated';
-    socket.emit(mode,{userID: userID, room: room, createPrivate: createPrivate});
+    socket.emit(mode,{
+      userID: userID, 
+      room: room, 
+      createPrivate: createPrivate
+    });
   };
 
   game.startGame = function() {
-    socket.emit('startGame');
+    socket.emit('startGame', {
+      regionId: sessionStorage.getItem('userRegion')      
+    })
   };
 
   game.leaveGame = function() {

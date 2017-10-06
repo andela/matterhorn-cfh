@@ -11,3 +11,4 @@ matterhorn-cfh-staging
 .nyc_output
 build
 coverage
+seed.json
