@@ -19,7 +19,6 @@ angular.module('mean.system')
       time: 0,
       curQuestion: null,
       notification: null,
-      newChatAlert: false,
       timeLimits: {},
       joinOverride: false
     };
@@ -188,10 +187,6 @@ angular.module('mean.system')
 
     socket.on('notification', function (data) {
       addToNotificationQueue(data.notification);
-    });
-
-    socket.on('newMessage', function (data) {      
-      setChatNotification();
     });
 
     game.joinGame = function (mode, room, createPrivate) {
