@@ -4,7 +4,7 @@ angular.module('mean.system')
   $scope.scrollTo = function(id){
       // Scroll
     $('html,body').animate({
-        scrollTop: $("#"+id).offset().top}, 'slow');
+        scrollTop: $(`#${id}`).offset().top}, 'slow');
   }
     $scope.checkAuth = () => {
           if ($cookies.token) {

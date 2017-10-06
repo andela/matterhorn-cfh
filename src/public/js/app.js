@@ -3,7 +3,8 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
       function($routeProvider) {
           $routeProvider.
           when('/', {
-            templateUrl: 'views/index.html'
+            templateUrl: 'views/index.html',
+            controller: 'IndexController'
           }).
           when('/app', {
             templateUrl: '/views/app.html',

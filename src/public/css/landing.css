@@ -137,33 +137,45 @@ a:hover, .waves-light:hover{
 .main-title {
   font-size: 48px;
   color: #FFFFFF;
-  width: 414px; }
+  width: 414px;
+ }
 
 #main-cards {
   position: absolute;
   bottom: -90px;
   right: 0; }
 
+.main-desc-text{
+  margin-top: -90px;
+}
 @media (max-width: 1024px) and (min-width: 426px) {
   .main-desc-text {
     width: 250px; }
   #main-cards {
-    width: 500px; } }
+    width: 450px; } }
 
-@media (min-width: 426px) and (max-width: 768px) {
+@media (min-width: 426px) and (max-width: 767px) {
   #main-cards {
     bottom: -45px;
-    width: 400px; } }
+    width: 400px; 
+  } 
+  }
 
 @media (max-width: 425px) {
   #main-cards {
     bottom: -65px;
-    width: 100%; }
+    width: 100%; 
+  }
   .main-desc-text {
     width: 100%;
-    text-align: center; }
+    text-align: center; 
+  }
   .main-title {
-    width: 100%; } }
+    width: 100%;
+    font-size: 32px;
+    margin-top: 0;
+  } 
+}
 
 .main-motto {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -171,10 +183,34 @@ a:hover, .waves-light:hover{
 
 #main-cfh-definition {
   position: relative;
-  min-height: 250px;
+  height: 403px;
   display: flex;
   align-items: center;
-  overflow: hidden; }
+  overflow: hidden; 
+}
+
+@media (max-width: 425px) {
+  #main-cfh-definition {
+    height: 500px;
+  }
+  #main-how-play{
+    height: 650px;
+  }
+}  
+
+@media (max-width: 376px) {
+  #main-how-play{
+    height: 700px;
+  }
+}  
+
+#main-how-play .row .col{
+  height: 200px;
+}
+
+#main-how-play .row .col >div{
+  height: 100%;
+}
 
 #main-cfh-definition p {
   font-family: Helvetica;

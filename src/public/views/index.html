@@ -6,16 +6,22 @@
         <div class="nav-wrapper" ng-controller="IndexController">
           <a href="#" class="left navbar-brand font-luminari">cfh</a>        
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="#!/">Home</a></li>
+            <li><a href="/#!/">Home</a></li>
             <li><a ng-click="scrollTo('main-how-play')">How to play</a></li>
-            <li><a ng-click="scrollTo('main-donation')" href="">Charity</a></li>
-            <li><a ng-click="scrollTo('main-cfh-definition')" href="">About us</a></li>
+            <li><a ng-click="scrollTo('main-donation')">Charity</a></li>
+            <li><a ng-click="scrollTo('main-cfh-definition')">About us</a></li>
             <li ng-hide="showOptions"><a ng-click="signOut()">Sign Out</a></li>
           </ul>
           <a data-activates="slide-out" class="button-collapse right">
             <i class="material-icons">menu</i>
           </a>
-          <ul id="slide-out" class="side-nav"></ul>
+          <ul id="slide-out" class="side-nav">
+            <li><a href="/#!/">Home</a></li>
+            <li><a ng-click="scrollTo('main-how-play')">How to play</a></li>
+            <li><a ng-click="scrollTo('main-donation')">Charity</a></li>
+            <li><a ng-click="scrollTo('main-cfh-definition')">About us</a></li>
+            <li ng-hide="showOptions"><a ng-click="signOut()">Sign Out</a></li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -32,9 +38,9 @@
           <a href="#!/signin" class="waves-effect waves-light btn cfh-green">Login</a>
           <a href="#!/signup" class="waves-effect waves-light btn cfh-signup-red">Signup</a>
         </div>
-        <div class="mt-3" ng-hide="showOptions">
+        <div class="mt-1" ng-hide="showOptions">
           <a href="/play" class="waves-effect waves-light btn red">Play with Strangers</a><br/>
-          <a href="/play?custom" class="waves-effect waves-light btn cfh-green mt-1">Play with Friends</a>
+          <a href="/play?custom" class="waves-effect waves-light btn cfh-green mt-1 mt-sm-1">Play with Friends</a>
         </div>
         <img id="main-cards" src="/svg/cards.svg">
       </div>
@@ -47,7 +53,7 @@
     <img src="/img/small-card.png" class="small-card three" />
     <img src="/img/small-card.png" class="small-card four" />
     <div class="container">
-      <h2 class="font-freckle-face mt-0 pt-1">What is Cards for Humanity</h2>
+      <h2 class="font-freckle-face mt-0">What is Cards for Humanity</h2>
       <p class="text-justify">Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.</p>
     </div>
   </div>
@@ -84,7 +90,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-1 mt-sm-1 mb-1 text-center">
+      <div class="mt-3 mt-sm-1 mb-1 text-center">
         <a href="/#!app" class="waves-effect waves-light btn red">Play as guest</a> 
       </div>     
     </div>
