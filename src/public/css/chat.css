@@ -16,6 +16,28 @@ p { margin: 0; }
 
 /* ---------- LIVE-CHAT ---------- */
 
+
+
+.emojiPickerIconWrap .black {
+    background: url(http://www.iconninja.com/files/654/599/639/blinking-face-icon.png) center center no-repeat;
+    background-size: 60%;
+}
+
+.emojiPicker {
+    width: 400px;
+    height: 200px;
+    z-index: 0;
+    top: 847px;
+    left: 968px;
+    display: block;
+    margin-top: -300px;
+    margin-left: -250px;
+}
+
+.black {
+    background-color: rgba(0, 0, 0, 0.28) !important;
+}
+
 #live-chat {
     bottom: 0;
     font-size: 12px;

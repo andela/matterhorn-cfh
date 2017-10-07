@@ -1,4 +1,10 @@
-(function () {
+(function (e) {
+
+      $('.emojiable-option').emojiPicker({
+        width: '400px',
+        height: '200px'
+      });
+
     
         $('.chat').hide();
         $('.chat-message-counter').show();
