@@ -21,6 +21,10 @@ angular.module('mean.system')
       $location.path('/app');
     }
 
+    $scope.goHome = () => {
+      $location.path('/');
+    }
+
     $scope.showError = () => {
       if ($location.search().error) {
         return $location.search().error;

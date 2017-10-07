@@ -377,3 +377,7 @@ col.l8.m8.s12.question-container-outer {
   margin: 0;
   font-size: 30px;
 }
+
+.cfh-logo-fst {
+  cursor: pointer;
+}
