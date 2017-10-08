@@ -11,20 +11,18 @@
         <div id="the-word-players"> Players </div>
       </div>
       <div class="col m4" id="loading-container">
-        <div class="center-align" id="loading-gif"><img ng-src="../img/loader.gif" /></div>
-      </div>
-      <!-- start Game conditionally -->
-      <div class="col m4 right-align" id="start-game-container" ng-click="startGame()">
-        <div class="start-game-button btn btn-large btn-success">
-          Start Game
+        <div class="center-align" id="loading-gif">
+          <img ng-src="../img/loader.gif" />
         </div>
       </div>
-      <div id="start-game-container" ng-click="invitePlayers()">
-        <div id='start-game-button'>
+      <!-- start Game conditionally -->
+      <div class="col m4 right-align" id="start-game-container" ng-click="invitePlayers()">
+        <div class="start-game-button btn btn-large btn-success">
           Invite Players
         </div>
       </div>
     </div>
+
     <!-- Game Over Stuff -->
     <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -50,7 +48,7 @@
       <div class="modal-header">
         <!-- close button-->
         <button type="button" class="close" onclick="$('#theModal').hide();" data-dismiss="modal">&times;
-          </button>
+        </button>
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
@@ -60,44 +58,81 @@
 </div>
 
 
-<div id="invitePlayers" class="modal">
+<div id="invitePlayers" class="modal invite-players">
   <div class="modal-content">
-    <h4>Invite Players</h4>
-    <p>
-      <input id="search" autocomplete="off" ng-model="searchTerm" ng-change="searchusers()" />
 
-      <!-- Dropdown Trigger -->
-      <a class='dropdown-button btn' ng-click="viewFriends()" data-activates='dropdown1'>Drop Me!</a>
-
-      <!-- Dropdown Structure -->
-      <ul id='dropdown1' class='dropdown-content'>
-        <li ng-repeat="x in friendsList">
-          {{x}}
-          <i class="material-icons">delete</i>
-        </li>
-      </ul>
-
-      <div class="row">
-        <!-- <div ng-repeat="x in usernames">
-          <li class="col s8 collection-item">
-            {{x}}
-
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s6">
+            <a href="#your-friends" ng-click="viewFriends()">FRIENDS</a>
           </li>
-          <a class="btn col s2">Add as Friend</a>
-          <a class="btn col s2" ng-click="inviteToGame()">Invite Player</a>
-        </div> -->
+          <li class="tab col s6">
+            <a href="#invite-friends">USERS</a>
+          </li>
+        </ul>
       </div>
-    </p>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+
+    <div id="invite-friends">
+      <div class="col s12 search row z-depth-3">
+        <input id="search" type="search" autocomplete="off" placeholder="Search for users...." ng-model="searchTerm" ng-change="searchusers()"
+        />
+      </div>
+      <h5 class="center-align" ng-hide="searchResults.length > 0">No users found</h5>
+      <div class="row" ng-show="searchResults.length > 0">
+        <div ng-repeat="x in searchResults">
+          <div class="row">
+            <div class="col s12 m6 l8">
+              <h6>{{x.name}}</h6>
+            </div>
+            <div class="col s12 m6 l4 search-results-btn">
+              <a class="col s5 m5 l5 waves-effect waves-light action-btn" ng-click="addFriend(x)" ng-hide="friendsId.includes(x._id)">
+                <i class="material-icons">group_add</i>
+              </a>
+              <div class="col s5 m5 l5" ng-show="friendsId.includes(x._id)"></div>
+              <div class="col s2 m2 l2"></div>
+              <a class="col s5 m5 l5 waves-effect waves-light action-btn" ng-click="sendNotification(x)" ng-hide="inviteList.includes(x._id)">
+                <i class="material-icons">videogame_asset</i>
+              </a>
+            </div>
+          </div>
+          <div class="divider"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="your-friends" class="friends-info">
+      <div class="row">
+        <div class="col s12 friends">
+          <h6 class="col s6 m6 l6">
+            Friends: {{friendsList.length}}
+          </h6>
+          <div class="col s1 m3 l3 waves-effect waves-light"></div>
+          <a class="col s5 m3 l3 waves-effect waves-light action-btn" ng-show="friendsList.length > 0" ng-click="sendNotification()">INVITE FRIENDS</a>
+        </div>
+        <div class="col s12 list">
+          <ul class="collection" ng-show="friendsList.length > 0">
+            <li class="collection-item" ng-repeat="x in friendsList">
+              <div>
+                {{x.friendName}}
+              </div>
+            </li>
+          </ul>
+          <h6 class="center-align" ng-show="friendsList.length === 0">
+            You have not added any friends
+          </h6>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
   $(document).ready(function () {
     $('.modal').modal();
-    $('.dropdown-button').dropdown()
+    $('ul.tabs').tabs();
+    $('.dropdown-button').dropdown();
   });
 
 </script>

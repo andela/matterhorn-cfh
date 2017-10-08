@@ -8,7 +8,6 @@ import { all } from '../../app/controllers/avatars';
 const User = mongoose.model('User');
 consoleStamp(console, 'm/dd HH:MM:ss');
 
-
 const avatars = all();
 // Valid characters to use to generate random private game IDs
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
@@ -23,6 +22,11 @@ module.exports = (io) => {
   io.sockets.on('connection', (socket) => {
     console.log(`${socket.id} Connected`);
     socket.emit('id', { id: socket.id });
+
+    socket.on('broadcastNotification', () => {
+      const thisGame = allGames[socket.gameID];
+      thisGame.broadcastNotification();
+    });
 
     socket.on('pickCards', (data) => {
       console.log(socket.id, 'picked', data);

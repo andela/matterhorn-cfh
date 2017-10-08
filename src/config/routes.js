@@ -18,10 +18,10 @@ import {
   getToken,
   register,
   addFriend,
-  removeFriend,
   getFriendsList,
   saveGameData,
-  isLoggedIn
+  isLoggedIn,
+  isAthenticated
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -51,14 +51,13 @@ export default () => {
   app.get('/api/search/users/:username', searchUser);
 
   // Friends Route
-  app.put('/api/user/friend', isLoggedIn, addFriend);
-  app.get('/api/user/friend', isLoggedIn, getFriendsList);
-  app.delete('/api/user/friend', isLoggedIn, removeFriend);
+  app.put('/api/user/friend', isAthenticated, addFriend);
+  app.get('/api/user/friends', isAthenticated, getFriendsList);
 
   // Notifications Route
-  app.post('/api/notification', isLoggedIn, addNotification);
-  app.get('/api/notifications', isLoggedIn, loadNotification);
-  app.put('/api/notification/:id', isLoggedIn, readNotification);
+  app.post('/api/notification', isAthenticated, addNotification);
+  app.get('/api/notifications', isAthenticated, loadNotification);
+  app.put('/api/notification/:id', isAthenticated, readNotification);
 
   // Setting up the users api
   app.post('/users', create);

@@ -54,7 +54,7 @@ export const isLoggedIn = (req, res, next) => {
   }
 
   if (token) {
-    jwt.verify(token, key, (error) => {
+    jwt.verify(token, key, (error, decoded) => {
       if (error) {
         res.status(401)
           .send({
@@ -64,6 +64,28 @@ export const isLoggedIn = (req, res, next) => {
       } else {
         next();
       }
+    });
+  } else {
+    return res.status(401)
+      .send({
+        message: 'Access denied, Authentication token does not exist'
+      });
+  }
+};
+
+export const isAthenticated = (req, res, next) => {
+  const token = req.headers.authorization || req.headers['x-access-token'];
+  if (token) {
+    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
+      if (error) {
+        return res.status(401)
+          .send({
+            message: 'Failed to Authenticate Token',
+            error
+          });
+      }
+      req.decoded = decoded;
+      next();
     });
   } else {
     return res.status(401)
@@ -117,27 +139,6 @@ export const getFriendsList = (req, res) => {
     });
 };
 
-export const removeFriend = (req, res) => {
-  const { friendId } = req.body;
-  const userId = req.decoded.user;
-
-  User.findOneAndUpdate(
-    {
-      _id: userId
-    },
-    { $pull: { friends: { friendId } } }
-  )
-    .then(() => {
-      res.status(200).send({
-        message: 'Friend Deleted Successfully'
-      });
-    })
-    .catch(() => {
-      res.status(500).send({
-        message: 'Internal Server Error'
-      });
-    });
-};
 export const saveGameData = (req, res) => {
   const game = new Game();
 
@@ -470,7 +471,7 @@ export const addDonation = (req, res) => {
           let duplicate = false;
           for (let i = 0; i < user.donations.length; i++) {
             if (user.donations[i].crowdrise_donation_id ===
-               req.body.crowdrise_donation_id) {
+              req.body.crowdrise_donation_id) {
               duplicate = true;
             }
           }

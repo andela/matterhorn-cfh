@@ -16,7 +16,9 @@ angular.module('mean.system')
           (response) => {
             $scope.errorMessage = ''
             $window.localStorage.setItem('token', response.data.token)
+            $window.localStorage.setItem('userName', response.data.user.name)
             $location.path('/#!/')
+            $scope.loadNotifcations();
           },
           (error) => {
             if (error.status === 409) {
@@ -34,6 +36,27 @@ angular.module('mean.system')
           }
           );
       }
+
+      $scope.setHttpHeader = () => {
+        const token = $window.localStorage.getItem('token')
+        $http.defaults.headers.common.Authorization = token;
+      };
+
+      $scope.loadNotifcations = () => {
+        $scope.setHttpHeader();
+
+        $http.get('/api/notifications')
+          .then((reponse) => {
+            $scope.allNotifications = response.data;
+            $scope.countNotify = response.data.length;
+            console.log($scope.allNotifications, $scope.countNotify)
+          },
+          (error) => {
+
+          });
+      }
+
+
 
       $scope.togglePassword = () => {
         $scope.typePassword = !$scope.typePassword;

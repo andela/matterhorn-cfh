@@ -8,12 +8,11 @@ const Notification = mongoose.model('Notification');
 /* eslint-disable no-underscore-dangle */
 
 export const addNotification = (req, res) => {
-  const { friendList, message, link } = req.body;
-  const userId = req.decoded.user;
-  const list = friendList.map(id => ({
+  const { myFriends, link, name } = req.body;
+  const list = myFriends.map(id => ({
     to: id,
-    from: userId,
-    message,
+    from: name,
+    message: `${name} has invited you to a game`,
     link,
     read: 0
   }));
