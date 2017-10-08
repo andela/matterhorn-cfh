@@ -119,7 +119,7 @@ class Game {
     this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
   }
 
-  sendChat(msg) {
+  sendChat() {
     this.io.sockets.in(this.gameID).emit('newMessage');
   }
   // Currently called on each joinGame event from socket.js
@@ -204,6 +204,7 @@ class Game {
   sendUpdate() {
     this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());
   }
+
 
   stateChoosing(self) {
     self.state = 'waiting for players to pick';

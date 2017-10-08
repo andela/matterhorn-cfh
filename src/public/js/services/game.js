@@ -20,6 +20,7 @@ angular.module('mean.system')
       curQuestion: null,
       notification: null,
       timeLimits: {},
+      newChatAlert: false,
       joinOverride: false
     };
 
@@ -45,7 +46,7 @@ angular.module('mean.system')
         timeout = $timeout(setChatNotification, 10000);
       }
     };
-
+    
     var setNotification = function () {
       if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
         clearInterval(timeout);
@@ -69,6 +70,10 @@ angular.module('mean.system')
 
     socket.on('id', function (data) {
       game.id = data.id;
+    });
+
+   socket.on('newMessage', function (data) {      
+      setChatNotification();
     });
 
     socket.on('prepareGame', function (data) {
@@ -204,6 +209,7 @@ angular.module('mean.system')
     game.newChat = function () {
       socket.emit('newChat');
     };
+
 
     game.leaveGame = function () {
       game.players = [];
