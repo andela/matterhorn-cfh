@@ -7,12 +7,15 @@ import bcrypt from 'bcrypt';
 import { all } from './avatars';
 import validateInput from '../../config/middlewares/validateInput';
 
+
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
+
+
 const avatarsAll = all();
 
 const helper = require('sendgrid').mail;
@@ -415,7 +418,7 @@ export const login = (req, res) => {
           if (result) {
             // generate token upon login
             const token = jwt.sign(
-              { user: user.id, email: user.email },
+              { name: user.name, user: user.id, email: user.email },
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );

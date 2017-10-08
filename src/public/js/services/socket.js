@@ -10,6 +10,7 @@ angular.module('mean.system')
         });
       });
     },
+    
     emit: function(eventName, data, callback){
       socket.emit(eventName, data, function(){
         var args = arguments;
@@ -20,6 +21,7 @@ angular.module('mean.system')
         }
       });
     },
+
     removeAllListeners: function(eventName, callback){
       socket.removeAllListeners(eventName, function () {
         var args = arguments;

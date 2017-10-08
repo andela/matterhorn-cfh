@@ -1,61 +1,65 @@
 </script>
 <div id='layer'></div>
-<tolu ng-controller="GameController">
-  <div class="menu-container">
-    <div class="logo">
-      <span class="first-word">c</span>
-      <span class="second-word">f</span>
-      <span class="third-word">h</span>
-      <span class="tweet-container">
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
+<div class='polygonal'></div>
+<div class="menu-container">
+  <div class="logo">
+    <span class="first-word">c</span>
+    <span class="second-word">f</span>
+    <span class="third-word">h</span>
+    <span class="tweet-container">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good"
+        data-related="CFH_App">Tweet</a>
       <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
-      </span>
-      <span>
-        <!-- Dropdown Trigger -->
-        <a href= "" class='dropdown-button' data-activates='dropdown1'>
-          <i class="material-icons">notifications</i>
-          <span class="num-notify" ng-hide="notifications.length === 0">{{notifications.length}}</span>
-        </a>
-      </span>
-      <!-- Dropdown Structure -->
-      <ul id='dropdown1' class='dropdown-content'>
-        <li ng-repeat="item in notifications">
-          <a href={{item.link}} ng-click="readNotification(item._id)">
+    </span>
+    <span>
+      <!-- Dropdown Trigger -->
+      <a href="" class='dropdown-button' data-activates='dropdown1'>
+        <i class="material-icons">notifications</i>
+        <span class="num-notify" ng-hide="notifications.length === 0">{{notifications.length}}</span>
+      </a>
+    </span>
+    <!-- Dropdown Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+      <li ng-repeat="item in notifications">
+        <a href={{item.link}} ng-click="readNotification(item._id)">
           {{item.message}}
         </a>
-        </li>
-        <li ng-show="notifications.length === 0">
-          You have no new notification.
-        </li>
-      </ul>
+      </li>
+      <li ng-show="notifications.length === 0">
+        You have no new notification.
+      </li>
+    </ul>
 
-    </div>
   </div>
-  <div id="app-container" data-ng-init="setToken()">
-    <div id="gameplay-container" class="container-fluid">
-      <div class="row upper-gameplay-container">
-        <div class="menu-timeremaining-container">
-          <div class="col l2 m2 offset-m0 offset-s4 s4 timer-container">
-            <timer></timer>
+</div>
+<div id="app-container" data-ng-init="setToken()" ng-controller="GameController">
+  <div id="gameplay-container" class="container-fluid">
+    <div class="row upper-gameplay-container">
+      <div class="menu-timeremaining-container">
+        <div class="col l2 m2 offset-m0 offset-s4 s4 timer-container">
+          <timer></timer>
+        </div>
+      </div>
+      <div class="col l8 m8 s12 question-container-outer">
+        <question></question>
+        <br>
+      </div>
+      <div class="col l2 m2 s12 social-bar-container">
+        <div class="game-actions-container">
+          <div class="abandon-game-btn center-align" ng-click="abandonGame()">
+            <p>Leave &nbsp;
+              <img src='../img/exit.svg' style="width: 30px;" alt=''>
+            </p>
           </div>
-        </div>
-        <div class="col l8 m8 s12 question-container-outer">
-          <question></question>
-          <br>
-        </div>
-        <div class="col l2 m2 s12 social-bar-container">
-          <div class="game-actions-container">
-            <div class="abandon-game-btn center-align" ng-click="abandonGame()">
-              <p>Leave &nbsp;<img src='../img/exit.svg' style="width: 30px;" alt=''></p>
-            </div>
-            <div class='play-game-btn center-align' ng-click="startGame()">
-              <p>Play &nbsp;&nbsp;&nbsp;<img src='../img/play.svg' style="width: 30px;" alt=''></p>
-            </div>
+          <div class='play-game-btn center-align' ng-click="startGame()" ng-show="game.state === 'awaiting players'">
+            <p>Play &nbsp;&nbsp;&nbsp;
+              <img src='../img/play.svg' style="width: 30px;" alt=''>
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <answers></answers>
   </div>
-  <chat></chat>
-</tolu>
+  <answers></answers>
+</div>
+<chat></chat>
