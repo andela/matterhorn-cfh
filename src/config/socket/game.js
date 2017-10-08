@@ -239,7 +239,6 @@ class Game {
 
   stateJudging(self) {
     self.state = 'waiting for czar to decide';
-    // console.log(self.gameID,self.state);
 
     if (self.table.length <= 1) {
       // Automatically select a card if only one card was submitted
@@ -255,7 +254,6 @@ class Game {
 
   stateResults(self) {
     self.state = 'winner has been chosen';
-    console.log(self.state);
     // TODO: do stuff
     let winner = -1;
     for (let i = 0; i < self.players.length; i++) {

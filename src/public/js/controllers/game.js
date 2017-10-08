@@ -90,6 +90,7 @@ angular.module('mean.system')
         card.removeClass('animated flipOutY');
        $('#cardModal').hide();
       }, 500);
+      console.log('see ', game)
     };
 
     $scope.startNextRound = () => {
@@ -159,7 +160,6 @@ angular.module('mean.system')
         })
           .then((willPlay) => {
             if (willPlay) {
-              //$scope.showCardModal()
               game.startGame();
             }
           })
@@ -199,9 +199,6 @@ angular.module('mean.system')
       }else {
         $('.modal-close').trigger('click')
       }    
-      //if (game.state === 'game dissolved') {
-        //$('#cardModal').modal('close');
-      //}
       if ($scope.isCzar() === false && game.state === 'czar pick card'
         && game.state !== 'game dissolved'
         && game.state !== 'awaiting players' && game.table.length === 0) {

@@ -67,8 +67,6 @@ angular.module('mean.system')
   });
 
   socket.on('gameUpdate', function(data) {
-    //console.log(data)
-
     // Update gameID field only if it changed.
     // That way, we don't trigger the $scope.$watch too often
     if (game.gameID !== data.gameID) {
@@ -142,10 +140,10 @@ angular.module('mean.system')
     if (data.state === 'czar pick card') {
       game.czar = data.czar;
       if (game.czar === game.playerIndex) {
-        addToNotificationQueue(
-          `You are now a Czar, 
-          click black card to pop a new question`
-        );
+        // addToNotificationQueue(
+        //   `You are now a Czar, 
+        //   click black card to pop a new question`
+        // );
       } else {
         addToNotificationQueue('Waiting for Czar to pick card');
       }
@@ -159,9 +157,7 @@ angular.module('mean.system')
 
    // Set notifications only when entering state
    if (newState) {
-     if (game.czar === game.playerIndex) {
-       // addToNotificationQueue('You\'re the Card Czar! Please wait!');
-     } else if (game.curQuestion.numAnswers === 1) {
+     if (game.curQuestion.numAnswers === 1) {
        addToNotificationQueue('Select an answer!');
      } else {
        addToNotificationQueue('Select TWO answers!');
