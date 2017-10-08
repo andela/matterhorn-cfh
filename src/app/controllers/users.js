@@ -5,10 +5,14 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { all } from './avatars';
+import validateInput from '../../config/middlewares/validateInput';
 
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
-
+const Game = mongoose.model('Game');
+mongoose.Promise = global.Promise;
+require('dotenv').config();
+/* eslint-disable no-underscore-dangle */
 const avatarsAll = all();
 
 const helper = require('sendgrid').mail;
@@ -18,7 +22,86 @@ const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
  */
 
 export const authCallback = (req, res) => {
-  res.redirect('/chooseavatars');
+  const { TOKEN_SECRET } = process.env;
+  if (!req.user) {
+    res.redirect('/#!/signin?error=emailRequired');
+  } else {
+    const token = jwt.sign(
+      { user: req.user.id, name: req.user.name },
+      TOKEN_SECRET,
+      { expiresIn: 72 * 60 * 60 }
+    );
+    res.cookie('token', token);
+    req.headers.authorization = `Bearer ${token}`;
+    res.redirect('/#!/');
+  }
+};
+
+/** Checks if logged in user has valid AUTH token
+ * @param  {object} req - request
+ * @param  {object} res - response
+ */
+
+export const isLoggedIn = (req, res, next) => {
+  const key = 'mySecret';
+  let token;
+  const tokenAvailable = req.headers.authorization ||
+    req.headers['x-access-token'];
+  if (req.headers.authorization) {
+    [, token] = req.headers.authorization.split(' ');
+  } else {
+    token = tokenAvailable;
+  }
+
+  if (token) {
+    jwt.verify(token, key, (error) => {
+      if (error) {
+        res.status(401)
+          .send({
+            message: 'Failed to Authenticate Token',
+            error
+          });
+      } else {
+        next();
+      }
+    });
+  } else {
+    return res.status(401)
+      .send({
+        message: 'Access denied, Authentication token does not exist'
+      });
+  }
+};
+
+export const saveGameData = (req, res) => {
+  const game = new Game();
+
+  game.gameOwner = req.body.gameOwner;
+  game.gameId = req.params.id;
+  game.gameWinner = req.body.gameWinner;
+  game.date = new Date();
+  game.gamePlayers = req.body.gamePlayers;
+
+  game.save((error) => {
+    if (error) {
+      return error;
+    }
+    res.json(game);
+  });
+};
+
+
+/**
+ *  Retrieves the token from cookie
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing the token
+ */
+export const getToken = (req, res) => {
+  const cookie = req.cookies.token;
+  res.send({
+    cookie
+  });
 };
 
 /**
@@ -146,6 +229,65 @@ export const checkAvatar = (req, res) => {
 };
 
 /**
+ * Register User
+ */
+
+export const register = (req, res) => {
+  const { error, isValid } = validateInput(req.body);
+  if (!isValid) {
+    return res.status(401).send({
+      message: error
+    });
+  }
+
+  User.findOne({
+    $or: [{ name: req.body.name }, { email: req.body.email }]
+  })
+    .then((existingUser) => {
+      if (existingUser) {
+        if (existingUser.name === req.body.name) {
+          return res.status(409).send({
+            message: 'Sorry, that name is in use already!'
+          });
+        }
+        if (existingUser.email === req.body.email) {
+          return res.status(409).send({
+            message: 'Sorry, that email is in use already!'
+          });
+        }
+      }
+      const user = new User(req.body);
+      // Switch the user's avatar index to an actual avatar url
+      user.avatar = avatarsAll[user.avatar];
+      user.provider = 'local';
+      user.save()
+        .then(() => {
+          const token = jwt.sign(
+            { user: user._id, name: user.name },
+            process.env.TOKEN_SECRET,
+            { expiresIn: 72 * 60 * 60 }
+          );
+          req.headers.authorization = `Bearer ${token}`;
+          res.status(201).send({
+            token,
+            user: { id: user._id, name: user.name, email: user.email },
+            message: 'Welcome to Matterhorn CFH',
+          });
+        })
+        .catch(() => {
+          res.status(500).send({
+            message: 'Internal Server Error'
+          });
+        });
+    })
+    .catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
+};
+
+/**
  * Create user
  */
 
@@ -202,16 +344,16 @@ export const login = (req, res) => {
           message: 'Invalid login credentials'
         });
       } else {
-      // check if password is correct
+        // check if password is correct
         bcrypt.compare(password, user.hashed_password, (err, result) => {
           if (result) {
-          // generate token upon login
+            // generate token upon login
             const token = jwt.sign(
               { user: user.id, email: user.email },
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );
-
+            req.headers.authorization = `Bearer ${token}`;
             return res.send(200, {
               id: user.id,
               success: true,
@@ -234,7 +376,7 @@ export const login = (req, res) => {
 /**
  * Assign avatar to user
  */
-
+/* eslint-disable no-plusplus */
 export const avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user.id && req.body.avatar !== undefined &&
@@ -253,15 +395,17 @@ export const avatars = (req, res) => {
 export const addDonation = (req, res) => {
   if (req.body && req.user && req.user.id) {
     // Verify that the object contains crowdrise data
-    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
+    if (req.body.amount && req.body.crowdrise_donation_id &&
+      req.body.donor_name) {
       User.findOne({
         _id: req.user.id
       })
         .exec((err, user) => {
-        // Confirm that this object hasn't already been entered
+          // Confirm that this object hasn't already been entered
           let duplicate = false;
           for (let i = 0; i < user.donations.length; i++) {
-            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
+            if (user.donations[i].crowdrise_donation_id ===
+               req.body.crowdrise_donation_id) {
               duplicate = true;
             }
           }

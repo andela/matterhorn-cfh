@@ -191,10 +191,10 @@ class Game {
   }
 
   startGame() {
-    console.log(this.gameID, this.state);
     this.shuffleCards(this.questions);
     this.shuffleCards(this.answers);
-    this.stateChoosing(this);
+    this.changeCzar(this);
+    this.sendUpdate();
   }
 
   sendUpdate() {
@@ -216,12 +216,6 @@ class Game {
     }
     self.round++;
     self.dealAnswers();
-    // Rotate card czar
-    if (self.czar >= self.players.length - 1) {
-      self.czar = 0;
-    } else {
-      self.czar++;
-    }
     self.sendUpdate();
 
     self.choosingTimeout = setTimeout(() => {
@@ -238,7 +232,7 @@ class Game {
       this.winnerAutopicked = true;
       this.stateResults(this);
     } else {
-    // console.log(this.gameID,'no cards were picked!');
+      // console.log(this.gameID,'no cards were picked!');
       this.stateChoosing(this);
     }
   }
@@ -248,12 +242,12 @@ class Game {
     // console.log(self.gameID,self.state);
 
     if (self.table.length <= 1) {
-    // Automatically select a card if only one card was submitted
+      // Automatically select a card if only one card was submitted
       self.selectFirst();
     } else {
       self.sendUpdate();
       self.judgingTimeout = setTimeout(() => {
-      // Automatically select the first submitted card when time runs out.
+        // Automatically select the first submitted card when time runs out.
         self.selectFirst();
       }, self.timeLimits.stateJudging * 1000);
     }
@@ -274,7 +268,8 @@ class Game {
       if (winner !== -1) {
         self.stateEndGame(winner);
       } else {
-        self.stateChoosing(self);
+        //self.stateChoosing(self);
+        self.changeCzar(self);
       }
     }, self.timeLimits.stateResults * 1000);
   }
@@ -343,13 +338,13 @@ class Game {
   }
 
   pickCards(thisCardArray, thisPlayer) {
-  // Only accept cards when we expect players to pick a card
+    // Only accept cards when we expect players to pick a card
     if (this.state === 'waiting for players to pick') {
-    // Find the player's position in the players array
+      // Find the player's position in the players array
       const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
       console.log('player is at index', playerIndex);
       if (playerIndex !== -1) {
-      // Verify that the player hasn't previously picked a card
+        // Verify that the player hasn't previously picked a card
         let previouslySubmitted = false;
         _.each(this.table, (pickedSet) => {
           if (pickedSet.player === thisPlayer) {
@@ -357,7 +352,7 @@ class Game {
           }
         });
         if (!previouslySubmitted) {
-        // Find the indices of the cards in the player's hand (given the card ids)
+          // Find the indices of the cards in the player's hand (given the card ids)
           const tableCard = [];
           for (let i = 0; i < thisCardArray.length; i++) {
             let cardIndex = null;
@@ -404,7 +399,7 @@ class Game {
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
 
     if (playerIndex !== -1) {
-    // Just used to send the remaining players a notification
+      // Just used to send the remaining players a notification
       const playerName = this.players[playerIndex].username;
 
       // If this player submitted a card, take it off the table
@@ -423,19 +418,19 @@ class Game {
 
       // Check if the player is the czar
       if (this.czar === playerIndex) {
-      // If the player is the czar...
-      // If players are currently picking a card, advance to a new round.
+        // If the player is the czar...
+        // If players are currently picking a card, advance to a new round.
         if (this.state === 'waiting for players to pick') {
           clearTimeout(this.choosingTimeout);
           this.sendNotification('The Czar left the game! Starting a new round.');
           return this.stateChoosing(this);
         } else if (this.state === 'waiting for czar to decide') {
-        // If players are waiting on a czar to pick, auto pick.
+          // If players are waiting on a czar to pick, auto pick.
           this.sendNotification('The Czar left the game! First answer submitted wins!');
           this.pickWinning(this.table[0].card[0].id, thisPlayer, true);
         }
       } else {
-      // Update the czar's position if the removed player is above the current czar
+        // Update the czar's position if the removed player is above the current czar
         if (playerIndex < this.czar) {
           this.czar--;
         }
@@ -468,7 +463,7 @@ class Game {
         this.stateResults(this);
       }
     } else {
-    // TODO: Do something?
+      // TODO: Do something?
       this.sendUpdate();
     }
   }
@@ -477,6 +472,26 @@ class Game {
     clearTimeout(this.resultsTimeout);
     clearTimeout(this.choosingTimeout);
     clearTimeout(this.judgingTimeout);
+  }
+
+
+  changeCzar(self) {
+    self.state = 'czar pick card';
+    self.table = [];
+    if (self.czar >= self.players.length - 1) {
+      self.czar = 0;
+    } else {
+      self.czar += 1;
+    }
+    self.sendUpdate();
+  }
+
+  startNextRound(self) {
+    if (self.state === 'czar pick card') {
+      self.stateChoosing(self);
+    } else if (self.state === 'czar left game') {
+      self.changeCzar(self);
+    }
   }
 }
 

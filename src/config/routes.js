@@ -1,5 +1,6 @@
 import passport from 'passport';
-import { signin,
+import {
+  signin,
   signup,
   sendMail,
   searchUser,
@@ -13,7 +14,11 @@ import { signin,
   login,
   show,
   authCallback,
-  user
+  user,
+  getToken,
+  register,
+  saveGameData,
+  isLoggedIn
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -21,11 +26,11 @@ import { all, showAnswer, answer } from '../app/controllers/answers';
 import {
   allQuestions,
   showQuestion,
-  question } from '../app/controllers/questions';
+  question
+} from '../app/controllers/questions';
 import { play, render } from '../app/controllers/index';
 
 import app from '../app';
-
 
 export default () => {
   // User Routes
@@ -40,6 +45,10 @@ export default () => {
   app.post('/users', create);
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
+  app.post('/api/auth/signup', register);
+
+  // Save ended game data
+  app.post('/api/games/:id/start', isLoggedIn, saveGameData);
 
   // Donation Routes
   app.post('/donations', addDonation);
@@ -49,14 +58,14 @@ export default () => {
     failureFlash: 'Invalid email or password.'
   }), session);
 
+  app.get('/users/token', getToken);
   app.get('/users/me', me);
   app.get('/users/:userId', show);
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: ['email'],
-    failureRedirect: '/signin'
-  }), signin);
+    scope: ['email']
+  }));
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
@@ -65,7 +74,7 @@ export default () => {
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'
@@ -74,7 +83,7 @@ export default () => {
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/signin'
@@ -87,7 +96,7 @@ export default () => {
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-  }), signin);
+  }), authCallback);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'

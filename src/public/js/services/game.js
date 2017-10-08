@@ -67,6 +67,7 @@ angular.module('mean.system')
   });
 
   socket.on('gameUpdate', function(data) {
+    //console.log(data)
 
     // Update gameID field only if it changed.
     // That way, we don't trigger the $scope.$watch too often
@@ -138,40 +139,52 @@ angular.module('mean.system')
       game.state = data.state;
     }
 
-    if (data.state === 'waiting for players to pick') {
+    if (data.state === 'czar pick card') {
       game.czar = data.czar;
-      game.curQuestion = data.curQuestion;
-      // Extending the underscore within the question
-      game.curQuestion.text = data.curQuestion.text.replace(/_/g,'<u></u>');
-
-      // Set notifications only when entering state
-      if (newState) {
-        if (game.czar === game.playerIndex) {
-          addToNotificationQueue('You\'re the Card Czar! Please wait!');
-        } else if (game.curQuestion.numAnswers === 1) {
-          addToNotificationQueue('Select an answer!');
-        } else {
-          addToNotificationQueue('Select TWO answers!');
-        }
-      }
-    } else if (data.state === 'waiting for czar to decide') {
       if (game.czar === game.playerIndex) {
-        addToNotificationQueue("Everyone's done. Choose the winner!");
+        addToNotificationQueue(
+          `You are now a Czar, 
+          click black card to pop a new question`
+        );
       } else {
-        addToNotificationQueue("The czar is contemplating...");
+        addToNotificationQueue('Waiting for Czar to pick card');
       }
-    } else if (data.state === 'winner has been chosen' &&
-              game.curQuestion.text.indexOf('<u></u>') > -1) {
-      game.curQuestion = data.curQuestion;
-    } else if (data.state === 'awaiting players') {
-      joinOverrideTimeout = $timeout(function() {
-        game.joinOverride = true;
-      }, 15000);
-    } else if (data.state === 'game dissolved' || data.state === 'game ended') {
-      game.players[game.playerIndex].hand = [];
-      game.time = 0;
-    }
-  });
+   } else if (data.state === 'waiting for players to pick') {
+   game.czar = data.czar;
+   // console.log(data);
+   game.curQuestion = data.curQuestion;
+   // Extending the underscore within the question
+   // game.curQuestion.text = data.curQuestion.text.replace(/_/g, '<u></u>');
+   game.curQuestion.text = data.curQuestion.text.replace(/_/g, '_________');
+
+   // Set notifications only when entering state
+   if (newState) {
+     if (game.czar === game.playerIndex) {
+       // addToNotificationQueue('You\'re the Card Czar! Please wait!');
+     } else if (game.curQuestion.numAnswers === 1) {
+       addToNotificationQueue('Select an answer!');
+     } else {
+       addToNotificationQueue('Select TWO answers!');
+     }
+   }
+ } else if (data.state === 'waiting for czar to decide') {
+   if (game.czar === game.playerIndex) {
+     addToNotificationQueue("Everyone's done. Choose the winner!");
+   } else {
+     addToNotificationQueue("The czar is contemplating...");
+   }
+ } else if (data.state === 'winner has been chosen' &&
+           game.curQuestion.text.indexOf('<u></u>') > -1) {
+   game.curQuestion = data.curQuestion;
+ } else if (data.state === 'awaiting players') {
+   joinOverrideTimeout = $timeout(function() {
+     game.joinOverride = true;
+   }, 15000);
+ } else if (data.state === 'game dissolved' || data.state === 'game ended') {
+   game.players[game.playerIndex].hand = [];
+   game.time = 0;
+ }
+});
 
   socket.on('notification', function(data) {
     addToNotificationQueue(data.notification);
@@ -201,6 +214,10 @@ angular.module('mean.system')
 
   game.pickWinning = function(card) {
     socket.emit('pickWinning',{card: card.id});
+  };
+    
+  game.startNextRound = () => {
+    socket.emit('czarCardSelected');
   };
 
   decrementTime();

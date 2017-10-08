@@ -1,20 +1,21 @@
-<div id="question-container-inner">
-  <div class="card longBlack">
+<div class="question-container-inner row">
+  <div class="cards longBlacks">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
-    <div id="startGame" ng-show="game.state === 'awaiting players'">
-      <div id="finding-players">Finding Players</div>
-      <div id="player-count-container">
+    <div class="row" id="startGame" ng-show="game.state === 'awaiting players'">
+      <div class="col m12 center-align finding-players">Finding Players</div>
+      <div class="col m4" id="player-count-container">
         <div id="player-count">{{game.players.length}} / 12 </div>
         <div id="the-word-players"> Players </div>
       </div>
-      <div id="loading-container">
-        <div id="loading-gif"><img ng-src="../img/loader.gif" /></div>
+      <div class="col m4" id="loading-container">
+        <div class="center-align" id="loading-gif"><img ng-src="../img/loader.gif" /></div>
       </div>
-      <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride)">
-        <div id='start-game-button'>
+      <!-- start Game conditionally -->
+      <div class="col m4 right-align" id="start-game-container" ng-click="startGame()">
+        <div class="start-game-button btn btn-large btn-success">
           Start Game
         </div>
       </div>
@@ -38,19 +39,37 @@
   </div>
 </div>
 
-
-<div id="myModal" class="modal fade" role="dialog">
+<div id="theModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button class="close" data-dismiss="modal">
-  &times;
-        </button>
+        <!-- close button-->
+        <button type="button" class="close" onclick="$('#theModal').hide();" data-dismiss="modal">&times;
+          </button>
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-
       </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Structure for czar card decks-->
+<div id="cardModal" class="modal card-container" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content center">
+      <center>
+        <h4 id="cardText" class="card-text">Hey! You are the card czar. Click a card and start the game.</h4>
+        <div ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style='margin: auto;'>
+          <center>
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard1' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard2' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard3' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard4' />
+        </div>
+        </center>
+        <div class="modal-footer" style='display: none'>
+          <button class="modal-action modal-close waves-effect waves-green btn-flat" ></button>
+        </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+  .controller('GameController', ['$scope', 'game', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -37,7 +37,6 @@ angular.module('mean.system')
     };
 
     $scope.sendPickedCards = function () {
-      console.log('hey man see the sent card', game)
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
     };
@@ -82,20 +81,24 @@ angular.module('mean.system')
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
 
-    $scope.showCzarModal = () => {
-      swal({
-        title: 'Sweet!',
-        text: 'Modal with a custom image.',
-        imageUrl: 'https://unsplash.it/400/200',
-        imageWidth: 400,
-        imageHeight: 200,
-        imageAlt: 'Custom image',
-        animation: false
-      })
-    }
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      $('#cardModal').show();
+      card.addClass('animated flipOutY');
+      setTimeout(() => {
+        $scope.startNextRound();
+        card.removeClass('animated flipOutY');
+       $('#cardModal').hide();
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      if ($scope.isCzar()) {
+        game.startNextRound();
+      }
+    };
 
     $scope.isCzar = function () {
-      console.log('you are now the czar')
       return game.czar === game.playerIndex;
     };
 
@@ -136,16 +139,31 @@ angular.module('mean.system')
 
     $scope.startGame = function () {
       if (game.players.length < game.playerMinLimit) {
-        const popupModal = $('#myModal');
-        popupModal
+        const myModal = $('#theModal');
+        myModal
           .find('.modal-title')
-          .text('You cannot start the game now');
-        popupModal
+          .text('You cannot start game now!');
+        myModal
           .find('.modal-body')
-          .text(`You need ${game.playerMinLimit - game.players.length} more player(s) to start the game`);
-        popupModal.modal('show')
+          .text(`You need ${game.playerMinLimit - game.players.length} more players`);
+        myModal.show();
       } else {
-        game.startGame();
+        swal({
+          title: "Are you sure??",
+          text: "Clicking the Start button will start the game for every users in this session",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Go back',
+          confirmButtonText: 'Start Game'
+        })
+          .then((willPlay) => {
+            if (willPlay) {
+              //$scope.showCardModal()
+              game.startGame();
+            }
+          })
+          .catch(() => swal("Game was not started"))
       }
     };
 
@@ -153,29 +171,73 @@ angular.module('mean.system')
       game.leaveGame();
       $location.path('/');
     };
-
+        // Observes changes to round to update when no players pick card
+      // (because game.state remains the same)
+     $scope.$watch('game.round', () => {
+       $scope.hasPickedCards = false;
+        $scope.showTable = false;
+        $scope.winningCardPicked = false;
+        $scope.makeAWishFact = makeAWishFacts.pop();
+        if (!makeAWishFacts.length) {
+          makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+        }
+        $scope.pickedCards = [];
+      });
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
-    $scope.$watch('game.round', function () {
-      $scope.hasPickedCards = false;
-      $scope.showTable = false;
-      $scope.winningCardPicked = false;
-      $scope.makeAWishFact = makeAWishFacts.pop();
-      if (!makeAWishFacts.length) {
-        makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-      }
-      $scope.pickedCards = [];
-    });
-
-    // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function () {
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-      console.log('hey man', game.state, game.table)
-      // Trigger for czar
-    });
+      // POp up program for modal
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        const cardModal =  $('#cardModal')
+        cardModal.modal({
+          dismissible: false
+        });
+       cardModal.modal('open');
+      }else {
+        $('.modal-close').trigger('click')
+      }    
+      //if (game.state === 'game dissolved') {
+        //$('#cardModal').modal('close');
+      //}
+      if ($scope.isCzar() === false && game.state === 'czar pick card'
+        && game.state !== 'game dissolved'
+        && game.state !== 'awaiting players' && game.table.length === 0) {
+        $scope.czarHasDrawn = 'Wait! Czar is drawing Card';
+      }
+      if (game.state !== 'czar pick card'
+       && game.state !== 'awaiting players'
+        && game.state !== 'game dissolved') {
+        $scope.czarHasDrawn = '';
+      }
 
+    // When game ends, send game data to the database
+      if ($scope.game.state === 'game ended') {
+        const gameData = { 
+          gameId: $scope.game.gameID,
+          gameOwner: $scope.game.players[0].username,
+          gameWinner: $scope.game.players[game.gameWinner].username,
+          gamePlayers: $scope.game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+      }
+    
+    });
+    $scope.setToken = () => {
+      $http.get('/users/token')
+        .success((data) => {
+          if (data.cookie) {
+            $window.localStorage.setItem('token', data.cookie);
+          } else {
+            $scope.showMessage = data.message;
+          }
+        })
+        .error(() => {
+          $scope.showMessage = "Failed to authenticate user";
+        });
+    }
     $scope.$watch('game.gameID', function () {
       if (game.gameID && game.state === 'awaiting players') {
         if (!$scope.isCustomGame() && $location.search().game) {

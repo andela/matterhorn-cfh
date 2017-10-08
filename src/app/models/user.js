@@ -1,10 +1,7 @@
-/**
- * Module dependencies.
- */
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import Helper from './helper';
 
-const authTypes = ['github', 'twitter', 'facebook', 'google'];
 const { Schema } = mongoose;
 
 /* eslint-disable no-underscore-dangle */
@@ -29,54 +26,34 @@ const UserSchema = new Schema({
 /**
  * Virtuals
  */
-UserSchema.virtual('password').set(function (password) {
-  this._password = password;
-  this.hashed_password = this.encryptPassword(password);
-}).get(function () { return this._password; });
+UserSchema.virtual('password').set(Helper.validatePass).get(Helper.returnPass);
 
 /**
  * Validations
  */
 
-const validatePresenceOf = value => value && value.length;
-
 // the below 4 validations only apply if you are signing up traditionally
-UserSchema.path('name').validate((name) => {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true;
-  return name.length;
-}, 'Name cannot be blank');
+UserSchema.path('name').validate(Helper.validateName, 'Name cannot be blank');
 
-UserSchema.path('email').validate((email) => {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true;
-  return email.length;
-}, 'Email cannot be blank');
+UserSchema
+  .path('email').validate(Helper.validateEmail, 'Email cannot be blank');
 
-UserSchema.path('username').validate((username) => {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true;
-  return username.length;
-}, 'Username cannot be blank');
+UserSchema
+  .path('username').validate(
+    Helper.validateUsername,
+    'Username cannot be blank'
+  );
 
-UserSchema.path('hashed_password').validate((hashedPassword) => {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true;
-  return hashedPassword.length;
-}, 'Password cannot be blank');
+UserSchema
+  .path('hashed_password')
+  .validate(Helper.validateHash, 'Password cannot be blank');
 
 
 /**
  * Pre-save hook
  */
-UserSchema.pre('save', (next) => {
-  if (!this.isNew) return next();
+UserSchema.pre('save', Helper.preSaveHook);
 
-  if (!validatePresenceOf(this.password)
-    && authTypes.indexOf(this.provider) === -1) {
-    next(new Error('Invalid password'));
-  } else { next(); }
-});
 
 /**
  * Methods
@@ -112,3 +89,7 @@ UserSchema.methods = {
 };
 
 mongoose.model('User', UserSchema);
+
+const User = mongoose.model('User', UserSchema);
+
+export default User;
