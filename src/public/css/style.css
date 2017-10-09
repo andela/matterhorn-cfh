@@ -1406,5 +1406,13 @@ input {
 .password-show-button:hover {
    opacity: .87;
 }
-
+i.fa.fa-twitter {
+  background-color: #0084b4;
+}
+i.fa.fa-facebook {
+  background-color: #3b5998;
+}
+i.fa.fa-google {
+  background-color:  #dd4b39;
+}
 /**** End of authentication screen ****/
