@@ -17,6 +17,7 @@ angular.module('mean.system')
             $scope.errorMessage = ''
             $window.localStorage.setItem('token', response.data.token)
             $location.path('/#!/')
+            $scope.loadNotifcations();
           },
           (error) => {
             if (error.status === 409) {
