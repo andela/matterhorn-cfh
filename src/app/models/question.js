@@ -21,6 +21,12 @@ const QuestionSchema = new Schema({
   numAnswers: {
     type: Number
   },
+  regionId: {
+    type: Number,
+    default: 0,
+    trim: true
+  },
+
   official: {
     type: Boolean
   },

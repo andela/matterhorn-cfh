@@ -1,7 +1,4 @@
-.polygonal {
-  background: url('../img/polygonal-bg.jpg');
-  background-attachment: fixed;
-  background-size: 100%;
+html {
   position: relative;
 }
 
