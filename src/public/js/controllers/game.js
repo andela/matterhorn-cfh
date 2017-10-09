@@ -254,8 +254,7 @@ angular.module('mean.system')
       $scope.inviteList = [...$scope.inviteList, ...myFriends];
 
       const payload = {
-        name: $window.localStorage.getItem('userName'),
-        link: $location.absUrl(),
+        link: $location.url(),
         myFriends
       };
       $scope.setHttpHeader();
@@ -285,15 +284,28 @@ angular.module('mean.system')
 
     $scope.loadNotifications();
 
-    $scope.readNotification = (id) => {
-      $http.put(`/api/notification/${id}`)
+    $scope.readNotification = (item) => {
+      $http.put(`/api/notification/${item._id}`)
         .then(
         (response) => {
           $scope.loadNotifications();
+          //$window.location.href = '/';
+          //$location.path(`/#!/${item.link}`)
+          //console.log($location.absUrl())
         },
         (error) => {
           $scope.loadNotifications();
         });
+    };
+
+    $scope.isUser = () => {
+      const token = $window.localStorage.getItem('token');
+  
+      if(token) {
+        return true
+      } else {
+        return false
+      }
     };
 
     $scope.abandonGame = function () {

@@ -34,10 +34,7 @@ angular.module('mean.system')
         .success((data) => {
           if (data.success === true) {
             $window.localStorage.setItem('token', data.token);
-            $window.localStorage.setItem('userName', data.name);
             $window.location.href = '/';
-
-            $scope.loadNotifcations();
           } else {
             $scope.showMessage = data.message;
           }
@@ -57,7 +54,6 @@ angular.module('mean.system')
         $cookieStore.remove(k);
       });
       $window.localStorage.removeItem("token");
-      $window.localStorage.removeItem("userName");
       // $cookieStore.remove('token');
       $window.location.href = '/';
     }

@@ -1,7 +1,7 @@
 </script>
 <div id='layer'></div>
 <div class='polygonal'></div>
-<div class="menu-container">
+<div class="menu-container" ng-controller="GameController">
   <div class="logo">
     <span class="first-word">c</span>
     <span class="second-word">f</span>
@@ -13,7 +13,7 @@
     </span>
     <span>
       <!-- Dropdown Trigger -->
-      <a href="" class='dropdown-button' data-activates='dropdown1'>
+      <a href="" class='dropdown-button' data-activates='dropdown1' ng-show="isUser()">
         <i class="material-icons">notifications</i>
         <span class="num-notify" ng-hide="notifications.length === 0">{{notifications.length}}</span>
       </a>
@@ -21,7 +21,7 @@
     <!-- Dropdown Structure -->
     <ul id='dropdown1' class='dropdown-content'>
       <li ng-repeat="item in notifications">
-        <a href={{item.link}} ng-click="readNotification(item._id)">
+        <a href="/#!{{item.link}}" ng-click="readNotification(item)">
           {{item.message}}
         </a>
       </li>
@@ -29,6 +29,7 @@
         You have no new notification.
       </li>
     </ul>
+
 
   </div>
 </div>

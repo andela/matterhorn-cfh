@@ -125,6 +125,10 @@ input[type=search]:not(.browser-default) {
   margin-left: 0px;
 }
 
+.dropdown-button {
+  color: white;
+}
+
 .dropdown-content{
   width: fit-content !important;
   top: 35px !important;

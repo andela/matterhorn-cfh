@@ -115,8 +115,9 @@ export const addFriend = (req, res) => {
         message: 'Friend Added Successfully'
       });
     })
-    .catch(() => {
+    .catch((error) => {
       res.status(500).send({
+        error,
         message: 'Internal Server Error'
       });
     });
@@ -332,7 +333,7 @@ export const register = (req, res) => {
       user.save()
         .then(() => {
           const token = jwt.sign(
-            { user: user._id, name: user.name },
+            { user: user._id, name: user.name, email: user.email },
             process.env.TOKEN_SECRET,
             { expiresIn: 72 * 60 * 60 }
           );
