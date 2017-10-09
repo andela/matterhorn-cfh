@@ -2,7 +2,6 @@
   "name": "mean",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "~3.0.0",
     "angular-bootstrap": "~0.4.0",
     "angular-ui-utils": "0.0.4",
     "jquery": "~1.9.1",
