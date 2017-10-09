@@ -210,10 +210,10 @@ module.exports = (io) => {
       joinGame(socket, data);
     });
 
-    socket.on('new-chat-message', () => {
-      socket.broadcast.emit('message-seen', {
-        msg: 'new'
-      });
+    socket.on('newChat', () => {
+      const thisGame = allGames[socket.gameID];
+
+      thisGame.sendChat();
     });
 
     socket.on('startGame', (data) => {
@@ -234,11 +234,6 @@ module.exports = (io) => {
       }
     });
 
-    socket.on('newChat', () => {
-      const thisGame = allGames[socket.gameID];
-
-      thisGame.sendChat();
-    });
 
     socket.on('leaveGame', () => {
       exitGame(socket);

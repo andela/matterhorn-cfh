@@ -208,6 +208,7 @@ class Game {
     this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());
   }
 
+
   stateChoosing(self) {
     self.state = 'waiting for players to pick';
     // console.log(self.gameID,self.state);

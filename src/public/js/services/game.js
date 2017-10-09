@@ -19,8 +19,8 @@ angular.module('mean.system')
       time: 0,
       curQuestion: null,
       notification: null,
-      newChatAlert: false,
       timeLimits: {},
+      newChatAlert: false,
       joinOverride: false
     };
 
@@ -43,10 +43,10 @@ angular.module('mean.system')
         game.newChatAlert = false;
       } else {
         game.newChatAlert = true // Show a notification and check again in a bit
-        timeout = $timeout(setChatNotification, 10000);
+        timeout = $timeout(setChatNotification, 20000);
       }
     };
-
+    
     var setNotification = function () {
       if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
         clearInterval(timeout);
@@ -70,6 +70,10 @@ angular.module('mean.system')
 
     socket.on('id', function (data) {
       game.id = data.id;
+    });
+
+   socket.on('newMessage', function (data) {      
+      setChatNotification();
     });
 
     socket.on('prepareGame', function (data) {
@@ -190,10 +194,6 @@ angular.module('mean.system')
       addToNotificationQueue(data.notification);
     });
 
-    socket.on('newMessage', function (data) {      
-      setChatNotification();
-    });
-
     game.joinGame = function (mode, room, createPrivate) {
       mode = mode || 'joinGame';
       room = room || '';
@@ -211,6 +211,7 @@ angular.module('mean.system')
     game.newChat = function () {
       socket.emit('newChat');
     };
+
 
     game.leaveGame = function () {
       game.players = [];
