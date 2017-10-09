@@ -266,7 +266,6 @@ class Game {
   stateResults(self) {
     self.state = 'winner has been chosen';
     console.log(self.state);
-    // TODO: do stuff
     let winner = -1;
     for (let i = 0; i < self.players.length; i++) {
       if (self.players[i].points >= self.pointLimit) {
@@ -472,7 +471,6 @@ class Game {
         this.stateResults(this);
       }
     } else {
-    // TODO: Do something?
       this.sendUpdate();
     }
   }
