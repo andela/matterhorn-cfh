@@ -8,9 +8,8 @@ build/
 bower_components
 public/lib
 matterhorn-cfh-staging
-.nyc_output
+.nyc_output/
 build
 coverage
-.nyc_output/
 seed.json
 seeders/

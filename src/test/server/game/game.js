@@ -1,4 +1,7 @@
+import '../../../app';
+
 const io = require('socket.io-client');
+require('socket.io').listen(5000);
 
 const socketURL = 'http://localhost:5000';
 

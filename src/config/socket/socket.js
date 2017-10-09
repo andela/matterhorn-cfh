@@ -1,13 +1,15 @@
 /** eslint-disable */
 import consoleStamp from 'console-stamp';
 import mongoose from 'mongoose';
+
 import Game from './game';
 import Player from './player';
+
 import { all } from '../../app/controllers/avatars';
+
 
 const User = mongoose.model('User');
 consoleStamp(console, 'm/dd HH:MM:ss');
-
 
 const avatars = all();
 // Valid characters to use to generate random private game IDs
@@ -23,6 +25,11 @@ module.exports = (io) => {
   io.sockets.on('connection', (socket) => {
     console.log(`${socket.id} Connected`);
     socket.emit('id', { id: socket.id });
+
+    socket.on('broadcastNotification', () => {
+      const thisGame = allGames[socket.gameID];
+      thisGame.broadcastNotification();
+    });
 
     socket.on('pickCards', (data) => {
       console.log(socket.id, 'picked', data);
@@ -112,7 +119,7 @@ module.exports = (io) => {
         // Also checking the number of players, so node doesn't crash when
         // no one is in this custom room.
         if (game.state === 'awaiting players' && (!game.players.length ||
-          game.players[0].socketGame.id !== socketGame.id)) {
+          game.players[0].socket.id !== socketGame.id)) {
           // Put player into the requested game
           console.log('Allowing player to join', requestedGameId);
           allPlayers[socketGame.id] = true;
@@ -122,6 +129,7 @@ module.exports = (io) => {
           game.assignPlayerColors();
           game.assignGuestNames();
           game.sendUpdate();
+          // socket.broadcast.to('game').emit('message', 'nice game');
           game.sendNotification(`${player.username} has joined the game!`);
           if (game.players.length >= game.playerMaxLimit) {
             gamesNeedingPlayers.shift();
@@ -161,12 +169,14 @@ module.exports = (io) => {
             player.username = user.name;
             player.premium = user.premium || 0;
             player.avatar = user.avatar || avatars[Math.floor(Math.random() * 4) + 12];
+            player.regionId = data.regionId;
           }
           getGame(player, socket, data.room, data.createPrivate);
         });
       } else {
         // If the user isn't authenticated (guest)
         player.username = 'Guest';
+        player.regionId = data.regionId;
         player.avatar = avatars[Math.floor(Math.random() * 4) + 12];
         getGame(player, socket, data.room, data.createPrivate);
       }
@@ -198,14 +208,22 @@ module.exports = (io) => {
       socket.leave(socket.gameID);
     };
 
+
     socket.on('joinNewGame', (data) => {
       exitGame(socket);
       joinGame(socket, data);
     });
 
-    socket.on('startGame', () => {
+    socket.on('newChat', () => {
+      const thisGame = allGames[socket.gameID];
+
+      thisGame.sendChat();
+    });
+
+    socket.on('startGame', (data) => {
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];
+        thisGame.regionId = data.regionId;
         console.log('comparing', thisGame.players[0].socket.id, 'with', socket.id);
         if (thisGame.players.length >= thisGame.playerMinLimit) {
           // Remove this game from gamesNeedingPlayers so new players can't join it.
@@ -219,7 +237,7 @@ module.exports = (io) => {
         }
       }
     });
-
+    // listen to changes emitted from czar
     socket.on('czarCardSelected', () => {
       allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
     });

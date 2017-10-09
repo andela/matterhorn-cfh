@@ -1,7 +1,4 @@
 html {
-  background: url('../img/polygonal-bg.jpg');
-  background-attachment: fixed;
-  background-size: 100%;
   position: relative;
 }
 
@@ -67,7 +64,6 @@ col.l8.m8.s12.question-container-outer {
   color: #fff;
   height: 201px;
   text-align: center;
-  border-radius: 50%;
 }
 
 .timer-container .time {
@@ -81,15 +77,74 @@ col.l8.m8.s12.question-container-outer {
   padding-bottom: 20px;
 }
 
+.invite-players, .invite-players input {
+  color: black;
+}
+
+.action-btn, .action-btn:hover, .action-btn:focus {
+  background-color: #009688;
+  margin: 5px 0px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  height:26px;
+}
+
+.invite-players {
+  height: 70%;
+  overflow: auto;
+}
+
+input[type=search]:not(.browser-default) {
+  border-bottom: none !important;
+  margin: 0px !important;
+  padding: 3px !important;
+}
+
+.tabs, .tab a, .tab a:active, .tab a:hover{
+  color: #282F38 !important;
+}
+
+.search {
+  margin-top: 2%!important;
+  margin-bottom: 4%!important;
+  
+}
+
+.search-results-btn a.btn{
+  background-color:  #009688 !important;
+  margin: 2% 0% !important;
+};
+
+.num-notify {
+  margin-top: 7px !important;
+  position: absolute !important;
+  margin-left: 0px !important;
+}
+
+.dropdown-button {
+  color: white;
+}
+
+.dropdown-content{
+  width: fit-content !important;
+  top: 35px !important;
+  border-radius: 5px !important;
+}
+
+.dropdown-content li{
+  padding: 5px !important;
+}
+
 @media only screen and (max-width: 780px) {
   .timer-container .time {
     font-size: 10px;
   }
-
+  
   .finding-players {
     font-size: 20px;
   }
-
+  
   .inner-timer-container {
     padding: 20px;
     border: 3px solid #fff;
@@ -98,7 +153,7 @@ col.l8.m8.s12.question-container-outer {
     text-align: center;
     border-radius: 50%;
   }
-
+  
   #timer-status-round {
     font-size:12px;
   }
@@ -130,7 +185,7 @@ col.l8.m8.s12.question-container-outer {
 .main-container #app-container #gameplay-container #info-container,
 .main-container #app-container #gameplay-container #cards-container,
 .menu-container {
-  background: rgba(31, 149, 156, 1);;
+  background: rgba(0, 150, 136, 1);
 }
 
 
@@ -155,13 +210,28 @@ col.l8.m8.s12.question-container-outer {
     padding: 30px;
     font-size: 14px;
     cursor: pointer;
+    margin-top: 5px;
   }
-
+  
   .question-container-outer {
     background: rgba(29, 42, 49, 0.67);
     padding: 10px 0 50px 3 0px;
     color: #fff;
   }
+}
+#crDonateWidget_cfhio_cards4humanity {
+  margin-top: auto !important;
+}
+
+.return-block, .join-block {
+  box-sizing: border-box !important;
+  padding-top: 75px !important;
+  height: auto;
+  margin: auto;
+}
+
+.return-container, .return-container {
+  padding-top: 30px;
 }
 
 .card.longBlack {
@@ -187,6 +257,7 @@ col.l8.m8.s12.question-container-outer {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  min-height: 0 !important;
 }
 
 .game-card {
@@ -233,10 +304,9 @@ col.l8.m8.s12.question-container-outer {
 }
 
 #player-container {
-  /* width: 100px;
-  margin-right: 10px; */
-  height: 157px;
+  height: 200px;
   float:left;
+  padding: 22px;
   text-align: center;
   border-radius: 8px;
 }
@@ -249,7 +319,6 @@ col.l8.m8.s12.question-container-outer {
 
 #czar-blank-container {
   color: white;
-  width: 100%;
   background: rgba(29, 42, 49, 0.67);
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -333,13 +402,15 @@ col.l8.m8.s12.question-container-outer {
 
 /* Chat Window */
 .chat-window {
-  background: rgba(29, 42, 49, 0.67);
+  background: rgb(31, 149, 155);
   border: 2px solid #fff;
   border-radius: 5px;
   bottom: 0;
   padding: 20px;
   position: fixed;
   right: 0;
+  overflow-y: scroll;
+  max-height: 400px;
   width: 300px;
   z-index: 3;
 }
@@ -363,13 +434,12 @@ col.l8.m8.s12.question-container-outer {
   font-size: 30px;
 }
 
-/* entire modal*/
+/* style for czar modall*/
 .card-container {
   background: rgba(31, 149, 156, 1);
   margin-top: 150px;
   border-radius: 5px;
 }
-
 .small-card {
   margin-right: 10px;
 }
