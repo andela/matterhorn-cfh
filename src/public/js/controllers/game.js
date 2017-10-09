@@ -371,15 +371,21 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-      // When game ends, send game data to the database
-      if ($scope.game.state === 'game ended') {
-        const gameData = {
-          gameId: $scope.game.gameID,
-          gameOwner: $scope.game.players[0].username,
-          gameWinner: $scope.game.players[game.gameWinner].username,
-          gamePlayers: $scope.game.players
-        };
-        $http.post(`/api/games/${game.gameID}/start`, gameData);
+
+    // When game ends, delete chat data then send game data to the database
+      if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
+        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+        $scope.messages.$remove(chatRef)
+        .then(() => {
+          const gameData = { 
+            gameId: $scope.game.gameID,
+            gameOwner: $scope.game.players[0].username,
+            gameWinner: $scope.game.players[game.gameWinner].username,
+            gamePlayers: $scope.game.players
+          };
+          $http.post(`/api/games/${game.gameID}/start`, gameData);
+        })
+
       }
     });
     if ($scope.game.players.length < 1) {

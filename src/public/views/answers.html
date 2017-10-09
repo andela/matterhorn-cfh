@@ -6,7 +6,7 @@
         <span ng-show="winnerPicked()"></span>
 
         <div ng-style="{'cursor':'pointer'}" class="col l2 m2 s12 game-card" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
-        ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
+        ng-repeat="card in game.players[game.playerIndex].hand track by $index" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
             <span ng-bind-html-unsafe="card.text"></span>
             <span id='selection-number' ng-show="showFirst(card)"> 1 </span>
             <span id='selection-number' ng-show="showSecond(card)"> 2 </span>
