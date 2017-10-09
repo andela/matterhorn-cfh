@@ -46,7 +46,7 @@ export const authCallback = (req, res) => {
  */
 
 export const isLoggedIn = (req, res, next) => {
-  const key = 'mySecret';
+  const key = process.env.TOKEN_SECRET;
   let token;
   const tokenAvailable = req.headers.authorization ||
     req.headers['x-access-token'];
@@ -65,6 +65,7 @@ export const isLoggedIn = (req, res, next) => {
             error
           });
       } else {
+        req.decoded = decoded;
         next();
       }
     });
@@ -75,29 +76,6 @@ export const isLoggedIn = (req, res, next) => {
       });
   }
 };
-
-export const isAthenticated = (req, res, next) => {
-  const token = req.headers.authorization || req.headers['x-access-token'];
-  if (token) {
-    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
-      if (error) {
-        return res.status(401)
-          .send({
-            message: 'Failed to Authenticate Token',
-            error
-          });
-      }
-      req.decoded = decoded;
-      next();
-    });
-  } else {
-    return res.status(401)
-      .send({
-        message: 'Access denied, Authentication token does not exist'
-      });
-  }
-};
-
 
 export const addFriend = (req, res) => {
   const { friendId, friendName } = req.body;

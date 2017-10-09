@@ -15,13 +15,13 @@
       <!-- Dropdown Trigger -->
       <a href="" class='dropdown-button' data-activates='dropdown1' ng-show="isUser()">
         <i class="material-icons">notifications</i>
-        <span class="num-notify" ng-hide="notifications.length === 0">{{notifications.length}}</span>
+        <span ng-hide="notifications.length === 0" class="num-notify">{{notifications.length}}</span>
       </a>
     </span>
     <!-- Dropdown Structure -->
     <ul id='dropdown1' class='dropdown-content'>
       <li ng-repeat="item in notifications">
-        <a href="/#!{{item.link}}" ng-click="readNotification(item)">
+        <a ng-href="/#!{{item.link}}" ng-click="readNotification(item)" target="about:blank">
           {{item.message}}
         </a>
       </li>

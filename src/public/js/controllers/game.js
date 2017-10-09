@@ -289,9 +289,6 @@ angular.module('mean.system')
         .then(
         (response) => {
           $scope.loadNotifications();
-          //$window.location.href = '/';
-          //$location.path(`/#!/${item.link}`)
-          //console.log($location.absUrl())
         },
         (error) => {
           $scope.loadNotifications();

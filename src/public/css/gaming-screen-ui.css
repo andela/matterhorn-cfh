@@ -120,9 +120,9 @@ input[type=search]:not(.browser-default) {
 };
 
 .num-notify {
-  margin-top: 7px;
-  position: absolute;
-  margin-left: 0px;
+  margin-top: 7px !important;
+  position: absolute !important;
+  margin-left: 0px !important;
 }
 
 .dropdown-button {
