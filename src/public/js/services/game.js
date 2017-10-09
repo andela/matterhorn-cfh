@@ -43,7 +43,7 @@ angular.module('mean.system')
         game.newChatAlert = false;
       } else {
         game.newChatAlert = true // Show a notification and check again in a bit
-        timeout = $timeout(setChatNotification, 10000);
+        timeout = $timeout(setChatNotification, 20000);
       }
     };
     

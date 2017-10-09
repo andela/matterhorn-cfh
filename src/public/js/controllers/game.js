@@ -15,7 +15,7 @@ angular.module('mean.system')
     setTimeout(function() { 
       var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
   
-      $scope.messages = $firebaseArray(chatRef.limitToFirst(10));
+      $scope.messages = $firebaseArray(chatRef.limitToLast(20));
      }, 2000);
    
      var indicator = $( "div.chat-close" ).text();
@@ -202,15 +202,20 @@ angular.module('mean.system')
         $scope.showTable = true;
       }
 
-    // When game ends, send game data to the database
-      if ($scope.game.state === 'game ended') {
-        const gameData = { 
-          gameId: $scope.game.gameID,
-          gameOwner: $scope.game.players[0].username,
-          gameWinner: $scope.game.players[game.gameWinner].username,
-          gamePlayers: $scope.game.players
-        };
-        $http.post(`/api/games/${game.gameID}/start`, gameData);
+    // When game ends, delete chat data then send game data to the database
+      if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
+        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+        $scope.messages.$remove(chatRef)
+        .then(() => {
+          const gameData = { 
+            gameId: $scope.game.gameID,
+            gameOwner: $scope.game.players[0].username,
+            gameWinner: $scope.game.players[game.gameWinner].username,
+            gamePlayers: $scope.game.players
+          };
+          $http.post(`/api/games/${game.gameID}/start`, gameData);
+        })
+
       }
     
     });
