@@ -24,13 +24,11 @@ var regions = (regionId = '') => {
 }
 
 $(document).ready(function(){
-  $('body').on('click', '.button-collapse', function(){
-    $(this).sideNav({
-      closeOnClick: true,
-      onOpen: function(el) {
-        var navLinks = $('#nav-mobile').children().clone(true);
-        $(el).html(navLinks);
-      }
+  $('body').on('click', '.button-collapse', function(event){
+    event.preventDefault();
+    const $parent = $(this);
+    $parent.sideNav({
+      closeOnClick: true
     });
   })
   
