@@ -1,5 +1,42 @@
+@media (max-width: 320px) {
+  .avatars {
+    position: relative;
+    float: left;
+    margin: 0px -5px;
+   }
+ }
 
-@media (max-width: 768px) {
+@media (min-width: 400px) and (max-width:480px){
+  .avatars {
+    position: relative;
+    float: left;
+    margin: 2px 12px;
+ }
+
+}
+
+@media (max-width: 400px) {
+  .main-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack on top */
+  }
+  .sidebar-social {
+    order: 2; /* Go down, bring Box B up */
+  }
+   #landing-charity {
+      margin-bottom: -60px;
+   }
+
+   #info-box {
+      margin-left: 0%;
+   }
+
+   .some-text {
+      margin: 0;
+   }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
   .row .col.m8 {
     width: 100%;
   }
@@ -23,6 +60,9 @@
   .footer-social {
     height: 1vh;
   }
+  #contain-avatars {
+    padding-left: 10%;
+  }
 
 }
 @media (min-width: 1024px) and (max-width: 1300px) {
@@ -38,6 +78,9 @@
     margin-left: 80px; 
     top: 300px;
   }
+  #contain-avatars {
+    padding-left: 10%;
+  }
 
 }
 @media (min-width: 1440px)  {
@@ -50,15 +93,10 @@
   .sidebar-content input {
     width: 80% !important;
   }
-  .sidebar-content {
-    text-align: center;
+  .input-field {
+    display: inline-flex;
   }
-  .input-field label {
-    text-align: center;
-  }
-  #contain-avatars {
-    margin-left: 50px;
-  }
+  
 }
 
 @media (min-width: 800px) {
@@ -163,6 +201,13 @@
       float: left;
       margin-top: -50px;
    }
+   .main-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack on top */
+  }
+  .sidebar-social {
+    order: 2; /* Go down, bring Box B up */
+  }
 
    #info-box {
       margin-left: 0%;
@@ -178,19 +223,6 @@
 
 }
 
-@media (max-width: 400px) {
-   #landing-charity {
-      margin-bottom: -60px;
-   }
-
-   #info-box {
-      margin-left: 0%;
-   }
-
-   .some-text {
-      margin: 0;
-   }
-}
 
 .sign-error {
    text-align: center;
@@ -591,6 +623,7 @@
 
  #contain-avatars {
    margin-top: 25px;
+
  }
 
  .avatar-list {
@@ -606,7 +639,6 @@
  .avatars {
    position: relative;
    float: left;
-   margin: 2px 5px;
    border-radius: 8px;
  }
 
@@ -1305,12 +1337,6 @@
       margin-left: 0;
    }
 
-   .avatars {
-      position: relative;
-      float: left;
-      margin: 2px 20px;
-   }
-
    .foot {
       bottom: 0;
       max-width: 1400px;
@@ -1327,11 +1353,11 @@
    }
  }
 
- @media (max-width: 360px) {
+ @media (min-width: 340) and (max-width: 360px) {
   .avatars {
     position: relative;
     float: left;
-    margin: 2px 6px;
+    margin: 2px 0px;
    }
  }
  /**** authentication screen (Sign Up and Sign In)****/
