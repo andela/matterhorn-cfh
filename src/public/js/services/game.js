@@ -203,7 +203,9 @@ angular.module('mean.system')
     };
 
     game.startGame = function () {
-      socket.emit('startGame');
+      socket.emit('startGame', {
+        regionId: sessionStorage.getItem('userRegion')      
+      });
     };
 
     game.newChat = function () {

@@ -10,8 +10,21 @@ $(document).ready(function () {
   $('.scrollspy').scrollSpy();
 });
 
-$(document).ready(function () {
-  $('body').on('click', '.button-collapse', function () {
+var regions = (regionId = '') => {
+  var regionObject = {
+    0 : 'Please choose your region',
+    1 : 'Nigeria',
+    2 : 'United States',
+    3 : 'Kenya',
+    4 : 'Others' 
+  }
+  if(regionId) return regionObject[regionId];
+
+  return regionObject;
+}
+
+$(document).ready(function(){
+  $('body').on('click', '.button-collapse', function(){
     $(this).sideNav({
       closeOnClick: true,
       onOpen: function (el) {
@@ -19,6 +32,5 @@ $(document).ready(function () {
         $(el).html(navLinks);
       }
     });
-  })
-
-});    
+  })  
+});

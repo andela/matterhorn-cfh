@@ -27,17 +27,17 @@ no-plusplus,
 max-len,
 no-console */
 /**
- *
- *
- * @class Game
- */
+*
+*
+* @class Game
+*/
 class Game {
   /**
-   * Creates an instance of Game.
-   * @param {any} gameID
-   * @param {any} io
-   * @memberof Game
-   */
+  * Creates an instance of Game.
+  * @param {any} gameID
+  * @param {any} io
+  * @memberof Game
+  */
   constructor(gameID, io) {
     this.io = io;
     this.gameID = gameID;
@@ -70,14 +70,15 @@ class Game {
     this.judgingTimeout = 0;
     this.resultsTimeout = 0;
     this.guestNames = guestNames.slice();
+    this.regionId = 0;
   }
 
   /**
-   *
-   *
-   * @memberof Game
-   * @return {object} payload
-   */
+  *
+  *
+  * @memberof Game
+  * @return {object} payload
+  */
   payload() {
     const players = [];
     this.players.forEach((player) => {
@@ -88,7 +89,8 @@ class Game {
         avatar: player.avatar,
         premium: player.premium,
         socketID: player.socket.id,
-        color: player.color
+        color: player.color,
+        regionId: player.regionId
       });
     });
     return {
@@ -109,12 +111,12 @@ class Game {
 
 
   /**
-   *
-   *
-   * @param {any} msg
-   * @memberof Game
-   * @returns {void}
-   */
+  *
+  *
+  * @param {any} msg
+  * @memberof Game
+  * @returns {void}
+  */
   sendNotification(msg) {
     this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
   }
@@ -126,10 +128,10 @@ class Game {
   // Also called on removePlayer IF game is in 'awaiting players' state
 
   /**
-   *
-   * @returns {void}
-   * @memberof Game
-   */
+  *
+  * @returns {void}
+  * @memberof Game
+  */
   assignPlayerColors() {
     this.players.forEach((player, index) => {
       player.color = index;
@@ -138,10 +140,10 @@ class Game {
 
 
   /**
-   *
-   * @returns {void}
-   * @memberof Game
-   */
+  *
+  * @returns {void}
+  * @memberof Game
+  */
   assignGuestNames() {
     const self = this;
     this.players.forEach((player) => {
@@ -161,10 +163,10 @@ class Game {
   }
 
   /**
-   *
-   * @returns {void}
-   * @memberof Game
-   */
+  *
+  * @returns {void}
+  * @memberof Game
+  */
   prepareGame() {
     this.state = 'game in progress';
 
@@ -188,9 +190,13 @@ class Game {
         if (err) {
           console.log(err);
         }
-        self.questions = results[0];
-        self.answers = results[1];
-
+        if (this.regionId) {
+          self.questions = results[0].filter(result => parseInt(result.regionId, 10) === parseInt(this.regionId, 10));
+          self.answers = results[1].filter(result => parseInt(result.regionId, 10) === parseInt(this.regionId, 10));
+        } else {
+          self.questions = results[0];
+          self.answers = results[1];
+        }
         self.startGame();
       }
     );
@@ -218,7 +224,9 @@ class Game {
     self.curQuestion = self.questions.pop();
     if (!self.questions.length) {
       self.getQuestions((err, data) => {
-        self.questions = data;
+        if (this.regionId) {
+          self.questions = data.filter(result => parseInt(result.regionId, 10) === this.regionId);
+        }
       });
     }
     self.round++;
@@ -327,7 +335,9 @@ class Game {
   dealAnswers(maxAnswers) {
     maxAnswers = maxAnswers || 10;
     const storeAnswers = (err, data) => {
-      this.answers = data;
+      if (this.regionId) {
+        this.answers = data.filter(result => parseInt(result.regionId, 10) === this.regionId);
+      }
     };
     for (let i = 0; i < this.players.length; i++) {
       while (this.players[i].hand.length < maxAnswers) {
@@ -457,7 +467,7 @@ class Game {
     autopicked = autopicked || false;
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
     if ((playerIndex === this.czar || autopicked)
-      && this.state === 'waiting for czar to decide') {
+    && this.state === 'waiting for czar to decide') {
       let cardIndex = -1;
       _.each(this.table, (winningSet, index) => {
         if (winningSet.card[0].id === thisCard) {

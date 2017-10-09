@@ -169,12 +169,14 @@ module.exports = (io) => {
             player.username = user.name;
             player.premium = user.premium || 0;
             player.avatar = user.avatar || avatars[Math.floor(Math.random() * 4) + 12];
+            player.regionId = data.regionId;
           }
           getGame(player, socket, data.room, data.createPrivate);
         });
       } else {
         // If the user isn't authenticated (guest)
         player.username = 'Guest';
+        player.regionId = data.regionId;
         player.avatar = avatars[Math.floor(Math.random() * 4) + 12];
         getGame(player, socket, data.room, data.createPrivate);
       }
@@ -218,9 +220,10 @@ module.exports = (io) => {
       });
     });
 
-    socket.on('startGame', () => {
+    socket.on('startGame', (data) => {
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];
+        thisGame.regionId = data.regionId;
         console.log('comparing', thisGame.players[0].socket.id, 'with', socket.id);
         if (thisGame.players.length >= thisGame.playerMinLimit) {
           // Remove this game from gamesNeedingPlayers so new players can't join it.
