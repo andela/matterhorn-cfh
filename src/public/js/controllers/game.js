@@ -8,7 +8,6 @@ angular.module('mean.system')
     $scope.notify = false;
     $scope.messages = {};
     $scope.global = Global;
-    $scope.messages = [];
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
@@ -17,7 +16,7 @@ angular.module('mean.system')
       var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
   
       $scope.messages = $firebaseArray(chatRef.limitToFirst(10));
-     }, 1000);
+     }, 2000);
    
      var indicator = $( "div.chat-close" ).text();
 
