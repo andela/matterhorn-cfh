@@ -242,6 +242,7 @@ module.exports = (io) => {
       allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
     });
 
+
     socket.on('leaveGame', () => {
       exitGame(socket);
     });
