@@ -49,6 +49,23 @@ a:hover, .waves-light:hover{
 .mt-5 {
   margin-top: 5em; }
 
+.landing-notification {
+  display: inline-block !important;
+  padding-left: 20px !important;
+}
+
+.landing-notification span {
+  position: absolute !important;
+  float: left !important;
+  margin-top: 10px !important;
+  margin-left: 2px !important;
+  color: white !important;
+}
+
+.landing-notification i {
+  float: left !important;
+}
+
 @media (min-width: 768px) {
   .mt-sm-5 {
     margin-top: 5em; }

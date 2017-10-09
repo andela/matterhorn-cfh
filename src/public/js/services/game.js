@@ -87,7 +87,7 @@ angular.module('mean.system')
 
       // Update gameID field only if it changed.
       // That way, we don't trigger the $scope.$watch too often
-      if (game.gameID !== data.gameID) {
+      if (game.gameID !== data.gameID) { 
         game.gameID = data.gameID;
       }
 
@@ -219,7 +219,6 @@ angular.module('mean.system')
       socket.emit('leaveGame');
     };
 
-
     game.pickCards = function (cards) {
       socket.emit('pickCards', { cards: cards });
     };
@@ -227,6 +226,10 @@ angular.module('mean.system')
     game.pickWinning = function (card) {
       socket.emit('pickWinning', { card: card.id });
     };
+
+    game.broadcastNotification = function () {
+      socket.emit('broadcastNotification');
+    }
 
     decrementTime();
 

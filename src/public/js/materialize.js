@@ -1,12 +1,12 @@
-(function($){
-  $(function(){
-    
+(function ($) {
+  $(function () {
+
     $('.parallax').parallax();
-    
+
   }); // end of document ready
 })(jQuery); // end of jQuery name space
 
-$(document).ready(function(){
+$(document).ready(function () {
   $('.scrollspy').scrollSpy();
 });
 
@@ -30,6 +30,5 @@ $(document).ready(function(){
     $parent.sideNav({
       closeOnClick: true
     });
-  })
-  
+  })  
 });

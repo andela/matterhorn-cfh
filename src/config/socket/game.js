@@ -114,7 +114,7 @@ class Game {
   * @memberof Game
   * @returns {void}
   */
-  sendNotification() {
+  sendNotification(msg) {
     this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
   }
 
@@ -155,6 +155,9 @@ class Game {
     });
   }
 
+  broadcastNotification() {
+    this.io.sockets.emit('notificationReceived');
+  }
 
   /**
   *
