@@ -371,14 +371,6 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-<<<<<<< HEAD
-    });
-    if($scope.game.players.length < 1){
-=======
-
-    // When game ends, delete chat data then send game data to the database
-      if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
-        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
         $scope.messages.$remove(chatRef)
         .then(() => {
           const gameData = {
@@ -390,10 +382,8 @@ angular.module('mean.system')
           $http.post(`/api/games/${game.gameID}/start`, gameData);
         })
 
-      }
-    });
+      });
     if ($scope.game.players.length < 1) {
->>>>>>> staging
 
     }
 

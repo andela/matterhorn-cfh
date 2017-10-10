@@ -1,5 +1,5 @@
 @media (max-width: 425px) {
-  .dashboard-header .main-desc-text {
+  .dashboard-header .dashboard-desc-text {
     text-align: center;
     width: 100%;
   }
@@ -12,7 +12,7 @@
   display: flex;
 }
 
-.dashboard-header .main-desc-text {
+.dashboard-header .dashboard-desc-text {
   text-align: center;
   width: 100%;
 }
