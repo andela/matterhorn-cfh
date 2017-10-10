@@ -268,7 +268,7 @@ input[type=search]:not(.browser-default) {
   border-radius: 8px;
   color: #252525;
   font-family: Arial;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   vertical-align: top;
 }
@@ -432,4 +432,8 @@ input[type=search]:not(.browser-default) {
   color: #fff;
   margin: 0;
   font-size: 30px;
+}
+
+.cfh-logo-fst {
+  cursor: pointer;
 }

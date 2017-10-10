@@ -8,7 +8,7 @@
 if (window.location.hash == "#_=_") window.location.hash = "#!";
 // $(document).ready(function() {
 //     //Fixing facebook bug with redirect
-    
+
 
 //     //Then init the app
 //     window.init();
@@ -22,7 +22,7 @@ function toggle_visibility(id)
         btn = document.getElementById("minimize-btn");
         btn.innerHTML = 'Î';
     }
-    else 
+    else
     {
         e.style.display = 'block';
         btn = document.getElementById("minimize-btn");
@@ -35,3 +35,7 @@ function hide_chat(id)
   let e = document.getElementById(id);
   e.style.display = "none";
 }
+
+$(document).ready(function(){
+  $('ul.tabs').tabs();
+});

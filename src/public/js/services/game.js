@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .factory('game', ['socket', '$timeout', function (socket, $timeout) {
+  .factory('game', ['socket', '$timeout', '$http', '$window', function (socket, $timeout, $http, $window ) {
 
     var game = {
       id: null, // This player's socket ID, so we know who this player is
@@ -187,6 +187,22 @@ angular.module('mean.system')
       } else if (data.state === 'game dissolved' || data.state === 'game ended') {
         game.players[game.playerIndex].hand = [];
         game.time = 0;
+      }
+
+      var setHttpHeader = () => {
+        const token = $window.localStorage.getItem('token')
+        $http.defaults.headers.common.Authorization = token;
+      };
+      setHttpHeader();
+      if (data.state === 'game ended' && game.gameID === data.gameID) {
+        // When game ends, send game data to the database
+        const gameData = {
+          gameId: game.gameID,
+          gameOwner: game.players[0].username,
+          gameWinner: game.players[game.gameWinner].username,
+          gamePlayers: game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
       }
     });
 

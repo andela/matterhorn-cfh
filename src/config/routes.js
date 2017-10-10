@@ -20,6 +20,7 @@ import {
   addFriend,
   getFriendsList,
   saveGameData,
+  getGameData,
   isLoggedIn,
   isAuthenticated
 } from '../app/controllers/users';
@@ -31,7 +32,7 @@ import {
   showQuestion,
   question
 } from '../app/controllers/questions';
-import { play, render } from '../app/controllers/index';
+import { play, render, showDashboard } from '../app/controllers/index';
 
 import {
   addNotification,
@@ -67,6 +68,7 @@ export default () => {
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
+  app.get('/api/games/logs', isLoggedIn, getGameData);
 
   // Donation Routes
   app.post('/donations', addDonation);
@@ -141,4 +143,7 @@ export default () => {
   // Home route
   app.get('/play', play);
   app.get('/', render);
+
+  // Dashboard route
+  app.get('/dashboard', showDashboard);
 };
