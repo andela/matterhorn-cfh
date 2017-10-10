@@ -17,9 +17,12 @@ import {
   user,
   getToken,
   register,
+  addFriend,
+  getFriendsList,
   saveGameData,
   getGameData,
-  isLoggedIn
+  isLoggedIn,
+  isAuthenticated
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -31,10 +34,15 @@ import {
 } from '../app/controllers/questions';
 import { play, render, showDashboard } from '../app/controllers/index';
 
+import {
+  addNotification,
+  loadNotification,
+  readNotification
+} from '../app/controllers/notifications';
+
 import app from '../app';
 
 export default () => {
-
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);
@@ -42,6 +50,15 @@ export default () => {
   app.get('/signout', signout);
   app.get('/api/sendmail/:email', sendMail);
   app.get('/api/search/users/:username', searchUser);
+
+  // Friends Route
+  app.put('/api/user/friend', isAuthenticated, addFriend);
+  app.get('/api/user/friends', isAuthenticated, getFriendsList);
+
+  // Notifications Route
+  app.post('/api/notification', isAuthenticated, addNotification);
+  app.get('/api/notifications', isAuthenticated, loadNotification);
+  app.put('/api/notification/:id', isAuthenticated, readNotification);
 
   // Setting up the users api
   app.post('/users', create);

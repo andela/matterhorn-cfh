@@ -6,7 +6,7 @@
         <span ng-show="winnerPicked()"></span>
 
         <div ng-style="{'cursor':'pointer'}" class="col l2 m2 s12 game-card" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
-        ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
+        ng-repeat="card in game.players[game.playerIndex].hand track by $index" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
             <span ng-bind-html-unsafe="card.text"></span>
             <span id='selection-number' ng-show="showFirst(card)"> 1 </span>
             <span id='selection-number' ng-show="showSecond(card)"> 2 </span>
@@ -46,10 +46,38 @@
       <div class="game-end-answer-text center-align" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
         <h2>What would you like to do now?</h2>
         You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely crown on your avatar's head.
+        <div>
+            Why not invite your friends from social media?
+        </div><br/>
+        <div class="row">
+          <span class="share-button">
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoo.gl%2FdYZ8uM" class="waves-effect waves-light btn-floating social facebook"> <i class="fa fa-facebook"></i></a>
+          </span>
+          <span class="share-button">
+            <a class="waves-effect waves-light btn-floating social twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgoo.gl%2FdYZ8uM&text=Find%20out%20what%20a%20GOOD%20person%20you%20are!%20Join%20me%20and%20let's%20play%20Cards%20for%20Humanity"><i class="fa fa-twitter"></i> </a>
+          </span>
+          <span class="share-button">
+            <a target="_blank" class="waves-effect waves-light btn-floating social google" href="https://plus.google.com/share?url=https%3A%2F%2Fgoo.gl%2FdYZ8uM"> <i class="fa fa-google"></i></a>
+          </span>
+        </div>
       </div>
       <div class="game-end-answer-text center-align" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
         <h2>What would you like to do now?</h2>
         Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
+        <div>
+            Why not invite your friends from social media?
+        </div><br/>
+        <div class="row">
+            <span class="share-button">
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoo.gl%2FdYZ8uM" class="waves-effect waves-light btn-floating blue-darken-4 social facebook"> <i class="fa fa-facebook"></i></a>
+              </span>
+              <span class="share-button">
+                <a class="waves-effect waves-light btn-floating blue social twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgoo.gl%2FdYZ8uM&text=Find%20out%20what%20a%20GOOD%20person%20you%20are!%20Join%20me%20and%20let's%20play%20Cards%20for%20Humanity"><i class="fa fa-twitter"></i> </a>
+              </span>
+              <span class="share-button">
+                <a target="_blank" class="waves-effect waves-light btn-floating red social google" href="https://plus.google.com/share?url=https%3A%2F%2Fgoo.gl%2FdYZ8uM"> <i class="fa fa-google"></i></a>
+              </span>
+        </div>
       </div>
     </div>
     <div class='row'>

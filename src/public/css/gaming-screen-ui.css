@@ -1,7 +1,4 @@
-.polygonal {
-  background: url('../img/polygonal-bg.jpg');
-  background-attachment: fixed;
-  background-size: 100%;
+html {
   position: relative;
 }
 
@@ -78,6 +75,65 @@ col.l8.m8.s12.question-container-outer {
   font-family: 'Arial';
   color: #fff;
   padding-bottom: 20px;
+}
+
+.invite-players, .invite-players input {
+  color: black;
+}
+
+.action-btn, .action-btn:hover, .action-btn:focus {
+  background-color: #009688;
+  margin: 5px 0px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  height:26px;
+}
+
+.invite-players {
+  height: 70%;
+  overflow: auto;
+}
+
+input[type=search]:not(.browser-default) {
+  border-bottom: none !important;
+  margin: 0px !important;
+  padding: 3px !important;
+}
+
+.tabs, .tab a, .tab a:active, .tab a:hover{
+  color: #282F38 !important;
+}
+
+.search {
+  margin-top: 2%!important;
+  margin-bottom: 4%!important;
+
+}
+
+.search-results-btn a.btn{
+  background-color:  #009688 !important;
+  margin: 2% 0% !important;
+};
+
+.num-notify {
+  margin-top: 7px !important;
+  position: absolute !important;
+  margin-left: 0px !important;
+}
+
+.dropdown-button {
+  color: white;
+}
+
+.dropdown-content{
+  width: fit-content !important;
+  top: 35px !important;
+  border-radius: 5px !important;
+}
+
+.dropdown-content li{
+  padding: 5px !important;
 }
 
 @media only screen and (max-width: 780px) {
