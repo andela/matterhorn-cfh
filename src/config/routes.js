@@ -12,6 +12,7 @@ import {
   session,
   me,
   login,
+  donations,
   show,
   authCallback,
   user,
@@ -64,6 +65,7 @@ export default () => {
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
+  app.get('/api/donations', isAuthenticated, donations);
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
