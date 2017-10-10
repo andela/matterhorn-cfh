@@ -18,6 +18,7 @@ import {
   getToken,
   register,
   saveGameData,
+  getGameData,
   isLoggedIn
 } from '../app/controllers/users';
 
@@ -50,6 +51,7 @@ export default () => {
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
+  app.get('/api/games/logs', isLoggedIn, getGameData);
 
   // Donation Routes
   app.post('/donations', addDonation);

@@ -26,7 +26,7 @@
         <div class="game-end-headline">What the!? The game ended because too many people left! </div>
         Our sincere apologies.
       </div>
-      <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
+      <div id="game-ended-confirmation" ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
         <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope you
         feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde
         it all for youself.

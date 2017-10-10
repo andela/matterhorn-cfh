@@ -22,11 +22,9 @@
 
   <!-- Fixed Logo & Menu Bar End -->
 
-  <div id="main-desc" class="dashboard-header">
+  <div class="dashboard-header">
     <div class="container">
       <div class="main-desc-text">
-        <h1 class="font-luminari main-title">Cards for humanity</h1>
-        <p class="text-white main-motto">A game for horrible people desperately trying to do good.</p>
         <h3 class='font-luminari '>Dashboard</h3>
       </div>
     </div>
@@ -58,11 +56,17 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Alvin</td>
-                  <td>Eclair</td>
-                  <td>$0.87</td>
-                  <td>$0.87</td>
+                <tr ng-repeat="game in games">
+                  <td><b>CFH</b> {{game.gameId}}</td>
+                  <td>{{game.gameOwner}}</td>
+                  <td>{{game.gameWinner}}</td>
+                  <td>
+                    <ul ng-repeat="thePlayer in game.gamePlayers" >
+                      <li>
+                          {{thePlayer['username']}} <b>{{thePlayer['points']}}</b>
+                      </li>
+                    </ul>
+                  </td>
                 </tr>
               </tbody>
           </table>
