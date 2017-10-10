@@ -20,7 +20,6 @@ angular.module('mean.system')
     $scope.showRegionName = false;
 
     $scope.showRegionModal = function () {
-      console.log($scope.regionId)
       return swal({
         title: "Choose your region",
         input: "select",

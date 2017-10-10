@@ -113,6 +113,7 @@ class Game {
   /**
   * @memberof Game
   * @returns {void}
+  @param {string} msg
   */
   sendNotification(msg) {
     this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
