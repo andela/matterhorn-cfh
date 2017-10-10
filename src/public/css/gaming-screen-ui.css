@@ -29,9 +29,8 @@ body {
 }
 
 .tweet-container {
-  left: 84%;
-  position: relative;
-  top: -6px;
+  float: right;
+  margin: 17px 15px 0px 0px;
 }
 
 .menu-container {
@@ -82,12 +81,10 @@ col.l8.m8.s12.question-container-outer {
 }
 
 .action-btn, .action-btn:hover, .action-btn:focus {
-  background-color: #009688;
-  margin: 5px 0px;
-  border-radius: 5px;
-  color: white;
-  text-align: center;
-  height:26px;
+  font-size: 0.7rem !important;
+  padding: 0 !important;
+  height: 30px;
+  line-height: 30px;
 }
 
 .invite-players {
@@ -116,14 +113,14 @@ input[type=search]:not(.browser-default) {
   margin: 2% 0% !important;
 };
 
-.num-notify {
-  margin-top: 7px !important;
-  position: absolute !important;
-  margin-left: 0px !important;
-}
-
 .dropdown-button {
   color: white;
+}
+
+.dropdown-button span {
+  color: white;
+  top: 13px;
+  position: absolute;
 }
 
 .dropdown-content{
@@ -139,7 +136,7 @@ input[type=search]:not(.browser-default) {
 .tour-container {
   float: right;
   padding-top: 10px;
-  margin-right: 15%;
+  margin-right: 20px;
 }
 
 .tour-container a, .tour-container a:hover, .tour-container a:active, .tour-container a:focus, .tour-container a:visited {
@@ -148,6 +145,23 @@ input[type=search]:not(.browser-default) {
   background-color: #2b353d !important;
   box-shadow: none;
   border-radius: 20px;
+}
+
+.introjs-helperLayer {
+  background-color: transparent;
+  border: 1px solid white;
+}
+
+.invite-friends-btn {
+  font-size: 0.7rem;
+  padding: 0 !important;
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  .action-btn, .action-btn:hover, .action-btn:focus {
+    font-size: 0.6rem !important;
+    padding: 0 !important;
+  }
 }
 
 @media only screen and (max-width: 780px) {

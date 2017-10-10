@@ -20,7 +20,7 @@
 
       <!-- start Game conditionally -->
       <div class="col m4 right-align" id="start-game-container" ng-click="invitePlayers()" ng-show="isUser()">
-        <div class="start-game-button btn btn-large btn-success">
+        <div id="start-game-button" class="start-game-button btn btn-large btn-success">
           Invite Players
         </div>
       </div>
@@ -93,13 +93,13 @@
               <h6>{{x.name}}</h6>
             </div>
             <div class="col s12 m6 l4 search-results-btn">
-              <a class="col s5 m5 l5 waves-effect waves-light action-btn" ng-click="addFriend(x)" ng-hide="friendsId.includes(x._id)">
-                <i class="material-icons">group_add</i>
+              <a class="col s5 m5 l5 waves-effect waves-light btn action-btn" ng-click="addFriend(x)" ng-hide="friendsId.includes(x._id)">
+                ADD FRIEND
               </a>
               <div class="col s5 m5 l5" ng-show="friendsId.includes(x._id)"></div>
               <div class="col s2 m2 l2"></div>
-              <a class="col s5 m5 l5 waves-effect waves-light action-btn" ng-click="sendNotification(x)" ng-hide="inviteList.includes(x._id)">
-                <i class="material-icons">videogame_asset</i>
+              <a class="col s5 m5 l5 waves-effect waves-light btn action-btn" ng-click="sendNotification(x)" ng-hide="inviteList.includes(x._id)">
+                INVITE
               </a>
             </div>
           </div>
@@ -114,8 +114,8 @@
           <h6 class="col s6 m6 l6">
             Friends: {{friendsList.length}}
           </h6>
-          <div class="col s1 m3 l3 waves-effect waves-light"></div>
-          <a class="col s5 m3 l3 waves-effect waves-light action-btn" ng-show="friendsList.length > 0" ng-click="sendNotification()">INVITE FRIENDS</a>
+          <div class="col m3 l3 waves-effect waves-light"></div>
+          <a class="col s6 m3 l3 waves-effect waves-light invite-friends-btn btn" ng-show="friendsList.length > 0" ng-click="sendNotification()">INVITE FRIENDS</a>
         </div>
         <div class="col s12 list">
           <ul class="collection" ng-show="friendsList.length > 0">

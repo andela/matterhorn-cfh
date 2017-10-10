@@ -442,14 +442,70 @@ angular.module('mean.system')
 
     $scope.tour.setOptions({
       steps: [
-        { 
-          intro: "Hello world!"
+        {
+          intro: `Hi there. Welcome to Cards for Humanity Game.
+          Ready to do some good? Let me take you on a tour √`
         },
-        
-      ]
+        {
+          element: '#player-count-container',
+          intro: 'The game needs a minimum number of 3 players to start.'
+        },
+        {
+          element: '#start-game-button',
+          intro: 'You can invite other players from here and also add friends to invite to future games.'
+        },
+        {
+          element: '#play-game',
+          intro: 'Click this button to start the game if there are at least 3 players.'
+        },
+        {
+          element: '#question-container',
+          intro: 'When the game starts, the questions are displayed here.'
+        },
+        {
+          element: '#inner-timer-container',
+          intro: `You have 20 seconds to submit an awesome answer. After time out, the CZAR selects his favorite answer. Whoever submits CZAR's favorite answer wins that round.`
+        },
+        {
+          element: '#inner-info',
+          intro: 'The answer cards will be displayed here.',
+        },
+        {
+          element: '#game-players',
+          intro: 'The players are displayed here. The first player who gets the highest score wins the game.'
+        },
+        {
+          element: '#live-chat',
+          intro: 'You can chat with other players in the game.'
+
+        },
+        {
+          element: '#notifications-container',
+          intro: 'Your notifications will appear here.',
+          posotion: 'top'
+        },
+        {
+          element: '#leave-game',
+          intro: 'Done playing? Click this button to leave the game.'
+        },
+        {
+          element: '#tour-container',
+          intro: 'Click here to take this awesome tour again.'
+        }
+      ],
+      showStepNumbers: true,
+      disableInteraction: true,
+      skipLabel: 'Skip Tour',
+      overlayOpacity: 0.5,
+      showBullets: false
+    });
+    
+    $scope.tour.onbeforechange(function(targetElement) {
+      if (targetElement.id === 'game-players') {
+        $('#live-chat header').trigger('click');
+      }
     });
 
     $scope.startTour = () => $scope.tour.start();
-
 
   }]);
