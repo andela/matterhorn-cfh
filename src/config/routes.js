@@ -22,6 +22,7 @@ import {
   saveGameData,
   getGameData,
   isLoggedIn,
+  saveRankData,
   isAuthenticated
 } from '../app/controllers/users';
 
@@ -68,6 +69,7 @@ export default () => {
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
+  app.post('/api/games/rank', isLoggedIn, saveRankData);
   app.get('/api/games/logs', isLoggedIn, getGameData);
 
   // Donation Routes

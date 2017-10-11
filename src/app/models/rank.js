@@ -19,7 +19,7 @@ const RankSchema = new Schema({
   },
   wins: {
     type: Number,
-    default: 0
+    default: 1
   }
 });
 

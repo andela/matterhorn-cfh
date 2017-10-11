@@ -20,7 +20,6 @@ angular.module('mean.system')
     $scope.showRegionName = false;
 
     $scope.showRegionModal = function () {
-      console.log($scope.regionId)
       return swal({
         title: "Choose your region",
         input: "select",
@@ -49,8 +48,10 @@ angular.module('mean.system')
               text: `You need ${game.playerMinLimit - game.players.length} more players`
             });
           } else {
+            console.log($scope.regionName, '=====')
             $window.sessionStorage.setItem('userRegion', regionId);
-            $scope.regionName = regions(regionId);
+            $window.sessionStorage.setItem('regionName', $scope.regionName);
+            $scope.regionName = regions({regionId, userRegion: $scope.regionName});
             $scope.showRegionName = true;
             game.startGame();
           }
@@ -371,10 +372,6 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
-<<<<<<< HEAD
-    });
-    if($scope.game.players.length < 1){
-=======
 
     // When game ends, delete chat data then send game data to the database
       if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
@@ -393,7 +390,6 @@ angular.module('mean.system')
       }
     });
     if ($scope.game.players.length < 1) {
->>>>>>> staging
 
     }
 

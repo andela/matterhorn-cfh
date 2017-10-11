@@ -12,6 +12,7 @@ import validateInput from '../../config/middlewares/validateInput';
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
+const Rank = mongoose.model('Rank');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -137,6 +138,30 @@ export const getFriendsList = (req, res) => {
         res.status(200).send(user[0].friends);
       } else {
         res.status(404).send({ message: 'User Not Found' });
+      }
+    })
+    .catch(() => {
+      res.status(500).send({
+        message: 'Internal Server Error'
+      });
+    });
+};
+
+export const saveGameRank = (req, res) => {
+  const rank = new Rank();
+  rank.location = req.body.location;
+
+  Rank.find({
+    location: req.body.location
+  })
+    .then((region) => {
+      if (region) {
+        Rank.update(
+          { wins: region.wins },
+          { $set: { wins: region.wins + 1 } }
+        );
+      } else {
+        rank.save();
       }
     })
     .catch(() => {
