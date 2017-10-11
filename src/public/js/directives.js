@@ -85,4 +85,10 @@ angular.module('mean.directives', [])
         }
       }
     };
+  }).directive('dashboard', function() {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/history.html',
+      link: function(scope, elem, attr){}
+    }
   });
