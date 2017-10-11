@@ -20,3 +20,9 @@ export const render = (req, res) => {
   });
 };
 
+export const showDashboard = (req, res) => {
+  res.render('users/dashboard', {
+    user: req.user ? JSON.stringify(req.user) : 'null'
+  });
+};
+

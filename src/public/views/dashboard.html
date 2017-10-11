@@ -1,0 +1,147 @@
+<div landing class="main-wrapper" >
+  <!-- Fixed Logo & Menu Bar Start -->
+  <header>
+    <nav class="cfh-green">
+      <div class="container">
+        <div class="nav-wrapper" ng-controller="IndexController">
+          <a href="#" class="left navbar-brand font-luminari">cfh</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="#!/">Home</a></li>
+            <li><a href="#!/app">Play Game</a></li>
+            <li ng-hide="showOptions"><a href="/#!/dashboard">Dashboard</a></li>
+            <li ng-hide="showOptions"><a ng-click="signOut()">Sign Out</a></li>
+          </ul>
+          <a data-activates="slide-out" class="button-collapse right">
+            <i class="material-icons">menu</i>
+          </a>
+          <ul id="slide-out" class="side-nav"></ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Fixed Logo & Menu Bar End -->
+
+  <div class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-desc-text">
+        <h3 class='font-luminari'>Dashboard</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row dashboard" ng-controller="LogController">
+    <div class='col s12 offset-m1 m10'>
+      <div class='row card-panel white lighten-2'>
+        <div class='col m4 s12 center-align log-btn'>
+          <button ng-click="show = 1" ng-class="{ active : show == 1 }" class="teal btn">Game History</button>
+        </div>
+        <div class="col m4 s12 center-align log-btn">
+          <button ng-click="show = 2" ng-class="{ active : show == 2 }" class="teal btn">Leaderboard</button>
+        </div>
+        <div class='col m4 s12 center-align log-btn'>
+          <button ng-click="show = 3" ng-class="{ active : show == 3 }" class="teal btn">Donations</button>
+        </div>
+      </div>
+    </div>
+    <div ng-show="show==1" class='col s12 offset-m1 m10'>
+      <div class='card-panel white darken-3'>
+          <table class="responsive-table bordered striped">
+              <thead>
+                <tr>
+                    <th>GAME ID</th>
+                    <th>GAME OWNER</th>
+                    <th>WINNER</th>
+                    <th>PLAYERS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="game in games">
+                  <td><b>CFH</b> {{game.gameId}}</td>
+                  <td>{{game.gameOwner}}</td>
+                  <td>{{game.gameWinner}}</td>
+                  <td>
+                    <ul ng-repeat="thePlayer in game.gamePlayers" >
+                      <li>
+                          {{thePlayer['username']}} <b>{{thePlayer['points']}}</b>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+    </div>
+    <div ng-show="show==2" class='col s12 offset-m1 m10'>
+      <div class='card-panel white darken-3'>
+          <table class="responsive-table bordered striped">
+              <thead>
+                <tr>
+                    <th>GAME ID</th>
+                    <th>GAME OWNER</th>
+                    <th>WINNER</th>
+                    <th>PLAYERS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Alvin</td>
+                  <td>Eclair</td>
+                  <td>$0.87</td>
+                  <td>$0.87</td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+    </div>
+    <div ng-show="show==3" class='col s12 offset-m1 m10'>
+      <div class='card-panel white darken-3'>
+          <table class="responsive-table bordered striped">
+              <thead>
+                <tr>
+                    <th>GAME ID</th>
+                    <th>GAME OWNER</th>
+                    <th>WINNER</th>
+                    <th>PLAYERS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>56</td>
+                  <td>Eclair started game</td>
+                  <td>Sweet Monkey 8pts</td>
+                  <td>Sweet Monkey 8pts, Disco Potato 4pts, Landing Pot 1pts</td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+
+  <footer class="cfh-green">
+    <div class="container">
+      <div class="row mb-0">
+        <div class="col s6 white-text">
+          <p class="white-text">Redesigned by <strong>Team Matterhorn:</strong> Temitayo Fadojutimi, Temitope Joloko, Sofiat Abioye, Emmanuel Ogunbo, Abiona Ekundayo, Nasirudeen Abdulrasaq</p>
+          <p>
+            Based on Cards Against Humanity.<br/>
+            Licensed under CC licensed (BY-NC-SA).<br/>
+            Cards for Humanity is not affiliated with Cards Against Humanity.
+          </p>
+          <p>
+            All proceeds from donations go directly to charity,
+            as managed by crowdrise.
+          </p>
+        </div>
+        <div class="col s6 text-right main-social">
+          <div class="row">
+            <div class="col s6"><img src="/img/social/mail.png" /></div>
+            <div class="col s6"><img src="/img/social/gmail.png" /></div>
+            <div class="col s6"><img src="/img/social/twitter.png" /></div>
+            <div class="col s6"><img src="/img/social/facebook.png" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
