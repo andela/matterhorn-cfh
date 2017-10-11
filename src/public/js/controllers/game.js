@@ -159,9 +159,6 @@ angular.module('mean.system')
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
-<<<<<<< HEAD
-
-=======
     // model that triggers czar modal
     $scope.shuffleCards = () => {
       const card = $(`#${event.target.id}`);
@@ -179,7 +176,6 @@ angular.module('mean.system')
         game.startNextRound();
       }
     };
->>>>>>> staging
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
     };
@@ -361,20 +357,12 @@ angular.module('mean.system')
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
 
-<<<<<<< HEAD
-      if(token) {
-=======
       if (token) {
->>>>>>> staging
         return true
       } else {
         return false
       }
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
     $scope.abandonGame = function () {
       game.leaveGame();
       $location.path('/');
@@ -433,7 +421,7 @@ angular.module('mean.system')
             $http.post(`/api/games/${game.gameID}/start`, gameData);
           })
 
-      });
+      }});
     if ($scope.game.players.length < 1) {
 
     }
