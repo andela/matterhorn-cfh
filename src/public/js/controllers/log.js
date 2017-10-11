@@ -20,7 +20,6 @@ angular.module('mean.system')
 
   $http.get('/api/leaderboard/region')
   .then((response) => {
-    console.log(response.data.data, '-----=======-----')
     $scope.gameRank = response.data.data;
   })
 }]);
