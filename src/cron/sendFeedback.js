@@ -23,11 +23,12 @@ export default () =>
             const toEmail = new helper.Email(email);
             const subject = `Hi ${user.name}, please fill this survey to help improve CFH`;
             const html = `
-          <h3>Hi there</h3>
+          <h3>Hi ${user.name}</h3>
           <p>We appreciate your interest in playing the Cards for Humanity games.</p>
           <p>Please fill this survey to help improve CFH. We appreciate your response and your answers will be anonymous.</p>
           <br />
           <p><a href="https://goo.gl/forms/Ru1Y37LlAsQ0aW3s2">Follow this link to fill the form</a></p>
+          <p>Warm regards,</p>
           <p>Copyright &copy; 2017</p>
           `;
             const content = new helper.Content('text/html', html);
