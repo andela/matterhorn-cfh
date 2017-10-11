@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .factory('game', ['socket', '$timeout', function (socket, $timeout) {
+  .factory('game', ['socket', '$timeout', '$http', '$window', function (socket, $timeout, $http, $window ) {
 
     var game = {
       id: null, // This player's socket ID, so we know who this player is
@@ -46,7 +46,7 @@ angular.module('mean.system')
         timeout = $timeout(setChatNotification, 20000);
       }
     };
-    
+
     var setNotification = function () {
       if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
         clearInterval(timeout);
@@ -72,7 +72,7 @@ angular.module('mean.system')
       game.id = data.id;
     });
 
-   socket.on('newMessage', function (data) {      
+    socket.on('newMessage', function (data) {
       setChatNotification();
     });
 
@@ -87,7 +87,7 @@ angular.module('mean.system')
 
       // Update gameID field only if it changed.
       // That way, we don't trigger the $scope.$watch too often
-      if (game.gameID !== data.gameID) { 
+      if (game.gameID !== data.gameID) {
         game.gameID = data.gameID;
       }
 
@@ -154,6 +154,9 @@ angular.module('mean.system')
       if (newState || game.curQuestion !== data.curQuestion) {
         game.state = data.state;
       }
+      if (data.state === 'czar pick card') {
+        game.czar = data.czar;
+      }
 
       if (data.state === 'waiting for players to pick') {
         game.czar = data.czar;
@@ -163,9 +166,7 @@ angular.module('mean.system')
 
         // Set notifications only when entering state
         if (newState) {
-          if (game.czar === game.playerIndex) {
-            addToNotificationQueue('You\'re the Card Czar! Please wait!');
-          } else if (game.curQuestion.numAnswers === 1) {
+          if (game.curQuestion.numAnswers === 1) {
             addToNotificationQueue('Select an answer!');
           } else {
             addToNotificationQueue('Select TWO answers!');
@@ -188,6 +189,22 @@ angular.module('mean.system')
         game.players[game.playerIndex].hand = [];
         game.time = 0;
       }
+
+      var setHttpHeader = () => {
+        const token = $window.localStorage.getItem('token')
+        $http.defaults.headers.common.Authorization = token;
+      };
+      setHttpHeader();
+      if (data.state === 'game ended' && game.gameID === data.gameID) {
+        // When game ends, send game data to the database
+        const gameData = {
+          gameId: game.gameID,
+          gameOwner: game.players[0].username,
+          gameWinner: game.players[game.gameWinner].username,
+          gamePlayers: game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+      }
     });
 
     socket.on('notification', function (data) {
@@ -204,7 +221,7 @@ angular.module('mean.system')
 
     game.startGame = function () {
       socket.emit('startGame', {
-        regionId: sessionStorage.getItem('userRegion')      
+        regionId: sessionStorage.getItem('userRegion')
       });
     };
 
@@ -230,6 +247,10 @@ angular.module('mean.system')
     game.broadcastNotification = function () {
       socket.emit('broadcastNotification');
     }
+    // emit event when czar select card
+    game.startNextRound = () => {
+      socket.emit('czarCardSelected');
+    };
 
     decrementTime();
 

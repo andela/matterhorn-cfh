@@ -108,7 +108,7 @@ input[type=search]:not(.browser-default) {
 .search {
   margin-top: 2%!important;
   margin-bottom: 4%!important;
-
+  
 }
 
 .search-results-btn a.btn{
@@ -140,11 +140,11 @@ input[type=search]:not(.browser-default) {
   .timer-container .time {
     font-size: 10px;
   }
-
+  
   .finding-players {
     font-size: 20px;
   }
-
+  
   .inner-timer-container {
     padding: 20px;
     border: 3px solid #fff;
@@ -153,7 +153,7 @@ input[type=search]:not(.browser-default) {
     text-align: center;
     border-radius: 50%;
   }
-
+  
   #timer-status-round {
     font-size:12px;
   }
@@ -212,7 +212,7 @@ input[type=search]:not(.browser-default) {
     cursor: pointer;
     margin-top: 5px;
   }
-
+  
   .question-container-outer {
     background: rgba(29, 42, 49, 0.67);
     padding: 10px 0 50px 3 0px;
@@ -268,7 +268,7 @@ input[type=search]:not(.browser-default) {
   border-radius: 8px;
   color: #252525;
   font-family: Arial;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   vertical-align: top;
 }
@@ -432,4 +432,20 @@ input[type=search]:not(.browser-default) {
   color: #fff;
   margin: 0;
   font-size: 30px;
+}
+
+.cfh-logo-fst {
+  cursor: pointer;
+}
+/* style for czar modall*/
+.card-container {
+  background: rgba(31, 149, 156, 1);
+  margin-top: 150px;
+  border-radius: 5px;
+}
+.small-card {
+  margin-right: 10px;
+}
+.card-text {
+  font-size: 22px;
 }

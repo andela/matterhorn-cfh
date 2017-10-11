@@ -1,4 +1,42 @@
-@media (max-width: 768px) {
+@media (max-width: 320px) {
+  .avatars {
+    position: relative;
+    float: left;
+    margin: 0px -5px;
+   }
+ }
+
+@media (min-width: 400px) and (max-width:480px){
+  .avatars {
+    position: relative;
+    float: left;
+    margin: 2px 12px;
+ }
+
+}
+
+@media (max-width: 400px) {
+  .main-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack on top */
+  }
+  .sidebar-social {
+    order: 2; /* Go down, bring Box B up */
+  }
+   #landing-charity {
+      margin-bottom: -60px;
+   }
+
+   #info-box {
+      margin-left: 0%;
+   }
+
+   .some-text {
+      margin: 0;
+   }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
   .row .col.m8 {
     width: 100%;
   }
@@ -16,20 +54,32 @@
     position: absolute;
     left: 100%;
   }
+  .footer-content {
+    height: 1vh;
+  }
+  .footer-social {
+    height: 1vh;
+  }
+  #contain-avatars {
+    padding-left: 10%;
+  }
 
 }
 @media (min-width: 1024px) and (max-width: 1300px) {
   .sidebar-content {
-    height: 98vh; /* Go down, bring Box B up */
+    height: 99vh; /* Go down, bring Box B up */
   }
   .sidebar-social {
-    height: 98vh;
+    height: 99vh;
   }
   .center-image {
     position: absolute;
     left: 20%;
     margin-left: 80px; 
     top: 300px;
+  }
+  #contain-avatars {
+    padding-left: 10%;
   }
 
 }
@@ -40,14 +90,21 @@
     margin-left: 120px; 
     top: 300px;
   }
+  .sidebar-content input {
+    width: 80% !important;
+  }
+  .input-field {
+    display: inline-flex;
+  }
+  
 }
 
 @media (min-width: 800px) {
   .sidebar-content {
-    height: 98vh; /* Go down, bring Box B up */
+    height: 99vh; /* Go down, bring Box B up */
   }
   .sidebar-social {
-    height: 98vh;
+    height: 99vh;
   }
 
 }
@@ -144,6 +201,13 @@
       float: left;
       margin-top: -50px;
    }
+   .main-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack on top */
+  }
+  .sidebar-social {
+    order: 2; /* Go down, bring Box B up */
+  }
 
    #info-box {
       margin-left: 0%;
@@ -159,19 +223,6 @@
 
 }
 
-@media (max-width: 400px) {
-   #landing-charity {
-      margin-bottom: -60px;
-   }
-
-   #info-box {
-      margin-left: 0%;
-   }
-
-   .some-text {
-      margin: 0;
-   }
-}
 
 .sign-error {
    text-align: center;
@@ -454,9 +505,6 @@
 
   #sign-up-btn-other {
    display: inline-block;
-   border-radius: 8px;
-   -moz-border-radius: 5px;
-   -webkit-border-radius: 5px;
    font-size: 20px;
    font-size: 1.35em;
    font-weight: 400;
@@ -464,10 +512,9 @@
    color: white;
    background: #C54141;
    margin-top: 10px;
-   margin-bottom: 3px;
+   margin-bottom: 50px;
    margin-right: 10px;
-   padding: 0.1em 35px;
-   cursor: pointer;
+
  }
 
  /**** About Us ****/
@@ -576,6 +623,7 @@
 
  #contain-avatars {
    margin-top: 25px;
+
  }
 
  .avatar-list {
@@ -591,7 +639,6 @@
  .avatars {
    position: relative;
    float: left;
-   margin: 2px 5px;
    border-radius: 8px;
  }
 
@@ -1290,12 +1337,6 @@
       margin-left: 0;
    }
 
-   .avatars {
-      position: relative;
-      float: left;
-      margin: 2px 17px;
-   }
-
    .foot {
       bottom: 0;
       max-width: 1400px;
@@ -1312,6 +1353,13 @@
    }
  }
 
+ @media (min-width: 340) and (max-width: 360px) {
+  .avatars {
+    position: relative;
+    float: left;
+    margin: 2px 0px;
+   }
+ }
  /**** authentication screen (Sign Up and Sign In)****/
  .authpage {
   background-color: #fff;
@@ -1325,10 +1373,10 @@
   color: #ffffff;
 }
 
-input {
+.col.s12.sidebar-content input {
   position: relative;
-  color: rgb(25, 23, 23);
-  font-size: 18px;
+  color: #fff;
+  font-size: 15px;
 }
 .red-eye {
   position: absolute;
@@ -1348,9 +1396,7 @@ input {
     padding-top: 80px;
     text-align: center;
 }
-.col.s12.sidebar-social input {
-  font-size: 15px;
-}
+
 .col.s12.sidebar-social h5 {
   color: #2F6B5D;
 }
@@ -1387,6 +1433,11 @@ input {
 }
 .material-icons {
   color: #ffffff;
+  margin-top: 20px;
+}
+.material-icons.right {
+  color: #ffffff;
+  margin-top: 0px;
 }
 .img-avatar {
   height: 80px;
@@ -1395,12 +1446,12 @@ input {
 }
 
 .footer-content {
-  height: 2vh;
+  height: 1vh;
   background-color: #009688;
 }
 .footer-social {
+  height: 1vh;
   background-color: #009688;
-  height: 2vh;
 }
 
 .password-show-button:hover {
