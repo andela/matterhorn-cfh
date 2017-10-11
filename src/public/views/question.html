@@ -136,9 +136,29 @@
 
 <script>
   $(document).ready(function () {
-    $('.modal').modal();
     $('ul.tabs').tabs();
     $('.dropdown-button').dropdown();
   });
 
 </script>
+
+<!-- Modal Structure for czar card decks-->
+<div id="cardModal" class="card-container modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content center">
+      <center>
+        <h4 id="cardText" class="card-text">Hey! You are the card czar. Click a card and start the game.</h4>
+        <div ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style='margin: auto;'>
+          <center>
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard1' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard2' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard3' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard4' />
+        </div>
+        </center>
+        <div class="modal-footer" style='display: none'>
+          <button class="modal-action modal-close waves-effect waves-green btn-flat"></button>
+        </div>
+    </div>
+  </div>
+</div>

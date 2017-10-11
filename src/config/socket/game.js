@@ -113,6 +113,7 @@ class Game {
   /**
   * @memberof Game
   * @returns {void}
+  @param {string} msg
   */
   sendNotification(msg) {
     this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
@@ -200,10 +201,10 @@ class Game {
   }
 
   startGame() {
-    console.log(this.gameID, this.state);
     this.shuffleCards(this.questions);
     this.shuffleCards(this.answers);
-    this.stateChoosing(this);
+    this.changeCzar(this);
+    this.sendUpdate();
   }
 
 
@@ -229,12 +230,6 @@ class Game {
     }
     self.round++;
     self.dealAnswers();
-    // Rotate card czar
-    if (self.czar >= self.players.length - 1) {
-      self.czar = 0;
-    } else {
-      self.czar++;
-    }
     self.sendUpdate();
 
     self.choosingTimeout = setTimeout(() => {
@@ -258,7 +253,6 @@ class Game {
 
   stateJudging(self) {
     self.state = 'waiting for czar to decide';
-    // console.log(self.gameID,self.state);
 
     if (self.table.length <= 1) {
       // Automatically select a card if only one card was submitted
@@ -286,7 +280,8 @@ class Game {
       if (winner !== -1) {
         self.stateEndGame(winner);
       } else {
-        self.stateChoosing(self);
+        // self.stateChoosing(self);
+        self.changeCzar(self);
       }
     }, self.timeLimits.stateResults * 1000);
   }
@@ -490,6 +485,26 @@ class Game {
     clearTimeout(this.resultsTimeout);
     clearTimeout(this.choosingTimeout);
     clearTimeout(this.judgingTimeout);
+  }
+
+
+  changeCzar(self) {
+    self.state = 'czar pick card';
+    self.table = [];
+    if (self.czar >= self.players.length - 1) {
+      self.czar = 0;
+    } else {
+      self.czar += 1;
+    }
+    self.sendUpdate();
+  }
+
+  startNextRound(self) {
+    if (self.state === 'czar pick card') {
+      self.stateChoosing(self);
+    } else if (self.state === 'czar left game') {
+      self.changeCzar(self);
+    }
   }
 }
 

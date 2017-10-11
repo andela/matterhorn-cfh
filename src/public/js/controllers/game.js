@@ -41,22 +41,22 @@ angular.module('mean.system')
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Start Game'
       })
-      .then((regionId) => {
-        if (regionId) {
-          if (game.players.length < game.playerMinLimit) {
-            return swal({
-              title: 'You cannot start a game now!',
-              text: `You need ${game.playerMinLimit - game.players.length} more players`
-            });
-          } else {
-            $window.sessionStorage.setItem('userRegion', regionId);
-            $scope.regionName = regions(regionId);
-            $scope.showRegionName = true;
-            game.startGame();
+        .then((regionId) => {
+          if (regionId) {
+            if (game.players.length < game.playerMinLimit) {
+              return swal({
+                title: 'You cannot start a game now!',
+                text: `You need ${game.playerMinLimit - game.players.length} more players`
+              });
+            } else {
+              $window.sessionStorage.setItem('userRegion', regionId);
+              $scope.regionName = regions(regionId);
+              $scope.showRegionName = true;
+              game.startGame();
+            }
           }
-        }
-      })
-      .catch(() => {})
+        })
+        .catch(() => { })
     };
 
     $scope.setHttpHeader = () => {
@@ -112,8 +112,8 @@ angular.module('mean.system')
         return {};
       }
     };
-    
-    
+
+
     $scope.sendPickedCards = function () {
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
@@ -134,8 +134,8 @@ angular.module('mean.system')
         return false;
       }
     };
-    
-    
+
+
     $scope.firstAnswer = function ($index) {
       if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
         return true;
@@ -159,7 +159,23 @@ angular.module('mean.system')
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
-    
+    // model that triggers czar modal
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      $('#cardModal').show();
+      card.addClass('animated flipOutY');
+      setTimeout(() => {
+        $scope.startNextRound();
+        card.removeClass('animated flipOutY');
+        $('#cardModal').hide();
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      if ($scope.isCzar()) {
+        game.startNextRound();
+      }
+    };
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
     };
@@ -198,8 +214,8 @@ angular.module('mean.system')
     $scope.winnerPicked = function () {
       return game.winningCard !== -1;
     };
-    
-    
+
+
     $scope.startGame = function () {
 
       if (game.players.length < game.playerMinLimit) {
@@ -340,14 +356,13 @@ angular.module('mean.system')
 
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
-  
-      if(token) {
+
+      if (token) {
         return true
       } else {
         return false
       }
     };
-    
     $scope.abandonGame = function () {
       game.leaveGame();
       $location.path('/');
@@ -371,20 +386,40 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
+      // POp up program for modal
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        const cardModal = $('#cardModal')
+        cardModal.modal({
+          dismissible: false
+        });
+        cardModal.modal('open');
+      } else {
+        $('.modal-close').trigger('click')
+      }
+      if ($scope.isCzar() === false && game.state === 'czar pick card'
+        && game.state !== 'game dissolved'
+        && game.state !== 'awaiting players' && game.table.length === 0) {
+        $scope.czarHasDrawn = 'Wait! Czar is drawing Card';
+      }
+      if (game.state !== 'czar pick card'
+        && game.state !== 'awaiting players'
+        && game.state !== 'game dissolved') {
+        $scope.czarHasDrawn = '';
+      }
 
-    // When game ends, delete chat data then send game data to the database
+      // When game ends, delete chat data then send game data to the database
       if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
         var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
         $scope.messages.$remove(chatRef)
-        .then(() => {
-          const gameData = { 
-            gameId: $scope.game.gameID,
-            gameOwner: $scope.game.players[0].username,
-            gameWinner: $scope.game.players[game.gameWinner].username,
-            gamePlayers: $scope.game.players
-          };
-          $http.post(`/api/games/${game.gameID}/start`, gameData);
-        })
+          .then(() => {
+            const gameData = {
+              gameId: $scope.game.gameID,
+              gameOwner: $scope.game.players[0].username,
+              gameWinner: $scope.game.players[game.gameWinner].username,
+              gamePlayers: $scope.game.players
+            };
+            $http.post(`/api/games/${game.gameID}/start`, gameData);
+          })
 
       }
     });
@@ -394,16 +429,16 @@ angular.module('mean.system')
 
     $scope.setToken = () => {
       $http.get('/users/token')
-      .success((data) => {
-        if (data.cookie) {
-          $window.sessionStorage.setItem('token', data.cookie);
-        } else {
-          $scope.showMessage = data.message;
-        }
-      })
-      .error(() => {
-        $scope.showMessage = "Failed to authenticate user";
-      });
+        .success((data) => {
+          if (data.cookie) {
+            $window.sessionStorage.setItem('token', data.cookie);
+          } else {
+            $scope.showMessage = data.message;
+          }
+        })
+        .error(() => {
+          $scope.showMessage = "Failed to authenticate user";
+        });
     }
     $scope.$watch('game.gameID', function () {
       if (game.gameID && game.state === 'awaiting players') {
