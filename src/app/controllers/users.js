@@ -21,6 +21,10 @@ const avatarsAll = all();
 const helper = require('sendgrid').mail;
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 /**
+ *  @returns {object}  -returns users object
+ */
+export const getLeaderBoard = () => {}
+/**
  * Auth callback
  */
 

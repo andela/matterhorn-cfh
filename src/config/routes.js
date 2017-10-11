@@ -21,7 +21,8 @@ import {
   getFriendsList,
   saveGameData,
   isLoggedIn,
-  isAuthenticated
+  isAuthenticated,
+  getLeaderBoard
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -42,6 +43,8 @@ import {
 import app from '../app';
 
 export default () => {
+  // leaderboard route
+  app.get('/api/leaderboard', isAuthenticated, getLeaderBoard);
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);
