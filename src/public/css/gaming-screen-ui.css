@@ -268,7 +268,7 @@ input[type=search]:not(.browser-default) {
   border-radius: 8px;
   color: #252525;
   font-family: Arial;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   vertical-align: top;
 }
@@ -434,6 +434,9 @@ input[type=search]:not(.browser-default) {
   font-size: 30px;
 }
 
+.cfh-logo-fst {
+  cursor: pointer;
+}
 /* style for czar modall*/
 .card-container {
   background: rgba(31, 149, 156, 1);

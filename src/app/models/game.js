@@ -6,6 +6,12 @@ const GameSchema = new Schema({
   gameId: {
     type: String
   },
+  gameUserID: {
+    type: String
+  },
+  gameUsername: {
+    type: String
+  },
   gameOwner: {
     type: String
   },

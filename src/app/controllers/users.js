@@ -3,6 +3,7 @@
  */
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import jwtDecode from 'jwt-decode';
 import bcrypt from 'bcrypt';
 import moment from 'moment';
 import { all } from './avatars';
@@ -47,15 +48,16 @@ export const authCallback = (req, res) => {
  */
 
 export const isLoggedIn = (req, res, next) => {
-  const key = 'mySecret';
-  let token;
-  const tokenAvailable = req.headers.authorization ||
-    req.headers['x-access-token'];
-  if (req.headers.authorization) {
-    [, token] = req.headers.authorization.split(' ');
-  } else {
-    token = tokenAvailable;
-  }
+  const key = process.env.TOKEN_SECRET;
+  const token = req.headers.authorization;
+  // let token;
+  // const tokenAvailable = req.headers.authorization ||
+  //   req.headers['x-access-token'];
+  // if (req.headers.authorization) {
+  //   [, token] = req.headers.authorization.split(' ');
+  // } else {
+  //   token = tokenAvailable;
+  // }
 
   if (token) {
     jwt.verify(token, key, (error, decoded) => {
@@ -146,8 +148,11 @@ export const getFriendsList = (req, res) => {
 };
 
 export const saveGameData = (req, res) => {
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
   const game = new Game();
-
+  game.gameUserID = decoded.user;
+  game.gameUsername = decoded.name;
   game.gameOwner = req.body.gameOwner;
   game.gameId = req.params.id;
   game.gameWinner = req.body.gameWinner;
@@ -160,6 +165,16 @@ export const saveGameData = (req, res) => {
     }
     res.json(game);
   });
+};
+
+export const getGameData = (req, res) => {
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
+  Game
+    .find({ gameUsername: decoded.name }, (err, resp) => {
+      if (err) res.send(err);
+      res.send(resp);
+    });
 };
 
 
