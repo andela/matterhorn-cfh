@@ -195,6 +195,7 @@ angular.module('mean.system')
       };
       setHttpHeader();
       if (data.state === 'game ended' && game.gameID === data.gameID) {
+        const token = $window.sessionStorage.getItem('regionName', $scope.regionName);
         // When game ends, send game data to the database
         const gameData = {
           gameId: game.gameID,
@@ -202,6 +203,7 @@ angular.module('mean.system')
           gameWinner: game.players[game.gameWinner].username,
           gamePlayers: game.players
         };
+        $http.post(`/api/games/rank`, { location: token });
         $http.post(`/api/games/${game.gameID}/start`, gameData);
       }
     });

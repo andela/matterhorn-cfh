@@ -48,7 +48,6 @@ angular.module('mean.system')
               text: `You need ${game.playerMinLimit - game.players.length} more players`
             });
           } else {
-            console.log($scope.regionName, '=====')
             $window.sessionStorage.setItem('userRegion', regionId);
             $window.sessionStorage.setItem('regionName', $scope.regionName);
             $scope.regionName = regions({regionId, userRegion: $scope.regionName});

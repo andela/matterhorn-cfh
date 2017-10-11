@@ -125,18 +125,14 @@
             <table class="responsive-table bordered striped">
                 <thead>
                   <tr>
-                      <th>GAME ID</th>
-                      <th>GAME OWNER</th>
-                      <th>WINNER</th>
-                      <th>PLAYERS</th>
+                      <th>LOCATION</th>
+                      <th>WINS</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>56</td>
-                    <td>Eclair started game</td>
-                    <td>Sweet Monkey 8pts</td>
-                    <td>Sweet Monkey 8pts, Disco Potato 4pts, Landing Pot 1pts</td>
+                  <tr ng-repeat="x in gameRank">
+                    <td>{{x.location}}</td>
+                    <td>{{x.wins}}</td>
                   </tr>
                 </tbody>
             </table>

@@ -49,7 +49,7 @@ export const authCallback = (req, res) => {
 
 export const isLoggedIn = (req, res, next) => {
   const key = process.env.TOKEN_SECRET;
-  const token = req.headers.authorization;
+  const token = req.headers.authorization || req.headers['x-access-token'];
   // let token;
   // const tokenAvailable = req.headers.authorization ||
   //   req.headers['x-access-token'];
@@ -147,6 +147,14 @@ export const getFriendsList = (req, res) => {
     });
 };
 
+export const getRankData = (req, res) => {
+  Rank.find({})
+    .sort({ wins: -1 })
+    .then(data => res.send({
+      data
+    }));
+};
+
 export const saveGameRank = (req, res) => {
   const rank = new Rank();
   rank.location = req.body.location;
@@ -155,13 +163,25 @@ export const saveGameRank = (req, res) => {
     location: req.body.location
   })
     .then((region) => {
-      if (region) {
+      if (region.length > 0) {
         Rank.update(
-          { wins: region.wins },
-          { $set: { wins: region.wins + 1 } }
+          {
+            location: req.body.location
+          },
+          { $inc: { wins: 1 } },
+          () => {
+            res.json({
+              message: 'Updated successfully!'
+            });
+          }
         );
       } else {
-        rank.save();
+        rank.save((error) => {
+          if (error) {
+            return error;
+          }
+          res.json(rank);
+        });
       }
     })
     .catch(() => {
