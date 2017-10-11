@@ -40,17 +40,11 @@
 }
 .dashboard td,
 .dashboard th {
-  border-left: 2px solid #999;
-  border-top: 2px solid #999;
-  border-right: 2px solid #999;
-  border-bottom: 2px solid #999;
+  border: 2px solid #999 !important;
   border-color: #00524a;
 }
 .dashboard tr {
-  border-left: 2px solid #999;
-  border-top: 2px solid #999;
-  border-right: 2px solid #999;
-  border-bottom: 2px solid #999;
+  border: 2px solid #999 !important;
 }
 
 .dashboard td,
