@@ -15,6 +15,7 @@ angular.module('mean.system')
     $scope.friendsId = [];
     $scope.inviteList = [];
     $scope.notifications = [];
+    $scope.chatStart = false;
     $scope.regionId = parseInt(sessionStorage.getItem('userRegion'), 10);
     $scope.regionName = regions($scope.regionId);
     $scope.showRegionName = false;
@@ -49,6 +50,7 @@ angular.module('mean.system')
               text: `You need ${game.playerMinLimit - game.players.length} more players`
             });
           } else {
+            $scope.chatStart = true;
             $window.sessionStorage.setItem('userRegion', regionId);
             $scope.regionName = regions(regionId);
             $scope.showRegionName = true;
@@ -65,9 +67,10 @@ angular.module('mean.system')
     };
 
     setTimeout(function () {
+      $scope.username = $scope.game.players[$scope.game.playerIndex].username;
       var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
 
-      $scope.messages = $firebaseArray(chatRef.limitToFirst(10));
+      $scope.messages = $firebaseArray(chatRef.limitToLast(15));
     }, 1000);
 
     var indicator = $("div.chat-close").text();
@@ -75,10 +78,10 @@ angular.module('mean.system')
     $scope.submitChat = function () {
       var date = new Date(),
         time = date.toString().split(' ')[4]
-      const sender = $scope.global.user.name;
+        
+      const sender = $scope.game.players[$scope.game.playerIndex].username;
       var message = document.getElementById('message').value,
         avatar = $scope.game.players[$scope.game.playerIndex].avatar;
-
       $scope.messages.$add({ message, gameId: game.gameID, sender, time, avatar })
         .then(() => game.newChat())
 
