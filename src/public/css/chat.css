@@ -22,6 +22,12 @@ p { margin: 0; }
     background-size: 60%;
 }
 
+.emojiPickerIcon .black{
+    height: 39px !important;
+    width: 39px !important;
+    background-color: rgb(255, 255, 255) !important;
+}
+
 .emojiPicker {
     width: 400px;
     height: 200px;
