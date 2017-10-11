@@ -1,9 +1,5 @@
 @media (max-width: 425px) {
-<<<<<<< HEAD
-  .dashboard-header .main-desc-text {
-=======
   .dashboard-header .dashboard-desc-text {
->>>>>>> staging
     text-align: center;
     width: 100%;
   }
@@ -16,11 +12,7 @@
   display: flex;
 }
 
-<<<<<<< HEAD
 .dashboard-header .main-desc-text {
-=======
-.dashboard-header .dashboard-desc-text {
->>>>>>> staging
   text-align: center;
   width: 100%;
 }
@@ -48,7 +40,6 @@
 }
 .dashboard td,
 .dashboard th {
-<<<<<<< HEAD
   border-left: 2px solid #999;
   border-top: 2px solid #999;
   border-right: 2px solid #999;
@@ -60,13 +51,11 @@
   border-top: 2px solid #999;
   border-right: 2px solid #999;
   border-bottom: 2px solid #999;
-=======
   border: 2px solid #999 !important;
   border-color: #00524a;
 }
 .dashboard tr {
   border: 2px solid #999 !important;
->>>>>>> staging
 }
 
 .dashboard td,
