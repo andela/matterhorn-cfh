@@ -160,7 +160,23 @@ angular.module('mean.system')
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
-    
+    // model that triggers czar modal
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      $('#cardModal').show();
+      card.addClass('animated flipOutY');
+      setTimeout(() => {
+        $scope.startNextRound();
+        card.removeClass('animated flipOutY');
+        $('#cardModal').hide();
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      if ($scope.isCzar()) {
+        game.startNextRound();
+      }
+    };
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
     };
@@ -341,14 +357,13 @@ angular.module('mean.system')
 
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
-  
-      if(token) {
+
+      if (token) {
         return true
       } else {
         return false
       }
     };
-    
     $scope.abandonGame = function () {
       game.leaveGame();
       $location.path('/');
@@ -387,8 +402,7 @@ angular.module('mean.system')
           $http.post(`/api/games/${game.gameID}/start`, gameData);
         })
 
-      }
-    });
+      }});
     if ($scope.game.players.length < 1) {
 
     }
