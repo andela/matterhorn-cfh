@@ -160,6 +160,24 @@ angular.module('mean.system')
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
 
+    // model that triggers czar modal
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      $('#cardModal').show();
+      card.addClass('animated flipOutY');
+      setTimeout(() => {
+        $scope.startNextRound();
+        card.removeClass('animated flipOutY');
+        $('#cardModal').hide();
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      if ($scope.isCzar()) {
+        game.startNextRound();
+      }
+    };
+
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
     };
@@ -340,14 +358,13 @@ angular.module('mean.system')
 
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
-
-      if (token) {
+      if(token) {
         return true
       } else {
         return false
       }
     };
-
+    
     $scope.abandonGame = function () {
       game.leaveGame();
       $location.path('/');
@@ -371,6 +388,26 @@ angular.module('mean.system')
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
+      // POp up program for modal
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        const cardModal = $('#cardModal')
+        cardModal.modal({
+          dismissible: false
+        });
+        cardModal.modal('open');
+      } else {
+        $('.modal-close').trigger('click')
+      }
+      if ($scope.isCzar() === false && game.state === 'czar pick card'
+        && game.state !== 'game dissolved'
+        && game.state !== 'awaiting players' && game.table.length === 0) {
+        $scope.czarHasDrawn = 'Wait! Czar is drawing Card';
+      }
+      if (game.state !== 'czar pick card'
+        && game.state !== 'awaiting players'
+        && game.state !== 'game dissolved') {
+        $scope.czarHasDrawn = '';
+      }
 
       // When game ends, delete chat data then send game data to the database
       if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
@@ -385,9 +422,9 @@ angular.module('mean.system')
             };
             $http.post(`/api/games/${game.gameID}/start`, gameData);
           })
-
-      }
-    });
+        }
+      });
+    
     if ($scope.game.players.length < 1) {
 
     }
@@ -436,7 +473,6 @@ angular.module('mean.system')
     } else {
       game.joinGame();
     }
-
 
     $scope.tour = introJs();
 

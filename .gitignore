@@ -13,3 +13,4 @@ build
 coverage
 seed.json
 src/public/lib
+seeders/
