@@ -547,7 +547,7 @@ angular.module('mean.system')
     $rootScope.$on('newUser', function (event) {
       $timeout(function () {
         $scope.startTour();
-      }, 1000);
+      }, 2000);
 
       $scope.tour.onexit(function () {
         swal({
