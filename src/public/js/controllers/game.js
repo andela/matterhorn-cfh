@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .controller('GameController', ['socket', '$rootScope', '$scope', '$timeout', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $rootScope, $scope, $timeout, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
+  .controller('GameController', ['socket', '$rootScope', '$scope', '$window', '$timeout', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $rootScope, $scope, $window,  $timeout, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -514,7 +514,20 @@ angular.module('mean.system')
       }, 1000);
 
       $scope.tour.onexit(function () {
-        $location.path('/');
+        swal({
+          text: "Do you want to go to the homepage or start a new game session",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Go to Home Page',
+          confirmButtonText: 'Start a New Game'
+        })
+          .then(() => {
+            $window.location.reload();
+          })
+          .catch(() => {
+            $location.path('/');
+          })
       });
     })
   }]);
