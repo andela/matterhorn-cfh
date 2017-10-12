@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .controller('GameController', ['socket', '$scope', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $scope, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
+  .controller('GameController', ['socket', '$rootScope', '$scope', '$timeout', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $rootScope, $scope, $timeout, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -499,8 +499,8 @@ angular.module('mean.system')
       overlayOpacity: 0.5,
       showBullets: false
     });
-    
-    $scope.tour.onbeforechange(function(targetElement) {
+
+    $scope.tour.onbeforechange(function (targetElement) {
       if (targetElement.id === 'game-players') {
         $('#live-chat header').trigger('click');
       }
@@ -508,4 +508,13 @@ angular.module('mean.system')
 
     $scope.startTour = () => $scope.tour.start();
 
+    $rootScope.$on('newUser', function (event) {
+      $timeout(function () {
+        $scope.startTour();
+      }, 1000);
+
+      $scope.tour.onexit(function () {
+        $location.path('/');
+      });
+    })
   }]);
