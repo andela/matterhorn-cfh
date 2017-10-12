@@ -66,14 +66,15 @@ export default () => {
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
-  app.get('/api/donations', isAuthenticated, donations);
+
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
   app.get('/api/games/logs', isLoggedIn, getGameData);
 
   // Donation Routes
-  app.post('/donations', addDonation);
+  app.post('/donations', isAuthenticated, addDonation);
+  app.get('/api/donations', isAuthenticated, donations);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',

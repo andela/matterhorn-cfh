@@ -504,12 +504,14 @@ export const addDonation = (req, res) => {
             if (user.donations[i].crowdrise_donation_id ===
               req.body.crowdrise_donation_id) {
               duplicate = true;
+              res.status(200).send({ message: 'Duplicate donation not allowed' });
             }
           }
           if (!duplicate) {
             user.donations.push(req.body);
             user.premium = 1;
             user.save();
+            res.status(200).send({ message: 'Donation has been saved' });
           }
         });
     }
