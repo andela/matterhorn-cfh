@@ -83,8 +83,7 @@ angular.module('mean.system')
         .then(() => game.newChat())
 
       document.getElementById('message').value = "";
-
-    }
+    };
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {
@@ -159,9 +158,7 @@ angular.module('mean.system')
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
-<<<<<<< HEAD
 
-=======
     // model that triggers czar modal
     $scope.shuffleCards = () => {
       const card = $(`#${event.target.id}`);
@@ -179,7 +176,6 @@ angular.module('mean.system')
         game.startNextRound();
       }
     };
->>>>>>> staging
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
     };
@@ -290,7 +286,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.getFriendsList();
-        })
+        });
     };
 
     $scope.getFriendsList = () => {
@@ -303,7 +299,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.friendsList = [];
-        })
+        });
     };
 
     $scope.sendNotification = (friend) => {
@@ -361,20 +357,12 @@ angular.module('mean.system')
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
 
-<<<<<<< HEAD
-      if(token) {
-=======
       if (token) {
->>>>>>> staging
         return true
       } else {
         return false
       }
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
     $scope.abandonGame = function () {
       game.leaveGame();
       $location.path('/');
@@ -421,7 +409,7 @@ angular.module('mean.system')
 
       // When game ends, delete chat data then send game data to the database
       if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
-        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`);
         $scope.messages.$remove(chatRef)
           .then(() => {
             const gameData = {
@@ -431,9 +419,10 @@ angular.module('mean.system')
               gamePlayers: $scope.game.players
             };
             $http.post(`/api/games/${game.gameID}/start`, gameData);
-          })
+          });
 
-      });
+      };
+    });
     if ($scope.game.players.length < 1) {
 
     }
