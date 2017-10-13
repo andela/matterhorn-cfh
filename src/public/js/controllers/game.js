@@ -387,6 +387,26 @@ angular.module('mean.system')
 
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function () {
+       // POp up program for modal
+       if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        const cardModal = $('#cardModal')
+        cardModal.modal({
+          dismissible: false
+        });
+        cardModal.modal('open');
+      } else {
+        $('.modal-close').trigger('click')
+      }
+      if ($scope.isCzar() === false && game.state === 'czar pick card'
+        && game.state !== 'game dissolved'
+        && game.state !== 'awaiting players' && game.table.length === 0) {
+        $scope.czarHasDrawn = 'Wait! Czar is drawing Card';
+      }
+      if (game.state !== 'czar pick card'
+        && game.state !== 'awaiting players'
+        && game.state !== 'game dissolved') {
+        $scope.czarHasDrawn = '';
+      }
       // watches for a win
       if (game.state === 'game ended' && game.gameWinner === game.playerIndex) {
         leaderData = {
