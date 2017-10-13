@@ -12,4 +12,5 @@ matterhorn-cfh-staging
 build
 coverage
 seed.json
+src/public/lib
 seeders/
