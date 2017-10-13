@@ -1,6 +1,6 @@
 angular.module('mean.system')
-  .controller('authController', ['$scope', '$location', '$http', '$window',
-    function ($scope, $location, $http, $window) {
+  .controller('authController', ['$rootScope', '$scope', '$location', '$http', '$window',
+    function ($rootScope, $scope, $location, $http, $window) {
 
       $scope.errorMessage = ''
 
@@ -16,8 +16,8 @@ angular.module('mean.system')
           (response) => {
             $scope.errorMessage = ''
             $window.localStorage.setItem('token', response.data.token)
-            $location.path('/#!/')
-            $scope.loadNotifcations();
+            $location.path('/app')
+            $rootScope.$broadcast('newUser');
           },
           (error) => {
             if (error.status === 409) {
