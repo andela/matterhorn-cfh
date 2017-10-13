@@ -13,6 +13,7 @@ angular.module('mean.system')
     };
 
     $scope.checkAuth();
+
     $scope.global = Global;
     $scope.formData = {};
 

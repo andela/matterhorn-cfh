@@ -5,10 +5,22 @@ angular.module('mean.system')
       $scope.errorMessage = ''
 
       $scope.signUp = () => {
-        const payload = {
-          name: $scope.name,
-          email: $scope.email,
-          password: $scope.password
+        if ($cookies.profileId && $cookies.provider) {
+          $scope.povider = $cookies.provider;
+          $scope.profileId = $cookies.profileId;
+          const payload = {
+            name: $scope.name,
+            email: $scope.email,
+            password: $scope.password,
+            provider: $scope.provider,
+            [$scope.provider['id']]: $scope.profileId
+          }
+        } else {
+          const payload = {
+            name: $scope.name,
+            email: $scope.email,
+            password: $scope.password,
+          }
         }
 
         $http.post('/api/auth/signup', payload)
