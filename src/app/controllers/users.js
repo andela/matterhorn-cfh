@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import jwtDecode from 'jwt-decode';
 import bcrypt from 'bcrypt';
+import moment from 'moment';
 import { all } from './avatars';
 import validateInput from '../../config/middlewares/validateInput';
 
@@ -387,6 +388,7 @@ export const create = (req, res, next) => {
         // Switch the user's avatar index to an actual avatar url
         user.avatar = avatarsAll[user.avatar];
         user.provider = 'local';
+        user.last_login = moment();
         user.save((err) => {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
@@ -433,6 +435,8 @@ export const login = (req, res) => {
         // check if password is correct
         bcrypt.compare(password, user.hashed_password, (err, result) => {
           if (result) {
+            user.last_login = moment();
+            user.save();
             // generate token upon login
             const token = jwt.sign(
               { name: user.name, user: user.id, email: user.email },
