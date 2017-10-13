@@ -167,6 +167,17 @@ export const saveGameData = (req, res) => {
   });
 };
 
+export const donations = (req, res) => {
+  const userId = req.decoded.user;
+  User.findOne({
+    _id: userId
+  })
+    .exec((err, user) => {
+      // Confirm that this object hasn't already been entered
+      res.status(200).send({ donations: user.donations });
+    });
+};
+
 export const getGameData = (req, res) => {
   const token = req.headers.authorization;
   const decoded = jwtDecode(token);
@@ -483,12 +494,12 @@ export const avatars = (req, res) => {
 };
 
 export const addDonation = (req, res) => {
-  if (req.body && req.user && req.user.id) {
+  if (req.body && req.decoded.user) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id &&
       req.body.donor_name) {
       User.findOne({
-        _id: req.user.id
+        _id: req.decoded.user
       })
         .exec((err, user) => {
           // Confirm that this object hasn't already been entered
@@ -497,12 +508,16 @@ export const addDonation = (req, res) => {
             if (user.donations[i].crowdrise_donation_id ===
               req.body.crowdrise_donation_id) {
               duplicate = true;
+              res.status(200).send({
+                message: 'Duplicate donation not allowed'
+              });
             }
           }
           if (!duplicate) {
             user.donations.push(req.body);
             user.premium = 1;
             user.save();
+            res.status(200).send({ message: 'Donation has been saved' });
           }
         });
     }
