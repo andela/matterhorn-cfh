@@ -1,0 +1,81 @@
+[{
+    "expansion": "Base",
+    "id": 1,
+    "numAnswers": 1,
+    "official": true,
+    "text": "_?  There's an app for that.",
+    "regionId": "1"
+  },
+  {
+    "expansion": "Base",
+    "id": 2,
+    "numAnswers": 1,
+    "official": true,
+    "text": "Why can't I sleep at night?",
+    "regionId": "2"
+  },
+  {
+    "expansion": "Base",
+    "id": 3,
+    "numAnswers": 1,
+    "official": true,
+    "text": "What's that smell?",
+    "regionId": "4"
+  },
+  {
+    "expansion": "Base",
+    "id": 4,
+    "numAnswers": 1,
+    "official": true,
+    "text": "I got 99 problems but _ ain't one.",
+    "regionId": "3"
+  },
+  {
+    "expansion": "Base",
+    "id": 5,
+    "numAnswers": 1,
+    "official": true,
+    "text": "Maybe she's born with it.  Maybe it's _.",
+    "regionId": "1"
+  },
+  {
+    "expansion": "Base",
+    "id": 6,
+    "numAnswers": 1,
+    "official": true,
+    "text": "What's the next Happy Meal® toy?",
+    "regionId": "1"
+  },
+  {
+    "expansion": "Base",
+    "id": 7,
+    "numAnswers": 1,
+    "official": true,
+    "text": "Anthropologists have recently discovered a primitive tribe that worships _.",
+    "regionId": "1"
+  },
+  {
+    "expansion": "Base",
+    "id": 8,
+    "numAnswers": 1,
+    "official": true,
+    "text": "It's a pity that kids these days are all getting involved with _.",
+    "regionId": "1"
+  },
+  {
+    "expansion": "Base",
+    "id": 9,
+    "numAnswers": 1,
+    "official": true,
+    "text": "During Picasso's often-overlooked Brown Period, he produced hundreds of paintings of _.",
+    "regionId": "1"
+  },
+  {
+    "expansion": "Base",
+    "id": 10,
+    "numAnswers": 1,
+    "official": true,
+    "text": "Alternative medicine is now embracing the curative powers of _.",
+    "regionId": "2"
+  }
+]

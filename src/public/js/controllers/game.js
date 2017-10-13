@@ -359,7 +359,9 @@ angular.module('mean.system')
 
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
-      if(token) {
+
+      if (token) {
+
         return true
       } else {
         return false
@@ -385,6 +387,14 @@ angular.module('mean.system')
 
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function () {
+      // watches for a win
+      if (game.state === 'game ended' && game.gameWinner === game.playerIndex) {
+        leaderData = {
+          gameID: game.gameID,
+          gameWinnerPoint: game.players[game.playerIndex].points
+        }
+         $http.post('/api/leaderboard', leaderData);
+      }
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
@@ -404,10 +414,6 @@ angular.module('mean.system')
           })
         }
       });
-    
-    if ($scope.game.players.length < 1) {
-
-    }
 
     $scope.setToken = () => {
       $http.get('/users/token')

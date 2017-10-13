@@ -36,6 +36,7 @@ angular.module('mean.system')
       $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
           if (data.success === true) {
+            $window.localStorage.setItem('userId', data.id);
             $window.localStorage.setItem('token', data.token);
             $window.location.href = '/';
           } else {

@@ -49,7 +49,7 @@ class Game {
     this.czar = -1; // Index in this.players
     this.playerMinLimit = 3;
     this.playerMaxLimit = 12;
-    this.pointLimit = 1;
+    this.pointLimit = 5;
     this.state = 'awaiting players';
     this.round = 0;
     this.questions = null;
@@ -90,7 +90,9 @@ class Game {
         premium: player.premium,
         socketID: player.socket.id,
         color: player.color,
-        regionId: player.regionId
+        regionId: player.regionId,
+        userID: player.userID,
+        name: player.name
       });
     });
     return {

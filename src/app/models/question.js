@@ -22,7 +22,7 @@ const QuestionSchema = new Schema({
     type: Number
   },
   regionId: {
-    type: Number,
+    type: String,
     default: 0,
     trim: true
   },
