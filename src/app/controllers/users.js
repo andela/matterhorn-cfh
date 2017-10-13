@@ -50,10 +50,15 @@ export const saveLeaderData = (req, res) => {
  */
   // Gets leaderboard
 exports.getLeaderBoard = (req, res) => {
+  const leaderData = [];
   Board.find({})
     .limit(10)
+    .sort({ playerPoint: -1 })
     .exec((error, records) => {
-      res.send(records);
+      for (let i = 0; i < records.length; i += 2) {
+        leaderData.push(records[i]);
+      }
+      res.send(leaderData);
     });
 };
 /**
