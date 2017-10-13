@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .factory('game', ['socket', '$timeout', function (socket, $timeout) {
+  .factory('game', ['socket', '$timeout', '$http', '$window', function (socket, $timeout, $http, $window ) {
 
     var game = {
       id: null, // This player's socket ID, so we know who this player is
@@ -189,6 +189,22 @@ angular.module('mean.system')
         game.players[game.playerIndex].hand = [];
         game.time = 0;
       }
+
+      var setHttpHeader = () => {
+        const token = $window.localStorage.getItem('token')
+        $http.defaults.headers.common.Authorization = token;
+      };
+      setHttpHeader();
+      if (data.state === 'game ended' && game.gameID === data.gameID) {
+        // When game ends, send game data to the database
+        const gameData = {
+          gameId: game.gameID,
+          gameOwner: game.players[0].username,
+          gameWinner: game.players[game.gameWinner].username,
+          gamePlayers: game.players
+        };
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+      }
     });
 
     socket.on('notification', function (data) {
@@ -200,7 +216,14 @@ angular.module('mean.system')
       room = room || '';
       createPrivate = createPrivate || false;
       var userID = !!window.user ? user._id : 'unauthenticated';
-      socket.emit(mode, { userID: userID, room: room, createPrivate: createPrivate });
+var userToken =  $window.localStorage.getItem('token');
+
+      socket.emit(mode, { 
+        userID: userID, 
+        room: room, 
+        createPrivate: createPrivate,
+        userToken
+      });
     };
 
     game.startGame = function () {

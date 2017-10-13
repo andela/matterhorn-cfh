@@ -17,7 +17,7 @@
                 $( "div.chat-close" ).text('V');                
                 
             } else {
-                $( "div.chat-close" ).text('V');
+                $( "div.chat-close" ).text('^');
             }
             
     

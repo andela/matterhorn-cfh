@@ -21,7 +21,7 @@ const UserSchema = new Schema({
   twitter: {},
   github: {},
   google: {},
-  friends: [],
+  friends: []
 });
 
 /**

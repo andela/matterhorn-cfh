@@ -3,6 +3,7 @@
  */
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import jwtDecode from 'jwt-decode';
 import bcrypt from 'bcrypt';
 import { all } from './avatars';
 import validateInput from '../../config/middlewares/validateInput';
@@ -11,6 +12,7 @@ import validateInput from '../../config/middlewares/validateInput';
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
+const Board = mongoose.model('Board');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -20,6 +22,40 @@ const avatarsAll = all();
 
 const helper = require('sendgrid').mail;
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+/**
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing the users data
+ */
+export const saveLeaderData = (req, res) => {
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
+  const leaderboard = new Board();
+  leaderboard.gameId = req.body.gameID;
+  leaderboard.username = decoded.name;
+  leaderboard.playerPoint = req.body.gameWinnerPoint;
+  leaderboard.playerId = decoded.user;
+  leaderboard.date = new Date();
+  leaderboard.save((error, leadboard) => {
+    if (error) {
+      return error;
+    }
+    res.json(leadboard);
+  });
+};
+/**
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing leaderboard object
+ */
+  // Gets leaderboard
+exports.getLeaderBoard = (req, res) => {
+  Board.find({})
+    .limit(10)
+    .exec((error, records) => {
+      res.send(records);
+    });
+};
 /**
  * Auth callback
  */
@@ -46,15 +82,16 @@ export const authCallback = (req, res) => {
  */
 
 export const isLoggedIn = (req, res, next) => {
-  const key = 'mySecret';
-  let token;
-  const tokenAvailable = req.headers.authorization ||
-    req.headers['x-access-token'];
-  if (req.headers.authorization) {
-    [, token] = req.headers.authorization.split(' ');
-  } else {
-    token = tokenAvailable;
-  }
+  const key = process.env.TOKEN_SECRET;
+  const token = req.headers.authorization;
+  // let token;
+  // const tokenAvailable = req.headers.authorization ||
+  //   req.headers['x-access-token'];
+  // if (req.headers.authorization) {
+  //   [, token] = req.headers.authorization.split(' ');
+  // } else {
+  //   token = tokenAvailable;
+  // }
 
   if (token) {
     jwt.verify(token, key, (error, decoded) => {
@@ -89,6 +126,7 @@ export const isAuthenticated = (req, res, next) => {
             error
           });
       }
+      req.user = decoded;
       req.decoded = decoded;
       next();
     });
@@ -145,11 +183,15 @@ export const getFriendsList = (req, res) => {
 };
 
 export const saveGameData = (req, res) => {
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
   const game = new Game();
-
+  game.gameUserID = decoded.user;
+  game.gameUsername = decoded.name;
   game.gameOwner = req.body.gameOwner;
   game.gameId = req.params.id;
   game.gameWinner = req.body.gameWinner;
+  game.gameWinnerPoints = req.body.gameWinnerPoints;
   game.date = new Date();
   game.gamePlayers = req.body.gamePlayers;
 
@@ -159,6 +201,16 @@ export const saveGameData = (req, res) => {
     }
     res.json(game);
   });
+};
+
+export const getGameData = (req, res) => {
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
+  Game
+    .find({ gameUsername: decoded.name }, (err, resp) => {
+      if (err) res.send(err);
+      res.send(resp);
+    });
 };
 
 
@@ -420,7 +472,11 @@ export const login = (req, res) => {
           if (result) {
             // generate token upon login
             const token = jwt.sign(
-              { name: user.name, user: user.id, email: user.email },
+              {
+                name: user.name,
+                user: user.id,
+                email: user.email
+              },
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );

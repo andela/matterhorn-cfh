@@ -19,6 +19,7 @@ class Player {
     this.avatar = null;
     this.userID = null;
     this.color = null;
+    this.name = null;
   }
 }
 

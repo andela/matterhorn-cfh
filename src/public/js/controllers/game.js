@@ -104,7 +104,7 @@ angular.module('mean.system')
         }
       }
     };
-    
+
     $scope.pointerCursorStyle = function () {
       if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
         return { 'cursor': 'pointer' };
@@ -118,7 +118,7 @@ angular.module('mean.system')
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
     };
-    
+
     $scope.cardIsFirstSelected = function (card) {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[0];
@@ -126,7 +126,7 @@ angular.module('mean.system')
         return false;
       }
     };
-    
+
     $scope.cardIsSecondSelected = function (card) {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[1];
@@ -143,7 +143,7 @@ angular.module('mean.system')
         return false;
       }
     };
-    
+
     $scope.secondAnswer = function ($index) {
       if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
         return true;
@@ -151,14 +151,15 @@ angular.module('mean.system')
         return false;
       }
     };
-    
+
     $scope.showFirst = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
     };
-    
+
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
+
     // model that triggers czar modal
     $scope.shuffleCards = () => {
       const card = $(`#${event.target.id}`);
@@ -179,23 +180,23 @@ angular.module('mean.system')
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
     };
-    
+
     $scope.isPlayer = function ($index) {
       return $index === game.playerIndex;
     };
-    
+
     $scope.isCustomGame = function () {
       return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
     };
-    
+
     $scope.isPremium = function ($index) {
       return game.players[$index].premium;
     };
-    
+
     $scope.currentCzar = function ($index) {
       return $index === game.czar;
     };
-    
+
     $scope.winningColor = function ($index) {
       if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
         return $scope.colors[game.players[game.winningCardPlayer].color];
@@ -203,14 +204,14 @@ angular.module('mean.system')
         return '#f9f9f9';
       }
     };
-    
+
     $scope.pickWinning = function (winningSet) {
       if ($scope.isCzar()) {
         game.pickWinning(winningSet.card[0]);
         $scope.winningCardPicked = true;
       }
     };
-    
+
     $scope.winnerPicked = function () {
       return game.winningCard !== -1;
     };
@@ -357,6 +358,7 @@ angular.module('mean.system')
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
 
+
       if (token) {
         return true
       } else {
@@ -367,7 +369,7 @@ angular.module('mean.system')
       game.leaveGame();
       $location.path('/');
     };
-    
+
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
     $scope.$watch('game.round', function () {
@@ -380,9 +382,17 @@ angular.module('mean.system')
       }
       $scope.pickedCards = [];
     });
-    
+
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function () {
+      // watches for a win
+      if (game.state === 'game ended' && game.gameWinner === game.playerIndex) {
+        leaderData = {
+          gameID: game.gameID,
+          gameWinnerPoint: game.players[game.playerIndex].points
+        }
+         $http.post('/api/leaderboard', leaderData);
+      }
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
       }
@@ -421,11 +431,7 @@ angular.module('mean.system')
             $http.post(`/api/games/${game.gameID}/start`, gameData);
           })
 
-      }
-    });
-    if ($scope.game.players.length < 1) {
-
-    }
+      }});
 
     $scope.setToken = () => {
       $http.get('/users/token')
@@ -462,7 +468,7 @@ angular.module('mean.system')
         }
       }
     });
-    
+
     if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
       console.log('joining custom game');
       game.joinGame('joinGame', $location.search().game);
@@ -471,6 +477,5 @@ angular.module('mean.system')
     } else {
       game.joinGame();
     }
-    
+
   }]);
-  

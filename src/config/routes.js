@@ -20,8 +20,11 @@ import {
   addFriend,
   getFriendsList,
   saveGameData,
+  getGameData,
   isLoggedIn,
-  isAuthenticated
+  isAuthenticated,
+  saveLeaderData,
+  getLeaderBoard
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -31,7 +34,7 @@ import {
   showQuestion,
   question
 } from '../app/controllers/questions';
-import { play, render } from '../app/controllers/index';
+import { play, render, showDashboard } from '../app/controllers/index';
 
 import {
   addNotification,
@@ -42,6 +45,9 @@ import {
 import app from '../app';
 
 export default () => {
+  // leaderboard Route
+  app.post('/api/leaderboard', isAuthenticated, saveLeaderData);
+  app.get('/api/leaderboard', isAuthenticated, getLeaderBoard);
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);
@@ -67,6 +73,7 @@ export default () => {
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
+  app.get('/api/games/logs', isLoggedIn, getGameData);
 
   // Donation Routes
   app.post('/donations', addDonation);
@@ -141,4 +148,7 @@ export default () => {
   // Home route
   app.get('/play', play);
   app.get('/', render);
+
+  // Dashboard route
+  app.get('/dashboard', showDashboard);
 };
