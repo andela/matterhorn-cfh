@@ -12,6 +12,7 @@ import {
   session,
   me,
   login,
+  donations,
   show,
   authCallback,
   user,
@@ -22,8 +23,7 @@ import {
   saveGameData,
   getGameData,
   isLoggedIn,
-  isAuthenticated,
-  getLeaderBoard
+  isAuthenticated
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -44,8 +44,6 @@ import {
 import app from '../app';
 
 export default () => {
-  // leaderboard route
-  app.get('/api/leaderboard', isAuthenticated, getLeaderBoard);
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);
@@ -69,12 +67,14 @@ export default () => {
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
 
+
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
   app.get('/api/games/logs', isLoggedIn, getGameData);
 
   // Donation Routes
-  app.post('/donations', addDonation);
+  app.post('/donations', isAuthenticated, addDonation);
+  app.get('/api/donations', isAuthenticated, donations);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',

@@ -57,7 +57,6 @@ angular.module('mean.system')
         $cookieStore.remove(k);
       });
       $window.localStorage.removeItem("token");
-      // $cookieStore.remove('token');
       $window.location.href = '/';
     }
 

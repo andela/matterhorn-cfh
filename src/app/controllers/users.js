@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import jwtDecode from 'jwt-decode';
 import bcrypt from 'bcrypt';
+import moment from 'moment';
 import { all } from './avatars';
 import validateInput from '../../config/middlewares/validateInput';
 
@@ -21,13 +22,6 @@ const avatarsAll = all();
 
 const helper = require('sendgrid').mail;
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-/**
- *  @returns {object}  -returns users object
- */
-export const getLeaderBoard = () => {}
-/**
- * Auth callback
- */
 
 export const authCallback = (req, res) => {
   const { TOKEN_SECRET } = process.env;
@@ -168,6 +162,17 @@ export const saveGameData = (req, res) => {
     }
     res.json(game);
   });
+};
+
+export const donations = (req, res) => {
+  const userId = req.decoded.user;
+  User.findOne({
+    _id: userId
+  })
+    .exec((err, user) => {
+      // Confirm that this object hasn't already been entered
+      res.status(200).send({ donations: user.donations });
+    });
 };
 
 export const getGameData = (req, res) => {
@@ -391,6 +396,7 @@ export const create = (req, res, next) => {
         // Switch the user's avatar index to an actual avatar url
         user.avatar = avatarsAll[user.avatar];
         user.provider = 'local';
+        user.last_login = moment();
         user.save((err) => {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
@@ -437,6 +443,8 @@ export const login = (req, res) => {
         // check if password is correct
         bcrypt.compare(password, user.hashed_password, (err, result) => {
           if (result) {
+            user.last_login = moment();
+            user.save();
             // generate token upon login
             const token = jwt.sign(
               { name: user.name, user: user.id, email: user.email },
@@ -483,12 +491,12 @@ export const avatars = (req, res) => {
 };
 
 export const addDonation = (req, res) => {
-  if (req.body && req.user && req.user.id) {
+  if (req.body && req.decoded.user) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id &&
       req.body.donor_name) {
       User.findOne({
-        _id: req.user.id
+        _id: req.decoded.user
       })
         .exec((err, user) => {
           // Confirm that this object hasn't already been entered
@@ -497,12 +505,16 @@ export const addDonation = (req, res) => {
             if (user.donations[i].crowdrise_donation_id ===
               req.body.crowdrise_donation_id) {
               duplicate = true;
+              res.status(200).send({
+                message: 'Duplicate donation not allowed'
+              });
             }
           }
           if (!duplicate) {
             user.donations.push(req.body);
             user.premium = 1;
             user.save();
+            res.status(200).send({ message: 'Donation has been saved' });
           }
         });
     }
