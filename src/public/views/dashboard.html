@@ -99,18 +99,20 @@
           <table class="responsive-table bordered striped">
               <thead>
                 <tr>
-                    <th>GAME ID</th>
-                    <th>GAME OWNER</th>
-                    <th>WINNER</th>
-                    <th>PLAYERS</th>
+                    <th>ID</th>
+                    <th>DONOR NAME</th>
+                    <th>CROWDRISE DONATION ID</th>
+                    <th>AMOUNT</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>56</td>
-                  <td>Eclair started game</td>
-                  <td>Sweet Monkey 8pts</td>
-                  <td>Sweet Monkey 8pts, Disco Potato 4pts, Landing Pot 1pts</td>
+                <tr ng-repeat="donation in donations">
+                  <td><b>CFH</b> </td>
+                  <td>{{donation.donor_name}}</td>
+                  <td>{{donation.crowdrise_donation_id}}</td>
+                  <td>
+                    {{donation.amount}}
+                  </td>
                 </tr>
               </tbody>
           </table>

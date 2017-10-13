@@ -2,12 +2,9 @@
  * Module dependencies.
  */
 
-import mongoose from 'mongoose';
 import express from 'express';
 import dotEnv from 'dotenv';
-
-import config from './config/config';
-import walk from './utils/walk';
+import db from './config/db';
 
 dotEnv.config();
 
@@ -18,14 +15,7 @@ dotEnv.config();
 
 // Load configurations
 // if test env, load example file
-
-// Bootstrap db connection
-mongoose.connect(config.db);
-// const dbCon = mongoose.connect(config.db);
-
-// Bootstrap models
-const modelsPath = `${__dirname}/app/models`;
-walk(modelsPath);
+db();
 
 const app = express();
 
