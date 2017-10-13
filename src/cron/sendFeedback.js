@@ -16,7 +16,7 @@ export default () =>
         return users.map((user) => {
           const today = moment();
           const lastLoginDate = moment(user.last_login);
-          const difference = lastLoginDate.diff(today, 'days');
+          const difference = today.diff(lastLoginDate, 'days');
           if (difference >= 7) {
             const { email } = user;
             const fromEmail = new helper.Email('matterhorn-cfh@andela.com');
@@ -40,6 +40,8 @@ export default () =>
             });
 
             sg.API(request, () => {
+              user.last_login = moment();
+              user.save();
             });
           }
           return true;

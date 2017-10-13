@@ -3,15 +3,12 @@ import sendFeedback from './sendFeedback';
 
 export const sendFeedbackJob = () =>
   new CronJob({
-    cronTime: '* * * * * *',
+    cronTime: '00 00 08 * * *',
     onTick: sendFeedback,
     timeZone: 'Africa/Lagos',
     start: true
   });
 
-if (require.main === module) {
-  sendFeedbackJob();
-}
-export default {
+sendFeedbackJob();
 
-};
+export default {};
