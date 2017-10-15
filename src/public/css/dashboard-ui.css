@@ -1,0 +1,51 @@
+@media (max-width: 425px) {
+  .dashboard-header .dashboard-desc-text {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.dashboard-header {
+  background: #282F38;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+.dashboard-header .dashboard-desc-text {
+  text-align: center;
+  width: 100%;
+}
+
+.dashboard-header .main-title {
+  color: #FFFFFF;
+  font-size: 48px;
+  width: 100%;
+}
+
+.dashboard-header .font-luminari {
+  color: #fff;
+  font-family: "luminari";
+}
+
+@media (max-width: 480px) {
+  .dashboard .log-btn {
+    padding: 5px !important;
+  }
+}
+
+.dashboard .active {
+  background-color: #00524a !important;
+  font-weight: bold;
+}
+.dashboard td,
+.dashboard th {
+  border: 2px solid #999 !important;
+  border-color: #00524a;
+}
+.dashboard tr {
+  border: 2px solid #999 !important;
+}
+
+.dashboard td,
+.dashboard th { padding: 10px; }

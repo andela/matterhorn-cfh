@@ -21,6 +21,10 @@ angular.module('mean.system')
       $location.path('/app');
     }
 
+    $scope.goHome = () => {
+      $location.path('/');
+    }
+
     $scope.showError = () => {
       if ($location.search().error) {
         return $location.search().error;
@@ -53,7 +57,6 @@ angular.module('mean.system')
         $cookieStore.remove(k);
       });
       $window.localStorage.removeItem("token");
-      // $cookieStore.remove('token');
       $window.location.href = '/';
     }
 

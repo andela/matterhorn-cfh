@@ -28,8 +28,9 @@
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/#!/">Home</a></li>
             <li><a ng-click="scrollTo('main-how-play')">How to play</a></li>
-            <li><a ng-click="scrollTo('main-donation')">Charity</a></li>
-            <li><a ng-click="scrollTo('main-cfh-definition')">About us</a></li>
+            <li><a ng-click="scrollTo('main-donation')" href="">Charity</a></li>
+            <li><a ng-click="scrollTo('main-cfh-definition')" href="">About us</a></li>
+            <li ng-hide="showOptions"><a href="/#!/dashboard" >Dashboard</a></li>
             <li ng-hide="showOptions"><a ng-click="signOut()">Sign Out</a></li>
           </ul>
           <a data-activates="slide-out" class="button-collapse right">
@@ -141,7 +142,7 @@
           </p>
           <div class="mt-5 main-donation-actions row">
             <div class="col l7 m7 s12 text-center">
-              <a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&amp;redirect_to=http%3A%2F%2Fmatterhorn-cfh-test.herokuapp.com%2F%23!%2F&amp;stylesheet=&amp;amounts="
+              <a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&amp;redirect_to=http%3A%2F%2Fmatterhorn-cfh-staging.herokuapp.com%2F%23!%2F&amp;stylesheet=&amp;amounts="
                 class="waves-effect waves-light btn cfh-green">Make a donation</a>
             </div>
             <div class="col l5 m5 s12">

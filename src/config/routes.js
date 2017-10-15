@@ -12,6 +12,7 @@ import {
   session,
   me,
   login,
+  donations,
   show,
   authCallback,
   user,
@@ -20,6 +21,7 @@ import {
   addFriend,
   getFriendsList,
   saveGameData,
+  getGameData,
   isLoggedIn,
   isAuthenticated
 } from '../app/controllers/users';
@@ -31,7 +33,7 @@ import {
   showQuestion,
   question
 } from '../app/controllers/questions';
-import { play, render } from '../app/controllers/index';
+import { play, render, showDashboard } from '../app/controllers/index';
 
 import {
   addNotification,
@@ -65,11 +67,14 @@ export default () => {
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
 
+
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
+  app.get('/api/games/logs', isLoggedIn, getGameData);
 
   // Donation Routes
-  app.post('/donations', addDonation);
+  app.post('/donations', isAuthenticated, addDonation);
+  app.get('/api/donations', isAuthenticated, donations);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',
@@ -141,4 +146,7 @@ export default () => {
   // Home route
   app.get('/play', play);
   app.get('/', render);
+
+  // Dashboard route
+  app.get('/dashboard', showDashboard);
 };

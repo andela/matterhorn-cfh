@@ -29,9 +29,8 @@ body {
 }
 
 .tweet-container {
-  left: 84%;
-  position: relative;
-  top: 0;
+  float: right;
+  margin: 17px 15px 0px 0px;
 }
 
 .menu-container {
@@ -82,12 +81,10 @@ col.l8.m8.s12.question-container-outer {
 }
 
 .action-btn, .action-btn:hover, .action-btn:focus {
-  background-color: #009688;
-  margin: 5px 0px;
-  border-radius: 5px;
-  color: white;
-  text-align: center;
-  height:26px;
+  font-size: 0.7rem !important;
+  padding: 0 !important;
+  height: 30px;
+  line-height: 30px;
 }
 
 .invite-players {
@@ -108,7 +105,7 @@ input[type=search]:not(.browser-default) {
 .search {
   margin-top: 2%!important;
   margin-bottom: 4%!important;
-
+  
 }
 
 .search-results-btn a.btn{
@@ -116,14 +113,14 @@ input[type=search]:not(.browser-default) {
   margin: 2% 0% !important;
 };
 
-.num-notify {
-  margin-top: 7px !important;
-  position: absolute !important;
-  margin-left: 0px !important;
-}
-
 .dropdown-button {
   color: white;
+}
+
+.dropdown-button span {
+  color: white;
+  top: 13px;
+  position: absolute;
 }
 
 .dropdown-content{
@@ -136,15 +133,46 @@ input[type=search]:not(.browser-default) {
   padding: 5px !important;
 }
 
+.tour-container {
+  float: right;
+  padding-top: 10px;
+  margin-right: 20px;
+}
+
+.tour-container a, .tour-container a:hover, .tour-container a:active, .tour-container a:focus, .tour-container a:visited {
+  font-size: 0.8rem;
+  padding: 0 1rem;
+  background-color: #2b353d !important;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+.introjs-helperLayer {
+  background-color: transparent;
+  border: 1px solid white;
+}
+
+.invite-friends-btn {
+  font-size: 0.7rem;
+  padding: 0 !important;
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  .action-btn, .action-btn:hover, .action-btn:focus {
+    font-size: 0.6rem !important;
+    padding: 0 !important;
+  }
+}
+
 @media only screen and (max-width: 780px) {
   .timer-container .time {
     font-size: 10px;
   }
-
+  
   .finding-players {
     font-size: 20px;
   }
-
+  
   .inner-timer-container {
     padding: 20px;
     border: 3px solid #fff;
@@ -153,7 +181,7 @@ input[type=search]:not(.browser-default) {
     text-align: center;
     border-radius: 50%;
   }
-
+  
   #timer-status-round {
     font-size:12px;
   }
@@ -212,7 +240,7 @@ input[type=search]:not(.browser-default) {
     cursor: pointer;
     margin-top: 5px;
   }
-
+  
   .question-container-outer {
     background: rgba(29, 42, 49, 0.67);
     padding: 10px 0 50px 3 0px;
@@ -268,7 +296,7 @@ input[type=search]:not(.browser-default) {
   border-radius: 8px;
   color: #252525;
   font-family: Arial;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   vertical-align: top;
 }
@@ -432,4 +460,20 @@ input[type=search]:not(.browser-default) {
   color: #fff;
   margin: 0;
   font-size: 30px;
+}
+
+.cfh-logo-fst {
+  cursor: pointer;
+}
+/* style for czar modall*/
+.card-container {
+  background: rgba(31, 149, 156, 1);
+  margin-top: 150px;
+  border-radius: 5px;
+}
+.small-card {
+  margin-right: 10px;
+}
+.card-text {
+  font-size: 22px;
 }

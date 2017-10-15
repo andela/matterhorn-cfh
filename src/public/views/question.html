@@ -20,7 +20,7 @@
 
       <!-- start Game conditionally -->
       <div class="col m4 right-align" id="start-game-container" ng-click="invitePlayers()" ng-show="isUser()">
-        <div class="start-game-button btn btn-large btn-success">
+        <div id="start-game-button" class="start-game-button btn btn-large btn-success">
           Invite Players
         </div>
       </div>
@@ -35,7 +35,7 @@
         <div class="game-end-headline">What the!? The game ended because too many people left! </div>
         Our sincere apologies.
       </div>
-      <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
+      <div id="game-ended-confirmation" ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
         <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope you
         feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde
         it all for youself.
@@ -82,7 +82,7 @@
 
     <div id="invite-friends">
       <div class="col s12 search row z-depth-3">
-        <input id="search" type="search" autocomplete="off" placeholder="Search for users...." ng-model="searchTerm" ng-change="searchusers()"
+        <input id="search" type="search" autocomplete="off" placeholder="Search for users by usernames...." ng-model="searchTerm" ng-change="searchusers()"
         />
       </div>
       <h5 class="center-align" ng-hide="searchResults.length > 0">No users found</h5>
@@ -93,13 +93,13 @@
               <h6>{{x.name}}</h6>
             </div>
             <div class="col s12 m6 l4 search-results-btn">
-              <a class="col s5 m5 l5 waves-effect waves-light action-btn" ng-click="addFriend(x)" ng-hide="friendsId.includes(x._id)">
-                <i class="material-icons">group_add</i>
+              <a class="col s5 m5 l5 waves-effect waves-light btn action-btn" ng-click="addFriend(x)" ng-hide="friendsId.includes(x._id)">
+                ADD FRIEND
               </a>
               <div class="col s5 m5 l5" ng-show="friendsId.includes(x._id)"></div>
               <div class="col s2 m2 l2"></div>
-              <a class="col s5 m5 l5 waves-effect waves-light action-btn" ng-click="sendNotification(x)" ng-hide="inviteList.includes(x._id)">
-                <i class="material-icons">videogame_asset</i>
+              <a class="col s5 m5 l5 waves-effect waves-light btn action-btn" ng-click="sendNotification(x)" ng-hide="inviteList.includes(x._id)">
+                INVITE
               </a>
             </div>
           </div>
@@ -114,8 +114,8 @@
           <h6 class="col s6 m6 l6">
             Friends: {{friendsList.length}}
           </h6>
-          <div class="col s1 m3 l3 waves-effect waves-light"></div>
-          <a class="col s5 m3 l3 waves-effect waves-light action-btn" ng-show="friendsList.length > 0" ng-click="sendNotification()">INVITE FRIENDS</a>
+          <div class="col m3 l3 waves-effect waves-light"></div>
+          <a class="col s6 m3 l3 waves-effect waves-light invite-friends-btn btn" ng-show="friendsList.length > 0" ng-click="sendNotification()">INVITE FRIENDS</a>
         </div>
         <div class="col s12 list">
           <ul class="collection" ng-show="friendsList.length > 0">
@@ -136,9 +136,29 @@
 
 <script>
   $(document).ready(function () {
-    $('.modal').modal();
     $('ul.tabs').tabs();
     $('.dropdown-button').dropdown();
   });
 
 </script>
+
+<!-- Modal Structure for czar card decks-->
+<div id="cardModal" class="card-container modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content center">
+      <center>
+        <h4 id="cardText" class="card-text">Hey! You are the card czar. Click a card and start the game.</h4>
+        <div ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style='margin: auto;'>
+          <center>
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard1' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard2' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard3' />
+            <img src='../img/small-card.png' style='width: 100px;' class='small-card animated flipInX' id='shufflecard4' />
+        </div>
+        </center>
+        <div class="modal-footer" style='display: none'>
+          <button class="modal-action modal-close waves-effect waves-green btn-flat"></button>
+        </div>
+    </div>
+  </div>
+</div>
