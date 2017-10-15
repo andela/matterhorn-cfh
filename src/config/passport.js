@@ -77,7 +77,7 @@ export default () => {
     },
     ((token, tokenSecret, profile, done) => {
       User.findOne({
-        'twitter.id_str': profile.id
+        'twitter._id': profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
@@ -135,8 +135,9 @@ export default () => {
       callbackURL: config.github.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
+      const twitterId = profile.id.toString();
       User.findOne({
-        'github.id': profile.id
+        'github._id': twitterId
       }, (err, user) => {
         if (err) {
           return done(err);
@@ -164,13 +165,12 @@ export default () => {
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
-        'google.id': profile.id
+        'google._id': profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          user = {};
           user = new User();
           user.newUser = true;
           user.profileId = profile.id;
