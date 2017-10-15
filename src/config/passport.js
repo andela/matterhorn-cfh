@@ -135,9 +135,9 @@ export default () => {
       callbackURL: config.github.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
-      const twitterId = profile.id.toString();
+      const githubId = profile.id.toString();
       User.findOne({
-        'github._id': twitterId
+        'github._id': githubId
       }, (err, user) => {
         if (err) {
           return done(err);
