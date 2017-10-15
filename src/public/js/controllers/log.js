@@ -3,6 +3,8 @@ angular.module('mean.system')
   $scope.show = 1;
   $scope.games = [];
   $scope.gameRank = [];
+  $scope.donations = [];
+
   $scope.abandonGame = () => {
     console.log($location.path('/'))
   };
@@ -11,6 +13,17 @@ angular.module('mean.system')
     $http.defaults.headers.common.Authorization = token;
   };
   setHttpHeader();
+
+  $http.get('/api/donations')
+  .then((res) => {
+    const donation = res.data.donations;
+    for (let i = 0; i < donation.length; i += 1) {
+      $scope.donations.push(donation[i]);
+    }
+    console.log($scope.donations);
+  });
+
+
   $http.get('/api/games/logs')
   .then((res) => {
     for (let i = 0; i < res.data.length; i += 1) {
@@ -22,4 +35,5 @@ angular.module('mean.system')
   .then((response) => {
     $scope.gameRank = response.data.data;
   })
+
 }]);

@@ -23,6 +23,7 @@ const UserSchema = new Schema({
   github: {},
   google: {},
   friends: [],
+  last_login: Date
 });
 
 /**
@@ -42,8 +43,8 @@ UserSchema
 
 UserSchema
   .path('username').validate(
-  Helper.validateUsername,
-  'Username cannot be blank'
+    Helper.validateUsername,
+    'Username cannot be blank'
   );
 
 UserSchema

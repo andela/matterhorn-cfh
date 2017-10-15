@@ -12,6 +12,7 @@ import {
   session,
   me,
   login,
+  donations,
   show,
   authCallback,
   user,
@@ -68,6 +69,7 @@ export default () => {
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
 
+
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
   app.post('/api/games/rank', isLoggedIn, saveGameRank);
@@ -75,7 +77,8 @@ export default () => {
   app.get('/api/leaderboard/region', isLoggedIn, getRankData);
 
   // Donation Routes
-  app.post('/donations', addDonation);
+  app.post('/donations', isAuthenticated, addDonation);
+  app.get('/api/donations', isAuthenticated, donations);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',
