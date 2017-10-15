@@ -85,6 +85,7 @@ angular.module('mean.system')
 
     socket.on('gameUpdate', function (data) {
 
+
       // Update gameID field only if it changed.
       // That way, we don't trigger the $scope.$watch too often
       if (game.gameID !== data.gameID) {
@@ -204,7 +205,7 @@ angular.module('mean.system')
           gameWinner: game.players[game.gameWinner].username,
           gamePlayers: game.players
         };
-        $http.post(`/api/games/rank`, { location: token });
+        $http.post(`/api/games/rank`, { winner: gameData.gameWinner });
         $http.post(`/api/games/${game.gameID}/start`, gameData);
       }
     });

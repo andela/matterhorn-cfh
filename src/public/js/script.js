@@ -5,7 +5,6 @@
         height: '200px'
       });
 
-    
         $('.chat').hide();
         $('.chat-message-counter').show();            
         

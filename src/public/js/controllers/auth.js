@@ -3,14 +3,14 @@ angular.module('mean.system')
     function ($scope, $location, $http, $window) {
 
       $scope.errorMessage = ''
-
+      $scope.country = geoplugin_countryName();
       $scope.signUp = () => {
         const payload = {
           name: $scope.name,
           email: $scope.email,
-          password: $scope.password
+          password: $scope.password,
+          location: $scope.country
         }
-
         $http.post('/api/auth/signup', payload)
           .then(
           (response) => {

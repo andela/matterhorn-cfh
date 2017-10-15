@@ -156,39 +156,44 @@ export const getRankData = (req, res) => {
 };
 
 export const saveGameRank = (req, res) => {
-  const rank = new Rank();
-  rank.location = req.body.location;
-
-  Rank.find({
-    location: req.body.location
+  User.findOne({
+    name: req.body.username
   })
-    .then((region) => {
-      if (region.length > 0) {
-        Rank.update(
-          {
-            location: req.body.location
-          },
-          { $inc: { wins: 1 } },
-          () => {
-            res.json({
-              message: 'Updated successfully!'
+    .then((user) => {
+      const rank = new Rank();
+      rank.location = user.location;
+      Rank.find({
+        location: user.location
+      })
+        .then((region) => {
+          if (region.length > 0) {
+            Rank.update(
+              {
+                location: user.location
+              },
+              { $inc: { wins: 1 } },
+              () => {
+                res.json({
+                  message: 'Updated successfully!'
+                });
+              }
+            );
+          } else {
+            rank.save((error) => {
+              if (error) {
+                return error;
+              }
+              res.json(rank);
             });
           }
-        );
-      } else {
-        rank.save((error) => {
-          if (error) {
-            return error;
-          }
-          res.json(rank);
+        })
+        .catch(() => {
+          res.status(500).send({
+            message: 'Internal Server Error'
+          });
         });
-      }
     })
-    .catch(() => {
-      res.status(500).send({
-        message: 'Internal Server Error'
-      });
-    });
+
 };
 
 export const saveGameData = (req, res) => {
