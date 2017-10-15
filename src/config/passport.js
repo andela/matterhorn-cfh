@@ -30,9 +30,9 @@ export default () => {
     User.findOne({
       _id: id
     }, (err, user) => {
-      user.email = null;
-      user.facebook = null;
-      user.hashed_password = null;
+      // user.email = null;
+      // user.facebook = null;
+      // user.hashed_password = null;
       done(err, user);
     });
   });
@@ -83,6 +83,8 @@ export default () => {
           return done(err);
         }
         if (!user) {
+          user = new User();
+          user.newUser = true;
           user.profileId = profile.id;
           user.provider = 'twitter';
           done(err, user);
@@ -105,12 +107,14 @@ export default () => {
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
-        'facebook.id': profile.id
+        'facebook._id': profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
+          user = new User();
+          user.newUser = true;
           user.profileId = profile.id;
           user.provider = 'facebook';
           done(err, user);
@@ -138,6 +142,8 @@ export default () => {
           return done(err);
         }
         if (!user) {
+          user = new User();
+          user.newUser = true;
           user.profileId = profile.id;
           user.provider = 'github';
           done(err, user);
@@ -164,6 +170,9 @@ export default () => {
           return done(err);
         }
         if (!user) {
+          user = {};
+          user = new User();
+          user.newUser = true;
           user.profileId = profile.id;
           user.provider = 'google';
           done(err, user);

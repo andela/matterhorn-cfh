@@ -350,7 +350,7 @@ export const register = (req, res) => {
       const user = new User(req.body);
       // Switch the user's avatar index to an actual avatar url
       user.avatar = avatarsAll[user.avatar];
-      user.provider = 'local';
+      user.provider = req.body.provider || 'local';
       user.save()
         .then(() => {
           const token = jwt.sign(

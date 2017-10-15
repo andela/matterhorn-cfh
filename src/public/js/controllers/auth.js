@@ -1,28 +1,30 @@
 angular.module('mean.system')
-  .controller('authController', ['$rootScope', '$scope', '$location', '$http', '$window',
-    function ($rootScope, $scope, $location, $http, $window) {
+  .controller('authController', ['$rootScope', '$scope', '$cookies', '$location', '$http', '$window',
+    function ($rootScope, $scope, $cookies, $location, $http, $window) {
 
       $scope.errorMessage = ''
+      $scope.provider = '';
+      $scope.profileId = '';
 
       $scope.signUp = () => {
+        let payload;
         if ($cookies.profileId && $cookies.provider) {
-          $scope.povider = $cookies.provider;
+          $scope.provider = $cookies.provider;
           $scope.profileId = $cookies.profileId;
-          const payload = {
+           payload = {
             name: $scope.name,
             email: $scope.email,
             password: $scope.password,
             provider: $scope.provider,
-            [$scope.provider['id']]: $scope.profileId
+            [$scope.provider]: { _id: $scope.profileId }
           }
         } else {
-          const payload = {
+           payload = {
             name: $scope.name,
             email: $scope.email,
             password: $scope.password,
           }
         }
-
         $http.post('/api/auth/signup', payload)
           .then(
           (response) => {
