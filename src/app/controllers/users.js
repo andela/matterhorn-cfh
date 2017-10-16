@@ -201,7 +201,7 @@ export const getRankData = (req, res) => {
 
 export const saveGameRank = (req, res) => {
   User.findOne({
-    username: req.body.username
+    name: req.body.username
   })
     .then((user) => {
       const rank = new Rank();
