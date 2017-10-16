@@ -203,6 +203,7 @@ angular.module('mean.system')
           gameWinner: game.players[game.gameWinner].username,
           gamePlayers: game.players
         };
+        $http.post(`/api/games/rank`, { winner: gameData.gameWinner });
         $http.post(`/api/games/${game.gameID}/start`, gameData);
       }
     });
