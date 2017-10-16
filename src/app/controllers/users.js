@@ -29,7 +29,12 @@ const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 
 export const authCallback = (req, res) => {
   const { TOKEN_SECRET } = process.env;
-  if (!req.user) {
+  if (req.user && req.user.newUser) {
+    const { profileId, provider } = req.user;
+    res.cookie('profileId', profileId);
+    res.cookie('provider', provider);
+    res.redirect('/#!/signup');
+  } else if (!req.user) {
     res.redirect('/#!/signin?error=emailRequired');
   } else {
     const token = jwt.sign(
@@ -407,7 +412,7 @@ export const register = (req, res) => {
       const user = new User(req.body);
       // Switch the user's avatar index to an actual avatar url
       user.avatar = avatarsAll[user.avatar];
-      user.provider = 'local';
+      user.provider = req.body.provider || 'local';
       user.save()
         .then(() => {
           const token = jwt.sign(

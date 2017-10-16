@@ -36,4 +36,8 @@ angular.module('mean.system')
     $scope.gameRank = response.data.data;
   })
 
+  $scope.parseStamp = (getStamp) => {
+    const formattedStamp = new Date(getStamp);
+    return formattedStamp.toUTCString({ hour12: true });
+  }
 }]);

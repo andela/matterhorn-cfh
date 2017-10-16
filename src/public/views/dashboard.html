@@ -52,7 +52,7 @@
           <table class="responsive-table bordered striped">
               <thead>
                 <tr>
-                    <th>GAME ID</th>
+                    <th>DATE/TIME</th>
                     <th>GAME OWNER</th>
                     <th>WINNER</th>
                     <th>PLAYERS</th>
@@ -60,7 +60,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat="game in games">
-                  <td><b>CFH</b> {{game.gameId}}</td>
+                  <td>{{parseStamp(game.date)}}</td>
                   <td>{{game.gameOwner}}</td>
                   <td>{{game.gameWinner}}</td>
                   <td>

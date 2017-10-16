@@ -15,7 +15,6 @@ angular.module('mean.system')
     $scope.friendsId = [];
     $scope.inviteList = [];
     $scope.notifications = [];
-    $scope.chatStart = false;
     $scope.regionId = parseInt(sessionStorage.getItem('userRegion'), 10);
     $scope.regionName = regions($scope.regionId);
     $scope.showRegionName = false;
@@ -49,7 +48,6 @@ angular.module('mean.system')
               text: `You need ${game.playerMinLimit - game.players.length} more players`
             });
           } else {
-            $scope.chatStart = true;
             $window.sessionStorage.setItem('userRegion', regionId);
             $scope.regionName = regions(regionId);
             $scope.showRegionName = true;
@@ -85,8 +83,7 @@ angular.module('mean.system')
         .then(() => game.newChat())
 
       document.getElementById('message').value = "";
-
-    }
+    };
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {
@@ -289,7 +286,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.getFriendsList();
-        })
+        });
     };
 
     $scope.getFriendsList = () => {
@@ -302,7 +299,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.friendsList = [];
-        })
+        });
     };
 
     $scope.sendNotification = (friend) => {
@@ -392,7 +389,7 @@ angular.module('mean.system')
 
     // When game ends, delete chat data then send game data to the database
       if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
-        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`);
         $scope.messages.$remove(chatRef)
           .then(() => {
             const gameData = {
@@ -402,10 +399,10 @@ angular.module('mean.system')
               gamePlayers: $scope.game.players
             };
             $http.post(`/api/games/${game.gameID}/start`, gameData);
-          })
-        }
-      });
-    
+          });
+
+      };
+    });
     if ($scope.game.players.length < 1) {
 
     }
