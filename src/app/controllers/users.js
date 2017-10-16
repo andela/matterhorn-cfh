@@ -13,6 +13,7 @@ import validateInput from '../../config/middlewares/validateInput';
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
+const Rank = mongoose.model('Rank');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -54,7 +55,7 @@ export const authCallback = (req, res) => {
 
 export const isLoggedIn = (req, res, next) => {
   const key = process.env.TOKEN_SECRET;
-  const token = req.headers.authorization;
+  const token = req.headers.authorization || req.headers['x-access-token'];
   // let token;
   // const tokenAvailable = req.headers.authorization ||
   //   req.headers['x-access-token'];
@@ -150,6 +151,55 @@ export const getFriendsList = (req, res) => {
         message: 'Internal Server Error'
       });
     });
+};
+
+export const getRankData = (req, res) => {
+  Rank.find({})
+    .sort({ wins: -1 })
+    .then(data => res.send({
+      data
+    }));
+};
+
+export const saveGameRank = (req, res) => {
+  User.findOne({
+    name: req.body.username
+  })
+    .then((user) => {
+      const rank = new Rank();
+      rank.location = user.location;
+      Rank.find({
+        location: user.location
+      })
+        .then((region) => {
+          if (region.length > 0) {
+            Rank.update(
+              {
+                location: user.location
+              },
+              { $inc: { wins: 1 } },
+              () => {
+                res.json({
+                  message: 'Updated successfully!'
+                });
+              }
+            );
+          } else {
+            rank.save((error) => {
+              if (error) {
+                return error;
+              }
+              res.json(rank);
+            });
+          }
+        })
+        .catch(() => {
+          res.status(500).send({
+            message: 'Internal Server Error'
+          });
+        });
+    })
+
 };
 
 export const saveGameData = (req, res) => {

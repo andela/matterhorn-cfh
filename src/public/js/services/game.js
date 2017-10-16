@@ -1,95 +1,96 @@
 angular.module('mean.system')
-.factory('game', ['socket', '$timeout', function (socket, $timeout) {
+  .factory('game', ['socket', '$timeout', '$http', '$window', function (socket, $timeout, $http, $window ) {
 
-  var game = {
-    id: null, // This player's socket ID, so we know who this player is
-    gameID: null,
-    players: [],
-    playerIndex: 0,
-    winningCard: -1,
-    winningCardPlayer: -1,
-    gameWinner: -1,
-    table: [],
-    czar: null,
-    playerMinLimit: 3,
-    playerMaxLimit: 12,
-    pointLimit: null,
-    state: null,
-    round: 0,
-    time: 0,
-    curQuestion: null,
-    notification: null,
-    timeLimits: {},
-    newChatAlert: false,
-    joinOverride: false
-  };
+    var game = {
+      id: null, // This player's socket ID, so we know who this player is
+      gameID: null,
+      players: [],
+      playerIndex: 0,
+      winningCard: -1,
+      winningCardPlayer: -1,
+      gameWinner: -1,
+      table: [],
+      czar: null,
+      playerMinLimit: 3,
+      playerMaxLimit: 12,
+      pointLimit: null,
+      state: null,
+      round: 0,
+      time: 0,
+      curQuestion: null,
+      notification: null,
+      timeLimits: {},
+      newChatAlert: false,
+      joinOverride: false
+    };
 
-  var notificationQueue = [];
-  var timeout = false;
-  var self = this;
-  var joinOverrideTimeout = 0;
+    var notificationQueue = [];
+    var timeout = false;
+    var self = this;
+    var joinOverrideTimeout = 0;
 
-  var addToNotificationQueue = function (msg) {
-    notificationQueue.push(msg);
-    if (!timeout) { // Start a cycle if there isn't one
-      setNotification();
-    }
-  };
+    var addToNotificationQueue = function (msg) {
+      notificationQueue.push(msg);
+      if (!timeout) { // Start a cycle if there isn't one
+        setNotification();
+      }
+    };
 
-  var setChatNotification = function () {
-    if (game.newChatAlert) { // If notificationQueue is empty, stop
-      clearInterval(timeout);
-      timeout = false;
-      game.newChatAlert = false;
-    } else {
-      game.newChatAlert = true // Show a notification and check again in a bit
-      timeout = $timeout(setChatNotification, 20000);
-    }
-  };
+    var setChatNotification = function () {
+      if (game.newChatAlert) { // If notificationQueue is empty, stop
+        clearInterval(timeout);
+        timeout = false;
+        game.newChatAlert = false;
+      } else {
+        game.newChatAlert = true // Show a notification and check again in a bit
+        timeout = $timeout(setChatNotification, 20000);
+      }
+    };
 
-  var setNotification = function () {
-    if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
-      clearInterval(timeout);
-      timeout = false;
-      game.notification = '';
-    } else {
-      game.notification = notificationQueue.shift(); // Show a notification and check again in a bit
-      timeout = $timeout(setNotification, 1300);
-    }
-  };
+    var setNotification = function () {
+      if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
+        clearInterval(timeout);
+        timeout = false;
+        game.notification = '';
+      } else {
+        game.notification = notificationQueue.shift(); // Show a notification and check again in a bit
+        timeout = $timeout(setNotification, 1300);
+      }
+    };
 
-  var timeSetViaUpdate = false;
-  var decrementTime = function () {
-    if (game.time > 0 && !timeSetViaUpdate) {
-      game.time--;
-    } else {
-      timeSetViaUpdate = false;
-    }
-    $timeout(decrementTime, 950);
-  };
+    var timeSetViaUpdate = false;
+    var decrementTime = function () {
+      if (game.time > 0 && !timeSetViaUpdate) {
+        game.time--;
+      } else {
+        timeSetViaUpdate = false;
+      }
+      $timeout(decrementTime, 950);
+    };
 
-  socket.on('id', function (data) {
-    game.id = data.id;
-  });
+    socket.on('id', function (data) {
+      game.id = data.id;
+    });
 
-  socket.on('newMessage', function (data) {
-    setChatNotification();
-  });
+    socket.on('newMessage', function (data) {
+      setChatNotification();
+    });
 
-  socket.on('prepareGame', function (data) {
-    game.playerMinLimit = data.playerMinLimit;
-    game.playerMaxLimit = data.playerMaxLimit;
-    game.pointLimit = data.pointLimit;
-    game.timeLimits = data.timeLimits;
-  });
+    socket.on('prepareGame', function (data) {
+      game.playerMinLimit = data.playerMinLimit;
+      game.playerMaxLimit = data.playerMaxLimit;
+      game.pointLimit = data.pointLimit;
+      game.timeLimits = data.timeLimits;
+    });
 
-  socket.on('gameUpdate', function (data) {
+    socket.on('gameUpdate', function (data) {
 
-    // Update gameID field only if it changed.
-    // That way, we don't trigger the $scope.$watch too often
-    if (game.gameID !== data.gameID) {
-      game.gameID = data.gameID;
-    }
+
+      // Update gameID field only if it changed.
+      // That way, we don't trigger the $scope.$watch too often
+      if (game.gameID !== data.gameID) {
+        game.gameID = data.gameID;
+      }
 
     game.joinOverride = false;
     clearTimeout(game.joinOverrideTimeout);
@@ -172,11 +173,29 @@ angular.module('mean.system')
           addToNotificationQueue('Select TWO answers!');
         }
       }
+      var setHttpHeader = () => {
+        const token = $window.localStorage.getItem('token')
+        $http.defaults.headers.common.Authorization = token;
+      };
+      setHttpHeader();
+      if (data.state === 'game ended' && game.gameID === data.gameID) {
+        const token = $window.sessionStorage.getItem('regionName', $scope.regionName);
+        // When game ends, send game data to the database
+        const gameData = {
+          gameId: game.gameID,
+          gameOwner: game.players[0].username,
+          gameWinner: game.players[game.gameWinner].username,
+          gamePlayers: game.players
+        };
+        $http.post(`/api/games/rank`, { winner: gameData.gameWinner });
+        $http.post(`/api/games/${game.gameID}/start`, gameData);
+        
     } else if (data.state === 'waiting for czar to decide') {
       if (game.czar === game.playerIndex) {
         addToNotificationQueue("Everyone's done. Choose the winner!");
       } else {
         addToNotificationQueue("The czar is contemplating...");
+
       }
     } else if (data.state === 'winner has been chosen' &&
       game.curQuestion.text.indexOf('<u></u>') > -1) {
