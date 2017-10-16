@@ -14,6 +14,7 @@ mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 const Board = mongoose.model('Board');
+const Rank = mongoose.model('Rank');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -53,7 +54,7 @@ export const saveLeaderData = (req, res) => {
 exports.getLeaderBoard = (req, res) => {
   const leaderData = [];
   Board.find({})
-    .limit(10)
+    .limit(20)
     .sort({ playerPoint: -1 })
     .exec((error, records) => {
       for (let i = 0; i < records.length; i += 2) {
@@ -65,7 +66,12 @@ exports.getLeaderBoard = (req, res) => {
 
 export const authCallback = (req, res) => {
   const { TOKEN_SECRET } = process.env;
-  if (!req.user) {
+  if (req.user && req.user.newUser) {
+    const { profileId, provider } = req.user;
+    res.cookie('profileId', profileId);
+    res.cookie('provider', provider);
+    res.redirect('/#!/signup');
+  } else if (!req.user) {
     res.redirect('/#!/signin?error=emailRequired');
   } else {
     const token = jwt.sign(
@@ -86,7 +92,7 @@ export const authCallback = (req, res) => {
 
 export const isLoggedIn = (req, res, next) => {
   const key = process.env.TOKEN_SECRET;
-  const token = req.headers.authorization;
+  const token = req.headers.authorization || req.headers['x-access-token'];
   // let token;
   // const tokenAvailable = req.headers.authorization ||
   //   req.headers['x-access-token'];
@@ -182,6 +188,54 @@ export const getFriendsList = (req, res) => {
       res.status(500).send({
         message: 'Internal Server Error'
       });
+    });
+};
+
+export const getRankData = (req, res) => {
+  Rank.find({})
+    .sort({ wins: -1 })
+    .then(data => res.send({
+      data
+    }));
+};
+
+export const saveGameRank = (req, res) => {
+  User.findOne({
+    username: req.body.username
+  })
+    .then((user) => {
+      const rank = new Rank();
+      rank.location = user.location;
+      Rank.find({
+        location: user.location
+      })
+        .then((region) => {
+          if (region.length > 0) {
+            Rank.update(
+              {
+                location: user.location
+              },
+              { $inc: { wins: 1 } },
+              () => {
+                res.json({
+                  message: 'Updated successfully!'
+                });
+              }
+            );
+          } else {
+            rank.save((error) => {
+              if (error) {
+                return error;
+              }
+              res.json(rank);
+            });
+          }
+        })
+        .catch(() => {
+          res.status(500).send({
+            message: 'Internal Server Error'
+          });
+        });
     });
 };
 
@@ -396,7 +450,7 @@ export const register = (req, res) => {
       const user = new User(req.body);
       // Switch the user's avatar index to an actual avatar url
       user.avatar = avatarsAll[user.avatar];
-      user.provider = 'local';
+      user.provider = req.body.provider || 'local';
       user.save()
         .then(() => {
           const token = jwt.sign(

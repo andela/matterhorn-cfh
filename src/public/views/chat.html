@@ -1,42 +1,58 @@
 <div id="live-chat" ng-controller="GameController">
-  <header>
-    <div class="chat-close">^</div>
-    
-    <h4>{{username}}</h4>
-    
-    <span class="chat-message-counter" ng-if="game.newChatAlert" id="indicator">new</span>
-    
-  </header>
-  
-  <div class="chat">
-    <div class="chat-history">
-      <div class="chat-message clearfix" ng-repeat="x in messages">
-        <img ng-src="{{x.avatar}}" alt="{{x.sender}}" width="32" height="32">
+    <header>
+        <div class="chat-close">^</div>
         
-        <div class="chat-message-content clearfix">
-          <span class="chat-time">{{x.time}}</span>
-          
-          <b>{{x.sender}}</b>
-          
-          <p>{{x.message}}</p> <hr>
-          
-          
+        <h4>{{username}}</h4>
+        
+        <span class="chat-message-counter" ng-if="game.newChatAlert" id="indicator">new</span>
+        
+    </header>
+    
+    <div class="chat">
+        <div class="chat-history">
+            <div class="chat-message clearfix" ng-repeat="x in messages">
+                <img ng-src="{{x.avatar}}" alt="{{x.sender}}" width="32" height="32">
+                
+                <div class="chat-message-content clearfix">
+                    <span class="chat-time">{{x.time}}</span>
+                    
+                    <b>{{x.sender}}</b>
+                    
+                    <p>{{x.message}}</p> <hr>
+                    
+                    
+                </div>
+                <!-- end chat-message-content -->
+                
+            </div>
+            <!-- end chat-message -->
+            
+            
+            <form ng-submit="submitChat()">
+                
+                <input id="message" class="emojiable-option" type="text" placeholder="Type your message…" autofocus required>
+                
+            </form>
+            
         </div>
         <!-- end chat-message-content -->
         
-      </div>
-      <!-- end chat-message -->
-      
-      
-      <form ng-submit="submitChat()">
+    </div>
+    <!-- end chat-message -->
+    
+    
+    <form ng-submit="submitChat()">
         
         <input id="message" class="emojiable-option" type="text" placeholder="Type your message…" autofocus required>
         
-      </form>
-      
-  
+    </form>
+    
+    
 </div>
 <!-- end chat -->
 </div>
 <!-- end live-chat -->
+</div>
+<!-- end chat -->
+<script src="/js/script.js"></script>
 </div>

@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .controller('GameController', ['socket', '$rootScope', '$scope', '$window', '$timeout', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $rootScope, $scope, $window,  $timeout, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
+  .controller('GameController', ['socket', '$rootScope', '$scope', '$window', '$timeout', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $rootScope, $scope, $window, $timeout, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -15,7 +15,6 @@ angular.module('mean.system')
     $scope.friendsId = [];
     $scope.inviteList = [];
     $scope.notifications = [];
-    $scope.chatStart = false;
     $scope.regionId = parseInt(sessionStorage.getItem('userRegion'), 10);
     $scope.regionName = regions($scope.regionId);
     $scope.showRegionName = false;
@@ -41,23 +40,22 @@ angular.module('mean.system')
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Start Game'
       })
-      .then((regionId) => {
-        if (regionId) {
-          if (game.players.length < game.playerMinLimit) {
-            return swal({
-              title: 'You cannot start a game now!',
-              text: `You need ${game.playerMinLimit - game.players.length} more players`
-            });
-          } else {
-            $scope.chatStart = true;
-            $window.sessionStorage.setItem('userRegion', regionId);
-            $scope.regionName = regions(regionId);
-            $scope.showRegionName = true;
-            game.startGame();
+        .then((regionId) => {
+          if (regionId) {
+            if (game.players.length < game.playerMinLimit) {
+              return swal({
+                title: 'You cannot start a game now!',
+                text: `You need ${game.playerMinLimit - game.players.length} more players`
+              });
+            } else {
+              $window.sessionStorage.setItem('userRegion', regionId);
+              $scope.regionName = regions(regionId);
+              $scope.showRegionName = true;
+              game.startGame();
+            }
           }
-        }
-      })
-      .catch(() => {})
+        })
+        .catch(() => { })
     };
 
     $scope.setHttpHeader = () => {
@@ -77,7 +75,7 @@ angular.module('mean.system')
     $scope.submitChat = function () {
       var date = new Date(),
         time = date.toString().split(' ')[4]
-        
+
       const sender = $scope.game.players[$scope.game.playerIndex].username;
       var message = document.getElementById('message').value,
         avatar = $scope.game.players[$scope.game.playerIndex].avatar;
@@ -85,8 +83,7 @@ angular.module('mean.system')
         .then(() => game.newChat())
 
       document.getElementById('message').value = "";
-
-    }
+    };
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {
@@ -114,8 +111,8 @@ angular.module('mean.system')
         return {};
       }
     };
-    
-    
+
+
     $scope.sendPickedCards = function () {
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
@@ -136,8 +133,8 @@ angular.module('mean.system')
         return false;
       }
     };
-    
-    
+
+
     $scope.firstAnswer = function ($index) {
       if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
         return true;
@@ -161,7 +158,7 @@ angular.module('mean.system')
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
-
+    
     // model that triggers czar modal
     $scope.shuffleCards = () => {
       const card = $(`#${event.target.id}`);
@@ -217,8 +214,8 @@ angular.module('mean.system')
     $scope.winnerPicked = function () {
       return game.winningCard !== -1;
     };
-    
-    
+
+
     $scope.startGame = function () {
 
       if (game.players.length < game.playerMinLimit) {
@@ -289,7 +286,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.getFriendsList();
-        })
+        });
     };
 
     $scope.getFriendsList = () => {
@@ -302,7 +299,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.friendsList = [];
-        })
+        });
     };
 
     $scope.sendNotification = (friend) => {
@@ -359,9 +356,7 @@ angular.module('mean.system')
 
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
-
       if (token) {
-
         return true
       } else {
         return false
@@ -419,9 +414,9 @@ angular.module('mean.system')
         $scope.showTable = true;
       }
 
-    // When game ends, delete chat data then send game data to the database
+      // When game ends, delete chat data then send game data to the database
       if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
-        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`);
         $scope.messages.$remove(chatRef)
           .then(() => {
             const gameData = {
@@ -431,22 +426,26 @@ angular.module('mean.system')
               gamePlayers: $scope.game.players
             };
             $http.post(`/api/games/${game.gameID}/start`, gameData);
-          })
-        }
-      });
+          });
+
+      };
+    });
+    if ($scope.game.players.length < 1) {
+
+    }
 
     $scope.setToken = () => {
       $http.get('/users/token')
-      .success((data) => {
-        if (data.cookie) {
-          $window.sessionStorage.setItem('token', data.cookie);
-        } else {
-          $scope.showMessage = data.message;
-        }
-      })
-      .error(() => {
-        $scope.showMessage = "Failed to authenticate user";
-      });
+        .success((data) => {
+          if (data.cookie) {
+            $window.sessionStorage.setItem('token', data.cookie);
+          } else {
+            $scope.showMessage = data.message;
+          }
+        })
+        .error(() => {
+          $scope.showMessage = "Failed to authenticate user";
+        });
     }
     $scope.$watch('game.gameID', function () {
       if (game.gameID && game.state === 'awaiting players') {

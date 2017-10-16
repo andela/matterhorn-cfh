@@ -25,7 +25,9 @@ import {
   isLoggedIn,
   isAuthenticated,
   saveLeaderData,
-  getLeaderBoard
+  getLeaderBoard,
+  saveGameRank,
+  getRankData
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -75,7 +77,9 @@ export default () => {
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
+  app.post('/api/games/rank', isLoggedIn, saveGameRank);
   app.get('/api/games/logs', isLoggedIn, getGameData);
+  app.get('/api/leaderboard/region', isLoggedIn, getRankData);
 
   // Donation Routes
   app.post('/donations', isAuthenticated, addDonation);

@@ -48,7 +48,7 @@ p { margin: 0; }
 }
 
 .black {
-    background-color: rgba(0, 0, 0, 0.28) !important;
+    background-color: rgba(0, 0, 0, 0.01) !important;
 }
 
 #live-chat {

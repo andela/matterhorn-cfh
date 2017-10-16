@@ -1,23 +1,24 @@
 angular.module('mean.system')
-  .controller('authController', ['$rootScope', '$scope', '$location', '$http', '$window',
-    function ($rootScope, $scope, $location, $http, $window) {
+  .controller('authController', ['$scope', '$location', '$http', '$window',
+    function ($scope, $location, $http, $window) {
 
       $scope.errorMessage = ''
-
+      $scope.country = geoplugin_countryName();
+      
       $scope.signUp = () => {
         const payload = {
           name: $scope.name,
           email: $scope.email,
-          password: $scope.password
+          password: $scope.password,
+          location: $scope.country
         }
-
         $http.post('/api/auth/signup', payload)
           .then(
           (response) => {
             $scope.errorMessage = ''
             $window.localStorage.setItem('token', response.data.token)
-            $location.path('/app')
-            $rootScope.$broadcast('newUser');
+            $location.path('/#!/')
+            $scope.loadNotifcations();
           },
           (error) => {
             if (error.status === 409) {
