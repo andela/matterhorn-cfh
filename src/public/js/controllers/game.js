@@ -408,7 +408,7 @@ angular.module('mean.system')
         $scope.czarHasDrawn = '';
       }
       // watches for a win
-      if (game.state === 'game ended' && game.gameWinner === game.playerIndex) {
+      if (game.state === 'game ended' || game.state === 'game dissolved') {
         leaderData = {
           gameID: game.gameID,
           gameWinnerPoint: game.players[game.playerIndex].points
