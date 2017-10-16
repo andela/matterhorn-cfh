@@ -30,6 +30,14 @@ angular.module('mean.system')
       $scope.games.push(res.data[i]);
     }
   });
+  
+  $http.get('/api/leaderboard')
+  .success((data) => {
+    $scope.leaderBoard = data;
+  })
+  .error(() => {
+    $scope.leaderBoard = false;
+  })
 
   $http.get('/api/leaderboard/region')
   .then((response) => {
