@@ -4,6 +4,7 @@ angular.module('mean.system')
 
       $scope.errorMessage = ''
       $scope.country = geoplugin_countryName();
+      
       $scope.signUp = () => {
         const payload = {
           name: $scope.name,
