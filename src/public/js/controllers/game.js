@@ -15,7 +15,6 @@ angular.module('mean.system')
     $scope.friendsId = [];
     $scope.inviteList = [];
     $scope.notifications = [];
-    $scope.chatStart = false;
     $scope.regionId = parseInt(sessionStorage.getItem('userRegion'), 10);
     $scope.regionName = regions($scope.regionId);
     $scope.showRegionName = false;
@@ -49,7 +48,6 @@ angular.module('mean.system')
               text: `You need ${game.playerMinLimit - game.players.length} more players`
             });
           } else {
-            $scope.chatStart = true;
             $window.sessionStorage.setItem('userRegion', regionId);
             $scope.regionName = regions(regionId);
             $scope.showRegionName = true;
@@ -358,7 +356,8 @@ angular.module('mean.system')
 
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
-      if(token) {
+
+      if (token) {
         return true
       } else {
         return false
