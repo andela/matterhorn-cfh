@@ -331,13 +331,18 @@ exports.sendMail = (req, res) => {
 exports.searchUser = (req, res) => {
   const { username } = req.params;
   User.find({
-    name: { $regex: `^${username}`, $options: 'i' }
-  }).exec((err, user) => {
-    if (err) {
-      res.jsonp({ error: '403' });
-    }
-    res.jsonp(user);
-  });
+    $and: [
+      { _id: { $nin: [`${req.decoded.user}`] } },
+      { name: { $regex: `^${username}.*`, $options: 'i' } }
+    ]
+  })
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch(error => res.status(501).send({
+      message: 'Internal Server Error',
+      error
+    }));
 };
 
 /**
