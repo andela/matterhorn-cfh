@@ -1,7 +1,6 @@
 /** eslint-disable */
 import consoleStamp from 'console-stamp';
 import mongoose from 'mongoose';
-import jwtDecode from 'jwt-decode';
 
 import Game from './game';
 import Player from './player';
