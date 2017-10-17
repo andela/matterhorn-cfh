@@ -24,8 +24,6 @@ import {
   getGameData,
   isLoggedIn,
   isAuthenticated,
-  saveLeaderData,
-  getLeaderBoard,
   saveGameRank,
   getRankData
 } from '../app/controllers/users';
@@ -47,10 +45,12 @@ import {
 
 import app from '../app';
 
+import { getLeaderBoard } from '../app/controllers/leaderboard';
+
 export default () => {
-  // leaderboard Route
-  app.post('/api/leaderboard', isAuthenticated, saveLeaderData);
-  app.get('/api/leaderboard', isAuthenticated, getLeaderBoard);
+  // LeaderBoard
+  app.get('/api/leaderboard', getLeaderBoard);
+
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);

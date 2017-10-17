@@ -1,4 +1,4 @@
-<div landing class="main-wrapper" >
+<div landing class="main-wrapper">
   <!-- Fixed Logo & Menu Bar Start -->
   <header>
     <nav class="cfh-green">
@@ -43,114 +43,113 @@
           <button ng-click="show = 3" ng-class="{ active : show == 3 }" class="teal btn">Donations</button>
         </div>
         <div class='col m3 s12 center-align log-btn'>
-            <button ng-click="show = 4" ng-class="{ active : show == 4 }" class="teal btn">Location Rank</button>
-          </div>
+          <button ng-click="show = 4" ng-class="{ active : show == 4 }" class="teal btn">Location Rank</button>
+        </div>
       </div>
     </div>
     <div ng-show="show==1" class='col s12 offset-m1 m10'>
       <div class='card-panel white darken-3'>
-          <table class="responsive-table bordered striped">
-              <thead>
-                <tr>
-                    <th>DATE/TIME</th>
-                    <th>GAME OWNER</th>
-                    <th>WINNER</th>
-                    <th>PLAYERS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="game in games">
-                  <td>{{parseStamp(game.date)}}</td>
-                  <td>{{game.gameOwner}}</td>
-                  <td>{{game.gameWinner}}</td>
-                  <td>
-                    <ul ng-repeat="thePlayer in game.gamePlayers" >
-                      <li>
-                          {{thePlayer['username']}} <b>{{thePlayer['points']}}</b>
-                      </li>
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-          </table>
+        <table class="responsive-table bordered striped">
+          <thead>
+            <tr>
+              <th>DATE/TIME</th>
+              <th>GAME OWNER</th>
+              <th>WINNER</th>
+              <th>PLAYERS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="game in games">
+              <td>{{parseStamp(game.date)}}</td>
+              <td>{{game.gameOwner}}</td>
+              <td>{{game.gameWinner}}</td>
+              <td>
+                <ul ng-repeat="thePlayer in game.gamePlayers">
+                  <li>
+                    {{thePlayer['username']}} <b>{{thePlayer['points']}}</b>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div ng-show="show==2" class='col s12 offset-m1 m10'>
       <div class='card-panel white darken-3'>
-          <table class="responsive-table bordered striped">
-              <thead>
-                <tr>
-                    <th>PLAYERS</th>
-                    <th>Game Point</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="leader in leaderBoard">
-                  <td>{{leader.username}}</td>
-                  <td>{{leader.playerPoint}}</td>
-                </tr>
-              </tbody>
-          </table>
+        <table class="responsive-table bordered striped">
+          <thead>
+            <tr>
+              <th>Player name</th>
+              <th>Number of wins</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="data in leaderboardData">
+              <td>{{ data.winnerName }}</td>
+              <td>{{ data.score }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div ng-show="show==3" class='col s12 offset-m1 m10'>
       <div class='card-panel white darken-3'>
-          <table class="responsive-table bordered striped">
-              <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>DONOR NAME</th>
-                    <th>CROWDRISE DONATION ID</th>
-                    <th>AMOUNT</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="donation in donations">
-                  <td><b>CFH</b> </td>
-                  <td>{{donation.donor_name}}</td>
-                  <td>{{donation.crowdrise_donation_id}}</td>
-                  <td>
-                    {{donation.amount}}
-                  </td>
-                </tr>
-              </tbody>
-          </table>
+        <table class="responsive-table bordered striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>DONOR NAME</th>
+              <th>CROWDRISE DONATION ID</th>
+              <th>AMOUNT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="donation in donations">
+              <td><b>CFH</b> </td>
+              <td>{{donation.donor_name}}</td>
+              <td>{{donation.crowdrise_donation_id}}</td>
+              <td>
+                {{donation.amount}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <div ng-show="show==4" class='col s12 offset-m1 m10'>
-        <div class='card-panel white darken-3'>
-            <table class="responsive-table bordered striped">
-                <thead>
-                  <tr>
-                      <th>LOCATION</th>
-                      <th>WINS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="x in gameRank">
-                    <td>{{x.location}}</td>
-                    <td>{{x.wins}}</td>
-                  </tr>
-                </tbody>
-            </table>
-        </div>
+      <div class='card-panel white darken-3'>
+        <table class="responsive-table bordered striped">
+          <thead>
+            <tr>
+              <th>LOCATION</th>
+              <th>WINS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="x in gameRank">
+              <td>{{x.location}}</td>
+              <td>{{x.wins}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
   </div>
 
   <footer class="cfh-green">
     <div class="container">
       <div class="row mb-0">
         <div class="col s6 white-text">
-          <p class="white-text">Redesigned by <strong>Team Matterhorn:</strong> Temitayo Fadojutimi, Temitope Joloko, Sofiat Abioye, Emmanuel Ogunbo, Abiona Ekundayo, Nasirudeen Abdulrasaq</p>
+          <p class="white-text">Redesigned by <strong>Team Matterhorn:</strong> Temitayo Fadojutimi, Temitope Joloko, Sofiat Abioye, Emmanuel Ogunbo,
+            Abiona Ekundayo, Nasirudeen Abdulrasaq</p>
           <p>
-            Based on Cards Against Humanity.<br/>
-            Licensed under CC licensed (BY-NC-SA).<br/>
-            Cards for Humanity is not affiliated with Cards Against Humanity.
+            Based on Cards Against Humanity.<br/> Licensed under CC licensed (BY-NC-SA).<br/> Cards for Humanity is not affiliated
+            with Cards Against Humanity.
           </p>
           <p>
-            All proceeds from donations go directly to charity,
-            as managed by crowdrise.
+            All proceeds from donations go directly to charity, as managed by crowdrise.
           </p>
         </div>
         <div class="col s6 text-right main-social">
