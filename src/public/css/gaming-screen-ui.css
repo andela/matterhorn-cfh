@@ -164,6 +164,16 @@ input[type=search]:not(.browser-default) {
   }
 }
 
+@media only screen and (min-width: 375px) {
+  .dropdown-button {
+    padding-left: 30px !important;
+  }
+  .dropdown-content{
+    top: 45px !important;
+    margin-left: 45px !important;
+  }
+}
+
 @media only screen and (max-width: 780px) {
   .timer-container .time {
     font-size: 10px;
