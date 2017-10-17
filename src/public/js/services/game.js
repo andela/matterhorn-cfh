@@ -187,7 +187,7 @@ socket.on('gameUpdate', function (data) {
         gameWinner: game.players[game.gameWinner].username,
         gamePlayers: game.players
       };
-      $http.post(`/api/games/rank`, { winner: gameData.gameWinner });
+      $http.post(`/api/games/rank`, { username: gameData.gameWinner });
       $http.post(`/api/games/${game.gameID}/start`, gameData);
       
     } else if (data.state === 'waiting for czar to decide') {
