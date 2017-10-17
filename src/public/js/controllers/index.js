@@ -58,6 +58,7 @@ angular.module('mean.system')
       angular.forEach($cookies, function (v, k) {
         $cookieStore.remove(k);
       });
+      $window.localStorage.removeItem('userId');
       $window.localStorage.removeItem("token");
       $window.location.href = '/';
     }
