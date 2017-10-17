@@ -32,6 +32,7 @@ angular.module('mean.system')
           .then(
           (response) => {
             $scope.errorMessage = ''
+            $window.localStorage.setItem('userId', response.data.user.id);
             $window.localStorage.setItem('token', response.data.token)
             $location.path('/#!/')
             $scope.loadNotifcations();
