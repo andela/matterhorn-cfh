@@ -93,7 +93,9 @@ class Game {
         premium: player.premium,
         socketID: player.socket.id,
         color: player.color,
-        regionId: player.regionId
+        regionId: player.regionId,
+        userID: player.userID,
+        name: player.name
       });
     });
     return {

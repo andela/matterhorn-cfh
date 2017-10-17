@@ -23,8 +23,8 @@ import {
   saveGameData,
   getGameData,
   isLoggedIn,
-  saveGameRank,
   isAuthenticated,
+  saveGameRank,
   getRankData
 } from '../app/controllers/users';
 
@@ -57,7 +57,7 @@ export default () => {
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
   app.get('/api/sendmail/:email', sendMail);
-  app.get('/api/search/users/:username', searchUser);
+  app.get('/api/search/users/:username', isAuthenticated, searchUser);
 
   // Friends Route
   app.put('/api/user/friend', isAuthenticated, addFriend);

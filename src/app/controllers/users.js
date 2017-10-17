@@ -13,6 +13,7 @@ import validateInput from '../../config/middlewares/validateInput';
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
+const Board = mongoose.model('Board');
 const Rank = mongoose.model('Rank');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
@@ -24,8 +25,44 @@ const avatarsAll = all();
 const helper = require('sendgrid').mail;
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 /**
- * Auth callback
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing the users data
  */
+export const saveLeaderData = (req, res) => {
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
+  const leaderboard = new Board();
+  leaderboard.gameId = req.body.gameID;
+  leaderboard.username = decoded.name;
+  leaderboard.playerPoint = req.body.gameWinnerPoint;
+  leaderboard.playerId = decoded.user;
+  leaderboard.date = new Date();
+  leaderboard.save((error, leadboard) => {
+    if (error) {
+      return error;
+    }
+    res.json(leadboard);
+  });
+};
+/**
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing leaderboard object
+ */
+  // Gets leaderboard
+exports.getLeaderBoard = (req, res) => {
+  const leaderData = [];
+  Board.find({})
+    .limit(20)
+    .sort({ playerPoint: -1 })
+    .exec((error, records) => {
+      for (let i = 0; i < records.length; i += 2) {
+        leaderData.push(records[i]);
+      }
+      res.send(leaderData);
+    });
+};
 
 export const authCallback = (req, res) => {
   const { TOKEN_SECRET } = process.env;
@@ -98,6 +135,7 @@ export const isAuthenticated = (req, res, next) => {
             error
           });
       }
+      req.user = decoded;
       req.decoded = decoded;
       next();
     });
@@ -163,7 +201,7 @@ export const getRankData = (req, res) => {
 
 export const saveGameRank = (req, res) => {
   User.findOne({
-    username: req.body.username
+    name: req.body.username
   })
     .then((user) => {
       const rank = new Rank();
@@ -198,8 +236,7 @@ export const saveGameRank = (req, res) => {
             message: 'Internal Server Error'
           });
         });
-    })
-
+    });
 };
 
 export const saveGameData = (req, res) => {
@@ -211,6 +248,7 @@ export const saveGameData = (req, res) => {
   game.gameOwner = req.body.gameOwner;
   game.gameId = req.params.id;
   game.gameWinner = req.body.gameWinner;
+  game.gameWinnerPoints = req.body.gameWinnerPoints;
   game.date = new Date();
   game.gamePlayers = req.body.gamePlayers;
 
@@ -331,13 +369,18 @@ exports.sendMail = (req, res) => {
 exports.searchUser = (req, res) => {
   const { username } = req.params;
   User.find({
-    name: { $regex: `^${username}`, $options: 'i' }
-  }).exec((err, user) => {
-    if (err) {
-      res.jsonp({ error: '403' });
-    }
-    res.jsonp(user);
-  });
+    $and: [
+      { _id: { $nin: [`${req.decoded.user}`] } },
+      { name: { $regex: `^${username}.*`, $options: 'i' } }
+    ]
+  })
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch(error => res.status(501).send({
+      message: 'Internal Server Error',
+      error
+    }));
 };
 
 /**
@@ -505,7 +548,11 @@ export const login = (req, res) => {
             user.save();
             // generate token upon login
             const token = jwt.sign(
-              { name: user.name, user: user.id, email: user.email },
+              {
+                name: user.name,
+                user: user.id,
+                email: user.email
+              },
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );
