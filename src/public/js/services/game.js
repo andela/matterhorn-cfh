@@ -57,24 +57,7 @@ var setNotification = function () {
     timeout = $timeout(setNotification, 1300);
   }
 };
-setHttpHeader();
-if (data.state === 'game ended' && game.gameID === data.gameID) {
-  const token = $window.sessionStorage.getItem('regionName', $scope.regionName);
-  // When game ends, send game data to the database
-  const gameData = {
-    gameId: game.gameID,
-    gameOwner: game.players[0].username,
-    gameWinner: game.players[game.gameWinner].username,
-    gamePlayers: game.players
-  };
-  $http.post(`/api/games/rank`, { username: gameData.gameWinner });
-  $http.post(`/api/games/${game.gameID}/start`, gameData);
-  
-} else if (data.state === 'waiting for czar to decide') {
-  if (game.czar === game.playerIndex) {
-    addToNotificationQueue("Everyone's done. Choose the winner!");
-  }
-}
+
 
 var timeSetViaUpdate = false;
 var decrementTime = function () {
