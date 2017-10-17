@@ -3,6 +3,9 @@ import _ from 'underscore';
 
 import { allQuestionsForGame } from '../../app/controllers/questions';
 import { allAnswersForGame } from '../../app/controllers/answers';
+import {
+  create as createLeaderBoard
+} from '../../app/controllers/leaderboard';
 
 const guestNames = [
   'Disco Potato',
@@ -49,7 +52,7 @@ class Game {
     this.czar = -1; // Index in this.players
     this.playerMinLimit = 3;
     this.playerMaxLimit = 12;
-    this.pointLimit = 1;
+    this.pointLimit = 5;
     this.state = 'awaiting players';
     this.round = 0;
     this.questions = null;
@@ -289,6 +292,15 @@ class Game {
   stateEndGame(winner) {
     this.state = 'game ended';
     this.gameWinner = winner;
+
+    const gameWinnerId =
+      this.players[winner].userID; // winner ID
+
+    const gamewinnerName =
+      this.players[winner].username; // winner name
+
+    createLeaderBoard(gameWinnerId, gamewinnerName);
+
     this.sendUpdate();
   }
 
@@ -459,7 +471,7 @@ class Game {
     autopicked = autopicked || false;
     const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
     if ((playerIndex === this.czar || autopicked)
-    && this.state === 'waiting for czar to decide') {
+      && this.state === 'waiting for czar to decide') {
       let cardIndex = -1;
       _.each(this.table, (winningSet, index) => {
         if (winningSet.card[0].id === thisCard) {

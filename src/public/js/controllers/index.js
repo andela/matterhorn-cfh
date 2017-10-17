@@ -3,9 +3,9 @@ angular.module('mean.system')
 
     $scope.scrollTo = function (id) {
       // Scroll
-    $('html,body').animate({
+      $('html,body').animate({
         scrollTop: $(`#${id}`).offset().top}, 'slow');
-  }
+    }
     $scope.checkAuth = () => {
       if ($cookies.token) {
         $window.localStorage.setItem('token', $cookies.token);
@@ -37,6 +37,7 @@ angular.module('mean.system')
       $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
           if (data.success === true) {
+            $window.localStorage.setItem('userId', data.id);
             $window.localStorage.setItem('token', data.token);
             $window.location.href = '/';
           } else {

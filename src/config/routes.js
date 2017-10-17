@@ -45,7 +45,12 @@ import {
 
 import app from '../app';
 
+import { getLeaderBoard } from '../app/controllers/leaderboard';
+
 export default () => {
+  // LeaderBoard
+  app.get('/api/leaderboard', getLeaderBoard);
+
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);
