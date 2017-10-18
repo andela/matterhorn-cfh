@@ -271,6 +271,17 @@ export const donations = (req, res) => {
     });
 };
 
+export const donors = (req, res) => {
+  const userId = req.decoded.user;
+  User.findOne({
+    _id: userId
+    
+  })
+    .exec((err, user) => {
+      res.status(200).send({ donors: user.donations });
+    });
+};
+
 export const getGameData = (req, res) => {
   const token = req.headers.authorization;
   const decoded = jwtDecode(token);

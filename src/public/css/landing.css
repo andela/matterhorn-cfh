@@ -329,3 +329,7 @@ footer {
   .side-nav li>a:hover {
     color: rgba(0,0,0,0.87) !important;
   }
+
+.donor-carousel {
+  background-color: #009688 !important;
+}

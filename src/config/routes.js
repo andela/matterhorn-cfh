@@ -12,6 +12,7 @@ import {
   session,
   me,
   login,
+  donors,
   donations,
   show,
   authCallback,
@@ -84,6 +85,7 @@ export default () => {
   // Donation Routes
   app.post('/donations', isAuthenticated, addDonation);
   app.get('/api/donations', isAuthenticated, donations);
+  app.get('/api/donors', isAuthenticated, donors);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',

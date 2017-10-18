@@ -4,6 +4,7 @@ angular.module('mean.system')
   $scope.games = [];
   $scope.gameRank = [];
   $scope.donations = [];
+  $scope.donors = [];
 
   $scope.abandonGame = () => {
     console.log($location.path('/'))
@@ -21,6 +22,18 @@ angular.module('mean.system')
       $scope.donations.push(donation[i]);
     }
     console.log($scope.donations);
+  });
+
+  $http.get('/api/donors')
+  .then((res) => {
+    const donors = res.data.donors;
+    console.log($scope.donors);
+    for (let i=0; i < donors.length; i++) {
+      if (donors[i].donor_consent === true) {
+        $scope.donors.push(donors[i]);
+      }
+    }
+    $scope.loadCarousel = true;
   });
 
 

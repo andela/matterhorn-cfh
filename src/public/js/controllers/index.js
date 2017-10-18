@@ -5,7 +5,11 @@ angular.module('mean.system')
       // Scroll
     $('html,body').animate({
         scrollTop: $(`#${id}`).offset().top}, 'slow');
-  }
+    }
+
+    $scope.seekConsent = () => {
+      console.log('Hello world');
+    }
     $scope.checkAuth = () => {
       if ($cookies.token) {
         $window.localStorage.setItem('token', $cookies.token);

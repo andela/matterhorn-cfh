@@ -144,7 +144,7 @@
           <div class="mt-5 main-donation-actions row">
             <div class="col l7 m7 s12 text-center">
               <a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&amp;redirect_to=http%3A%2F%2Fmatterhorn-cfh-staging.herokuapp.com%2F%23!%2F&amp;stylesheet=&amp;amounts="
-                class="waves-effect waves-light btn cfh-green">Make a donation</a>
+                class="waves-effect waves-light btn cfh-green" ng-click="seekConsent()">Make a donation</a>
             </div>
             <div class="col l5 m5 s12">
               <img class="ml-3" src="/svg/make-a-wish.svg" />
@@ -167,20 +167,13 @@
   </div>
 
   <div class='row'>
-    <div class='col s12 m12 l12'>
-        <div class="owl-carousel owl-theme">
-          <div class="item"><h4>1</h4></div>
-          <div class="item"><h4>2</h4></div>
-          <div class="item"><h4>3</h4></div>
-          <div class="item"><h4>4</h4></div>
-          <div class="item"><h4>5</h4></div>
-          <div class="item"><h4>6</h4></div>
-          <div class="item"><h4>7</h4></div>
-          <div class="item"><h4>8</h4></div>
-          <div class="item"><h4>9</h4></div>
-          <div class="item"><h4>10</h4></div>
-          <div class="item"><h4>11</h4></div>
-          <div class="item"><h4>12</h4></div>
+    <div class='col s12 m12 l12' ng-controller="LogController">
+        <h4 class="font-freckle-face mt-0 center-align">Oh Look! Our Awesome Donors</h4>
+        <div class="carousel" data-indicators="true">
+          <div class="carousel-item red white-text center-align donor-carousel" ng-repeat="donor in donors">
+            <h2>{{donor.donor_name}}</h2>
+            <p class="white-text">${{donor.amount}}</p>
+          </div>
         </div>
     </div>
   </div>
@@ -225,24 +218,9 @@
 
 <script>
   $(document).ready(function () {
-    $('.dropdown-button').dropdown();
-
-    $('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:10,
-    nav:true,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:3
-        },
-        1000:{
-            items:5
-        }
-    }
-})
+    setTimeout(function(){
+      $('.carousel').carousel();
+    }, 300);
   });
 
 </script>
