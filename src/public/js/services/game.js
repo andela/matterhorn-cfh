@@ -196,7 +196,7 @@ socket.on('gameUpdate', function (data) {
     $http.defaults.headers.common.Authorization = token;
   };
   setHttpHeader();
-  if (data.state === 'game ended' && game.gameID === data.gameID || data.state === 'game dissolved') {
+  if ((data.state === 'game ended' || data.state === 'game dissolved') && game.gameID === data.gameID) {
     // When game ends, send game data to the database
     const gameData = {
       gameId: game.gameID,
@@ -204,7 +204,7 @@ socket.on('gameUpdate', function (data) {
       gameWinner: game.players[game.gameWinner].username,
       gamePlayers: game.players
     };
-    $http.post(`/api/games/rank`, { winner: gameData.gameWinner });
+    $http.post(`/api/games/rank`, { username: gameData.gameWinner });
     $http.post(`/api/games/${game.gameID}/start`, gameData);
   }
 });
@@ -217,7 +217,7 @@ game.joinGame = function (mode, room, createPrivate) {
   mode = mode || 'joinGame';
   room = room || '';
   createPrivate = createPrivate || false;
-  var userID = $window.localStorage.userId ? $window.localStorage.userId : 'unauthenticated';
+  var userID = !!window.user ? user.id : 'unauthenticated';
   socket.emit(mode, { userID: userID, room: room, createPrivate: createPrivate });
 };
 

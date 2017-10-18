@@ -80,14 +80,14 @@
           <table class="responsive-table bordered striped">
               <thead>
                 <tr>
-                    <th>PLAYERS</th>
-                    <th>Game Point</th>
+                    <th>Players Name</th>
+                    <th>Number of wins</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="leader in leaderBoard">
-                  <td>{{leader.username}}</td>
-                  <td>{{leader.playerPoint}}</td>
+                <tr ng-repeat="leader in leaderboardData">
+                  <td>{{leader.winnerName}}</td>
+                  <td>{{leader.score}}</td>
                 </tr>
               </tbody>
           </table>
