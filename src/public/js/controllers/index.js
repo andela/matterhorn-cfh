@@ -13,16 +13,13 @@ angular.module('mean.system')
     };
 
     $scope.checkAuth();
+
     $scope.global = Global;
     $scope.formData = {};
 
     $scope.playAsGuest = () => {
       game.joinGame();
       $location.path('/app');
-    }
-
-    $scope.goHome = () => {
-      $location.path('/');
     }
 
     $scope.showError = () => {
@@ -36,6 +33,7 @@ angular.module('mean.system')
       $http.post('api/auth/login', JSON.stringify($scope.formData))
         .success((data) => {
           if (data.success === true) {
+            $window.localStorage.setItem('userId', data.id);
             $window.localStorage.setItem('token', data.token);
             $window.location.href = '/';
           } else {
@@ -56,8 +54,8 @@ angular.module('mean.system')
       angular.forEach($cookies, function (v, k) {
         $cookieStore.remove(k);
       });
+      $window.localStorage.removeItem('userId');
       $window.localStorage.removeItem("token");
-      // $cookieStore.remove('token');
       $window.location.href = '/';
     }
 

@@ -12,6 +12,7 @@ import {
   session,
   me,
   login,
+  donations,
   show,
   authCallback,
   user,
@@ -22,7 +23,11 @@ import {
   saveGameData,
   getGameData,
   isLoggedIn,
-  isAuthenticated
+  isAuthenticated,
+  saveLeaderData,
+  getLeaderBoard,
+  saveGameRank,
+  getRankData
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -43,13 +48,16 @@ import {
 import app from '../app';
 
 export default () => {
+  // leaderboard Route
+  app.post('/api/leaderboard', isAuthenticated, saveLeaderData);
+  app.get('/api/leaderboard', isAuthenticated, getLeaderBoard);
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
   app.get('/api/sendmail/:email', sendMail);
-  app.get('/api/search/users/:username', searchUser);
+  app.get('/api/search/users/:username', isAuthenticated, searchUser);
 
   // Friends Route
   app.put('/api/user/friend', isAuthenticated, addFriend);
@@ -66,12 +74,16 @@ export default () => {
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
 
+
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
+  app.post('/api/games/rank', isLoggedIn, saveGameRank);
   app.get('/api/games/logs', isLoggedIn, getGameData);
+  app.get('/api/leaderboard/region', isLoggedIn, getRankData);
 
   // Donation Routes
-  app.post('/donations', addDonation);
+  app.post('/donations', isAuthenticated, addDonation);
+  app.get('/api/donations', isAuthenticated, donations);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',

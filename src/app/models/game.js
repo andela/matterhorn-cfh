@@ -20,7 +20,6 @@ const GameSchema = new Schema({
     default: '',
     trim: true
   },
-
   date: Date,
 
   gamePlayers: []

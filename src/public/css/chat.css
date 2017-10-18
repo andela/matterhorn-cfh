@@ -20,6 +20,14 @@ p { margin: 0; }
 .emojiPickerIconWrap .black {
     background: url(http://www.iconninja.com/files/654/599/639/blinking-face-icon.png) center center no-repeat;
     background-size: 60%;
+    height: 46px !important;
+    width: 30px !important;
+}
+
+.emojiPickerIcon .black{
+    height: 39px !important;
+    width: 39px !important;
+    background-color: rgb(255, 255, 255) !important;
 }
 
 .emojiPickerIcon .black{
@@ -40,7 +48,7 @@ p { margin: 0; }
 }
 
 .black {
-    background-color: rgba(0, 0, 0, 0.28) !important;
+    background-color: rgba(0, 0, 0, 0.01) !important;
 }
 
 #live-chat {

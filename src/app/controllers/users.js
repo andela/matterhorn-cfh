@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import jwtDecode from 'jwt-decode';
 import bcrypt from 'bcrypt';
+import moment from 'moment';
 import { all } from './avatars';
 import validateInput from '../../config/middlewares/validateInput';
 
@@ -12,6 +13,8 @@ import validateInput from '../../config/middlewares/validateInput';
 mongoose.Promise = global.Promise;
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
+const Board = mongoose.model('Board');
+const Rank = mongoose.model('Rank');
 mongoose.Promise = global.Promise;
 require('dotenv').config();
 /* eslint-disable no-underscore-dangle */
@@ -22,12 +25,53 @@ const avatarsAll = all();
 const helper = require('sendgrid').mail;
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 /**
- * Auth callback
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing the users data
  */
+export const saveLeaderData = (req, res) => {
+  const token = req.headers.authorization;
+  const decoded = jwtDecode(token);
+  const leaderboard = new Board();
+  leaderboard.gameId = req.body.gameID;
+  leaderboard.username = decoded.name;
+  leaderboard.playerPoint = req.body.gameWinnerPoint;
+  leaderboard.playerId = decoded.user;
+  leaderboard.date = new Date();
+  leaderboard.save((error, leadboard) => {
+    if (error) {
+      return error;
+    }
+    res.json(leadboard);
+  });
+};
+/**
+ * @param {object} req -request
+ * @param {object} res - response
+ * @returns {object} returns a string containing leaderboard object
+ */
+  // Gets leaderboard
+exports.getLeaderBoard = (req, res) => {
+  const leaderData = [];
+  Board.find({})
+    .limit(20)
+    .sort({ playerPoint: -1 })
+    .exec((error, records) => {
+      for (let i = 0; i < records.length; i += 2) {
+        leaderData.push(records[i]);
+      }
+      res.send(leaderData);
+    });
+};
 
 export const authCallback = (req, res) => {
   const { TOKEN_SECRET } = process.env;
-  if (!req.user) {
+  if (req.user && req.user.newUser) {
+    const { profileId, provider } = req.user;
+    res.cookie('profileId', profileId);
+    res.cookie('provider', provider);
+    res.redirect('/#!/signup');
+  } else if (!req.user) {
     res.redirect('/#!/signin?error=emailRequired');
   } else {
     const token = jwt.sign(
@@ -48,7 +92,7 @@ export const authCallback = (req, res) => {
 
 export const isLoggedIn = (req, res, next) => {
   const key = process.env.TOKEN_SECRET;
-  const token = req.headers.authorization;
+  const token = req.headers.authorization || req.headers['x-access-token'];
   // let token;
   // const tokenAvailable = req.headers.authorization ||
   //   req.headers['x-access-token'];
@@ -91,6 +135,7 @@ export const isAuthenticated = (req, res, next) => {
             error
           });
       }
+      req.user = decoded;
       req.decoded = decoded;
       next();
     });
@@ -146,6 +191,54 @@ export const getFriendsList = (req, res) => {
     });
 };
 
+export const getRankData = (req, res) => {
+  Rank.find({})
+    .sort({ wins: -1 })
+    .then(data => res.send({
+      data
+    }));
+};
+
+export const saveGameRank = (req, res) => {
+  User.findOne({
+    name: req.body.username
+  })
+    .then((user) => {
+      const rank = new Rank();
+      rank.location = user.location;
+      Rank.find({
+        location: user.location
+      })
+        .then((region) => {
+          if (region.length > 0) {
+            Rank.update(
+              {
+                location: user.location
+              },
+              { $inc: { wins: 1 } },
+              () => {
+                res.json({
+                  message: 'Updated successfully!'
+                });
+              }
+            );
+          } else {
+            rank.save((error) => {
+              if (error) {
+                return error;
+              }
+              res.json(rank);
+            });
+          }
+        })
+        .catch(() => {
+          res.status(500).send({
+            message: 'Internal Server Error'
+          });
+        });
+    });
+};
+
 export const saveGameData = (req, res) => {
   const token = req.headers.authorization;
   const decoded = jwtDecode(token);
@@ -155,6 +248,7 @@ export const saveGameData = (req, res) => {
   game.gameOwner = req.body.gameOwner;
   game.gameId = req.params.id;
   game.gameWinner = req.body.gameWinner;
+  game.gameWinnerPoints = req.body.gameWinnerPoints;
   game.date = new Date();
   game.gamePlayers = req.body.gamePlayers;
 
@@ -164,6 +258,17 @@ export const saveGameData = (req, res) => {
     }
     res.json(game);
   });
+};
+
+export const donations = (req, res) => {
+  const userId = req.decoded.user;
+  User.findOne({
+    _id: userId
+  })
+    .exec((err, user) => {
+      // Confirm that this object hasn't already been entered
+      res.status(200).send({ donations: user.donations });
+    });
 };
 
 export const getGameData = (req, res) => {
@@ -264,13 +369,18 @@ exports.sendMail = (req, res) => {
 exports.searchUser = (req, res) => {
   const { username } = req.params;
   User.find({
-    name: { $regex: `^${username}`, $options: 'i' }
-  }).exec((err, user) => {
-    if (err) {
-      res.jsonp({ error: '403' });
-    }
-    res.jsonp(user);
-  });
+    $and: [
+      { _id: { $nin: [`${req.decoded.user}`] } },
+      { name: { $regex: `^${username}.*`, $options: 'i' } }
+    ]
+  })
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch(error => res.status(501).send({
+      message: 'Internal Server Error',
+      error
+    }));
 };
 
 /**
@@ -345,7 +455,7 @@ export const register = (req, res) => {
       const user = new User(req.body);
       // Switch the user's avatar index to an actual avatar url
       user.avatar = avatarsAll[user.avatar];
-      user.provider = 'local';
+      user.provider = req.body.provider || 'local';
       user.save()
         .then(() => {
           const token = jwt.sign(
@@ -387,6 +497,7 @@ export const create = (req, res, next) => {
         // Switch the user's avatar index to an actual avatar url
         user.avatar = avatarsAll[user.avatar];
         user.provider = 'local';
+        user.last_login = moment();
         user.save((err) => {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
@@ -433,9 +544,15 @@ export const login = (req, res) => {
         // check if password is correct
         bcrypt.compare(password, user.hashed_password, (err, result) => {
           if (result) {
+            user.last_login = moment();
+            user.save();
             // generate token upon login
             const token = jwt.sign(
-              { name: user.name, user: user.id, email: user.email },
+              {
+                name: user.name,
+                user: user.id,
+                email: user.email
+              },
               TOKEN_SECRET,
               { expiresIn: 72 * 60 * 60 }
             );
@@ -479,12 +596,12 @@ export const avatars = (req, res) => {
 };
 
 export const addDonation = (req, res) => {
-  if (req.body && req.user && req.user.id) {
+  if (req.body && req.decoded.user) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id &&
       req.body.donor_name) {
       User.findOne({
-        _id: req.user.id
+        _id: req.decoded.user
       })
         .exec((err, user) => {
           // Confirm that this object hasn't already been entered
@@ -493,12 +610,16 @@ export const addDonation = (req, res) => {
             if (user.donations[i].crowdrise_donation_id ===
               req.body.crowdrise_donation_id) {
               duplicate = true;
+              res.status(200).send({
+                message: 'Duplicate donation not allowed'
+              });
             }
           }
           if (!duplicate) {
             user.donations.push(req.body);
             user.premium = 1;
             user.save();
+            res.status(200).send({ message: 'Donation has been saved' });
           }
         });
     }

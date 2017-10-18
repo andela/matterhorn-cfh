@@ -1,5 +1,5 @@
 angular.module('mean.system')
-  .controller('GameController', ['socket', '$scope', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $scope, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
+  .controller('GameController', ['socket', '$rootScope', '$scope', '$window', '$timeout', 'Global', 'game', '$firebaseObject', '$firebaseArray', '$timeout', '$http', '$window', '$location', 'MakeAWishFactsService', '$dialog', function (socket, $rootScope, $scope, $window, $timeout, Global, game, $firebaseObject, $firebaseArray, $timeout, $http, $window, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -20,7 +20,6 @@ angular.module('mean.system')
     $scope.showRegionName = false;
 
     $scope.showRegionModal = function () {
-      console.log($scope.regionId)
       return swal({
         title: "Choose your region",
         input: "select",
@@ -65,9 +64,10 @@ angular.module('mean.system')
     };
 
     setTimeout(function () {
+      $scope.username = $scope.game.players[$scope.game.playerIndex].username;
       var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
 
-      $scope.messages = $firebaseArray(chatRef.limitToFirst(10));
+      $scope.messages = $firebaseArray(chatRef.limitToLast(15));
     }, 1000);
 
     var indicator = $("div.chat-close").text();
@@ -75,16 +75,15 @@ angular.module('mean.system')
     $scope.submitChat = function () {
       var date = new Date(),
         time = date.toString().split(' ')[4]
-      const sender = $scope.global.user.name;
+
+      const sender = $scope.game.players[$scope.game.playerIndex].username;
       var message = document.getElementById('message').value,
         avatar = $scope.game.players[$scope.game.playerIndex].avatar;
-
       $scope.messages.$add({ message, gameId: game.gameID, sender, time, avatar })
         .then(() => game.newChat())
 
       document.getElementById('message').value = "";
-
-    }
+    };
 
     $scope.pickCard = function (card) {
       if (!$scope.hasPickedCards) {
@@ -158,6 +157,24 @@ angular.module('mean.system')
 
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
+    };
+    
+    // model that triggers czar modal
+    $scope.shuffleCards = () => {
+      const card = $(`#${event.target.id}`);
+      $('#cardModal').show();
+      card.addClass('animated flipOutY');
+      setTimeout(() => {
+        $scope.startNextRound();
+        card.removeClass('animated flipOutY');
+        $('#cardModal').hide();
+      }, 500);
+    };
+
+    $scope.startNextRound = () => {
+      if ($scope.isCzar()) {
+        game.startNextRound();
+      }
     };
     $scope.isCzar = function () {
       return game.czar === game.playerIndex;
@@ -269,7 +286,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.getFriendsList();
-        })
+        });
     };
 
     $scope.getFriendsList = () => {
@@ -282,7 +299,7 @@ angular.module('mean.system')
         },
         (error) => {
           $scope.friendsList = [];
-        })
+        });
     };
 
     $scope.sendNotification = (friend) => {
@@ -339,7 +356,6 @@ angular.module('mean.system')
 
     $scope.isUser = () => {
       const token = $window.localStorage.getItem('token');
-
       if (token) {
         return true
       } else {
@@ -366,11 +382,8 @@ angular.module('mean.system')
 
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function () {
-      if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
-        $scope.showTable = true;
-      }
-      // POp up program for modal
-      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+       // POp up program for modal
+       if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
         const cardModal = $('#cardModal')
         cardModal.modal({
           dismissible: false
@@ -389,10 +402,21 @@ angular.module('mean.system')
         && game.state !== 'game dissolved') {
         $scope.czarHasDrawn = '';
       }
+      // watches for a win
+      if (game.state === 'game ended' || game.state === 'game dissolved') {
+        leaderData = {
+          gameID: game.gameID,
+          gameWinnerPoint: game.players[game.playerIndex].points
+        }
+         $http.post('/api/leaderboard', leaderData);
+      }
+      if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
+        $scope.showTable = true;
+      }
 
       // When game ends, delete chat data then send game data to the database
       if ($scope.game.state === 'game ended' || $scope.game.state === 'game dissolved') {
-        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`)
+        var chatRef = new Firebase(`https://matterhorn-cfh.firebaseio.com/chat/${game.gameID}`);
         $scope.messages.$remove(chatRef)
           .then(() => {
             const gameData = {
@@ -402,9 +426,10 @@ angular.module('mean.system')
               gamePlayers: $scope.game.players
             };
             $http.post(`/api/games/${game.gameID}/start`, gameData);
-          })
+          });
 
-      }});
+      };
+    });
     if ($scope.game.players.length < 1) {
 
     }
@@ -454,4 +479,101 @@ angular.module('mean.system')
       game.joinGame();
     }
 
+    $scope.tour = introJs();
+
+    $scope.tour.setOptions({
+      steps: [
+        {
+          intro: `Hi there. Welcome to Cards for Humanity Game.
+          Ready to do some good? Let me take you on a tour √`
+        },
+        {
+          element: '#player-count-container',
+          intro: 'The game needs a minimum number of 3 players to start.'
+        },
+        {
+          element: '#start-game-button',
+          intro: 'You can invite other players from here and also add friends to invite to future games.'
+        },
+        {
+          element: '#play-game',
+          intro: 'Click this button to start the game if there are at least 3 players.'
+        },
+        {
+          element: '#question-container',
+          intro: 'When the game starts, the questions are displayed here.'
+        },
+        {
+          element: '#inner-timer-container',
+          intro: `You have 20 seconds to submit an awesome answer. After time out, the CZAR selects his favorite answer. Whoever submits CZAR's favorite answer wins that round.`
+        },
+        {
+          element: '#inner-info',
+          intro: 'The answer cards will be displayed here.',
+        },
+        {
+          element: '#game-players',
+          intro: 'The players are displayed here. The first player who gets the highest score wins the game.'
+        },
+        {
+          element: '#live-chat',
+          intro: 'You can chat with other players in the game.'
+
+        },
+        {
+          element: '#notifications-container',
+          intro: 'Your notifications will appear here.',
+          posotion: 'top'
+        },
+        {
+          element: '#leave-game',
+          intro: 'Done playing? Click this button to leave the game.'
+        },
+        {
+          element: '#tour-container',
+          intro: 'Click here to take this awesome tour again.'
+        }
+      ],
+      showStepNumbers: true,
+      disableInteraction: true,
+      skipLabel: 'Skip Tour',
+      overlayOpacity: 0.5,
+      showBullets: false
+    });
+
+    $scope.tour.onbeforechange(function (targetElement) {
+      if (targetElement.id === 'game-players') {
+        $('#live-chat header').trigger('click');
+      }
+    });
+
+    $scope.startTour = () => $scope.tour.start();
+
+    $rootScope.$on('newUser', function (event) {
+      $timeout(function () {
+        $scope.startTour();
+      }, 2000);
+
+      $scope.tour.onexit(function () {
+        swal({
+          text: "Do you want to go to the homepage or start a new game session",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Go to Home Page',
+          confirmButtonText: 'Start a New Game'
+        })
+          .then(() => {
+            $window.location.reload();
+          })
+          .catch(() => {
+            $location.path('/');
+          })
+      });
+    })
+
+    $scope.goHome = () => {
+      $location.path('/');
+    }
+    
   }]);

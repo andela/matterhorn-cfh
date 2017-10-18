@@ -30,9 +30,9 @@ export default () => {
     User.findOne({
       _id: id
     }, (err, user) => {
-      user.email = null;
-      user.facebook = null;
-      user.hashed_password = null;
+      // user.email = null;
+      // user.facebook = null;
+      // user.hashed_password = null;
       done(err, user);
     });
   });
@@ -77,20 +77,20 @@ export default () => {
     },
     ((token, tokenSecret, profile, done) => {
       User.findOne({
-        'twitter.id_str': profile.id
+        twitter: profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          user = new User({
-            name: profile.displayName,
-            username: profile.username,
-            provider: 'twitter',
-            twitter: profile._json
-          });
-          user.save(err => done(err, user));
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'twitter';
+          done(err, user);
         } else {
+          user.profileId = profile.id;
+          user.provider = 'twitter';
           return done(err, user);
         }
       });
@@ -107,22 +107,17 @@ export default () => {
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
-        'facebook.id': profile.id
+        facebook: profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          user = new User({
-            name: profile.displayName,
-            username: profile.displayName.split(' ').join('_').toLowerCase(),
-            provider: 'facebook',
-            facebook: profile._json
-          });
-          user.save((err) => {
-            user.facebook = null;
-            return done(err, user);
-          });
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'facebook';
+          done(err, user);
         } else {
           user.facebook = null;
           return done(err, user);
@@ -140,20 +135,19 @@ export default () => {
       callbackURL: config.github.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
+      const githubId = profile.id.toString();
       User.findOne({
-        'github.id': profile.id
+        github: githubId
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          user = new User({
-            name: profile.displayName,
-            username: profile.username,
-            provider: 'github',
-            github: profile._json
-          });
-          user.save(() => done(err, user));
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'github';
+          done(err, user);
         } else {
           return done(err, user);
         }
@@ -171,20 +165,17 @@ export default () => {
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
-        'google.id': profile.id
+        google: profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          user = new User({
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            username: profile.username,
-            provider: 'google',
-            google: profile._json
-          });
-          user.save(err => done(err, user));
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'google';
+          done(err, user);
         } else {
           return done(err, user);
         }

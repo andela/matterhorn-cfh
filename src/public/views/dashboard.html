@@ -33,15 +33,18 @@
   <div class="row dashboard" ng-controller="LogController">
     <div class='col s12 offset-m1 m10'>
       <div class='row card-panel white lighten-2'>
-        <div class='col m4 s12 center-align log-btn'>
+        <div class='col m3 s12 center-align log-btn'>
           <button ng-click="show = 1" ng-class="{ active : show == 1 }" class="teal btn">Game History</button>
         </div>
-        <div class="col m4 s12 center-align log-btn">
+        <div class="col m3 s12 center-align log-btn">
           <button ng-click="show = 2" ng-class="{ active : show == 2 }" class="teal btn">Leaderboard</button>
         </div>
-        <div class='col m4 s12 center-align log-btn'>
+        <div class='col m3 s12 center-align log-btn'>
           <button ng-click="show = 3" ng-class="{ active : show == 3 }" class="teal btn">Donations</button>
         </div>
+        <div class='col m3 s12 center-align log-btn'>
+            <button ng-click="show = 4" ng-class="{ active : show == 4 }" class="teal btn">Location Rank</button>
+          </div>
       </div>
     </div>
     <div ng-show="show==1" class='col s12 offset-m1 m10'>
@@ -49,7 +52,7 @@
           <table class="responsive-table bordered striped">
               <thead>
                 <tr>
-                    <th>GAME ID</th>
+                    <th>DATE/TIME</th>
                     <th>GAME OWNER</th>
                     <th>WINNER</th>
                     <th>PLAYERS</th>
@@ -57,7 +60,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat="game in games">
-                  <td><b>CFH</b> {{game.gameId}}</td>
+                  <td>{{parseStamp(game.date)}}</td>
                   <td>{{game.gameOwner}}</td>
                   <td>{{game.gameWinner}}</td>
                   <td>
@@ -77,18 +80,14 @@
           <table class="responsive-table bordered striped">
               <thead>
                 <tr>
-                    <th>GAME ID</th>
-                    <th>GAME OWNER</th>
-                    <th>WINNER</th>
                     <th>PLAYERS</th>
+                    <th>Game Point</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Alvin</td>
-                  <td>Eclair</td>
-                  <td>$0.87</td>
-                  <td>$0.87</td>
+                <tr ng-repeat="leader in leaderBoard">
+                  <td>{{leader.username}}</td>
+                  <td>{{leader.playerPoint}}</td>
                 </tr>
               </tbody>
           </table>
@@ -99,23 +98,44 @@
           <table class="responsive-table bordered striped">
               <thead>
                 <tr>
-                    <th>GAME ID</th>
-                    <th>GAME OWNER</th>
-                    <th>WINNER</th>
-                    <th>PLAYERS</th>
+                    <th>ID</th>
+                    <th>DONOR NAME</th>
+                    <th>CROWDRISE DONATION ID</th>
+                    <th>AMOUNT</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>56</td>
-                  <td>Eclair started game</td>
-                  <td>Sweet Monkey 8pts</td>
-                  <td>Sweet Monkey 8pts, Disco Potato 4pts, Landing Pot 1pts</td>
+                <tr ng-repeat="donation in donations">
+                  <td><b>CFH</b> </td>
+                  <td>{{donation.donor_name}}</td>
+                  <td>{{donation.crowdrise_donation_id}}</td>
+                  <td>
+                    {{donation.amount}}
+                  </td>
                 </tr>
               </tbody>
           </table>
       </div>
     </div>
+
+    <div ng-show="show==4" class='col s12 offset-m1 m10'>
+        <div class='card-panel white darken-3'>
+            <table class="responsive-table bordered striped">
+                <thead>
+                  <tr>
+                      <th>LOCATION</th>
+                      <th>WINS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="x in gameRank">
+                    <td>{{x.location}}</td>
+                    <td>{{x.wins}}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
   </div>
 
   <footer class="cfh-green">
