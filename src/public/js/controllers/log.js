@@ -26,11 +26,16 @@ angular.module('mean.system')
 
   $http.get('/api/donors')
   .then((res) => {
-    const donors = res.data.donors;
-    console.log($scope.donors);
+    const donors = res.data;
     for (let i=0; i < donors.length; i++) {
-      if (donors[i].donor_consent === true) {
-        $scope.donors.push(donors[i]);
+      // if (donors[i].donor_consent === true) {
+      //   $scope.donors.push(donors[i]);
+      // }
+      donorsDonations = donors[i].donations;
+      for (let i=0; i < donorsDonations.length; i++) {
+        if (donorsDonations[i].donor_consent === true) {
+          $scope.donors.push(donorsDonations[i])
+        }
       }
     }
     $scope.loadCarousel = true;

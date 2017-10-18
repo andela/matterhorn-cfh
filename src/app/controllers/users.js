@@ -272,14 +272,10 @@ export const donations = (req, res) => {
 };
 
 export const donors = (req, res) => {
-  const userId = req.decoded.user;
-  User.findOne({
-    _id: userId
-    
-  })
-    .exec((err, user) => {
-      res.status(200).send({ donors: user.donations });
-    });
+  User.find((err, users) => {
+    if (err) return console.error(err);
+    return res.status(200).send(users);
+  });
 };
 
 export const getGameData = (req, res) => {

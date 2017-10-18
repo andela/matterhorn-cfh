@@ -8,7 +8,32 @@ angular.module('mean.system')
     }
 
     $scope.seekConsent = () => {
-      console.log('Hello world');
+      return swal({
+        title: "Can we show your identity as a donor?",
+        input: "select",
+        inputOptions: ["Yes", "No"],
+        inputValidator: function (value) {
+          return new Promise(function (resolve, reject) {
+            if (parseInt(value, 10) > -1) {
+              resolve()
+            } else {
+              reject('Please give your consent')
+            }
+          })
+        },
+        showCancelButton: true,
+        confirmButtonColor: '#009688',
+        cancelButtonColor: '#D0021B',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Proceed to Donate'
+      })
+        .then((consentResponse) => {
+          if (consentResponse === '0') {
+            $window.localStorage.setItem('donorConsent', true);
+          }
+          $window.open("https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&redirect_to=http%3A%2F%2Fmatterhorn-cfh-staging.herokuapp.com%2F%23!%2F&stylesheet=&amounts=", "_self");
+        })
+        .catch(() => { })
     }
     $scope.checkAuth = () => {
       if ($cookies.token) {

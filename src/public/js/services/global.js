@@ -22,13 +22,17 @@ angular.module('mean.system')
     };
   }])
 
-  .factory('DonationService', ['$http', '$q', function($http, $q) {
+  .factory('DonationService', ['$window', '$http', '$q', function($window, $http, $q) {
     return {
       userDonated: function(donationObject) {
+        if ($window.localStorage.getItem('donorConsent') !== null) {
+          donationObject.donor_consent = $window.localStorage.getItem('donorConsent');
+        }
         return $q.all([
           $http.post('/donations', donationObject)
         ])
         .then(function(results) {
+          $window.localStorage.removeItem('donorConsent');
           console.log('userDonated success', results);
         });
       }
