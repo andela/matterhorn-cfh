@@ -5,6 +5,7 @@ angular.module('mean.system')
   $scope.gameRank = [];
   $scope.donations = [];
   $scope.donors = [];
+  $scope.leaderboardData = [];
 
   $scope.abandonGame = () => {
     console.log($location.path('/'))
@@ -66,4 +67,9 @@ angular.module('mean.system')
     const formattedStamp = new Date(getStamp);
     return formattedStamp.toUTCString({ hour12: true });
   }
+
+  $http.get('/api/leaderboard').then((response) => {
+    $scope.leaderboardData = (response.data);
+     });
+
 }]);

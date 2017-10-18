@@ -199,45 +199,46 @@ export const getRankData = (req, res) => {
     }));
 };
 
-export const saveGameRank = (req, res) => {
+export const saveGameRank = (req, res) =>
   User.findOne({
     name: req.body.username
   })
     .then((user) => {
-      const rank = new Rank();
-      rank.location = user.location;
-      Rank.find({
-        location: user.location
-      })
-        .then((region) => {
-          if (region.length > 0) {
-            Rank.update(
-              {
-                location: user.location
-              },
-              { $inc: { wins: 1 } },
-              () => {
-                res.json({
-                  message: 'Updated successfully!'
-                });
-              }
-            );
-          } else {
-            rank.save((error) => {
-              if (error) {
-                return error;
-              }
-              res.json(rank);
-            });
-          }
+      if (user) {
+        const rank = new Rank();
+        rank.location = user.location;
+        Rank.find({
+          location: user.location
         })
-        .catch(() => {
-          res.status(500).send({
-            message: 'Internal Server Error'
+          .then((region) => {
+            if (region.length > 0) {
+              Rank.update(
+                {
+                  location: user.location
+                },
+                { $inc: { wins: 1 } },
+                () => {
+                  res.json({
+                    message: 'Updated successfully!'
+                  });
+                }
+              );
+            } else {
+              rank.save((error) => {
+                if (error) {
+                  return error;
+                }
+                res.json(rank);
+              });
+            }
+          })
+          .catch(() => {
+            res.status(500).send({
+              message: 'Internal Server Error'
+            });
           });
-        });
+      }
     });
-};
 
 export const saveGameData = (req, res) => {
   const token = req.headers.authorization;

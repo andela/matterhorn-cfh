@@ -1,7 +1,6 @@
 angular.module('mean.system')
-  .controller('authController', ['$scope', '$cookies', '$location', '$http', '$window',
-    function ($scope, $cookies, $location, $http, $window) {
-
+  .controller('authController', ['$rootScope', '$scope', '$cookies', '$location', '$http', '$window',
+    function ($rootScope, $scope, $cookies, $location, $http, $window) {
       $scope.errorMessage = ''
       $scope.country = geoplugin_countryName();
 
@@ -32,9 +31,10 @@ angular.module('mean.system')
           .then(
           (response) => {
             $scope.errorMessage = ''
+            $window.localStorage.setItem('userId', response.data.user.id);
             $window.localStorage.setItem('token', response.data.token)
-            $location.path('/#!/')
-            $scope.loadNotifcations();
+            $location.path('/app')
+            $rootScope.$broadcast('newUser');
           },
           (error) => {
             if (error.status === 409) {

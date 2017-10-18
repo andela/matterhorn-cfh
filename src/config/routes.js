@@ -25,8 +25,6 @@ import {
   getGameData,
   isLoggedIn,
   isAuthenticated,
-  saveLeaderData,
-  getLeaderBoard,
   saveGameRank,
   getRankData
 } from '../app/controllers/users';
@@ -48,10 +46,12 @@ import {
 
 import app from '../app';
 
+import { getLeaderBoard } from '../app/controllers/leaderboard';
+
 export default () => {
   // leaderboard Route
-  app.post('/api/leaderboard', isAuthenticated, saveLeaderData);
   app.get('/api/leaderboard', isAuthenticated, getLeaderBoard);
+
   // User Routes
   app.get('/signin', signin);
   app.get('/signup', signup);
@@ -85,7 +85,7 @@ export default () => {
   // Donation Routes
   app.post('/donations', isAuthenticated, addDonation);
   app.get('/api/donations', isAuthenticated, donations);
-  app.get('/api/donors', isAuthenticated, donors);
+  app.get('/api/donors', donors);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',
