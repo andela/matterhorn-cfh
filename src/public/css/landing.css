@@ -76,7 +76,11 @@ a:hover, .waves-light:hover{
 .mt-3 {
   margin-top: 3em; }
 
-@media (max-width: 767px) {
+  .mb-3 {
+    margin-bottom: 3em;
+   }
+  
+    @media (max-width: 767px) {
   .mt-1 {
     margin-top: 1em; } 
     .mb-1{
@@ -328,4 +332,9 @@ footer {
 
   .side-nav li>a:hover {
     color: rgba(0,0,0,0.87) !important;
+  }
+
+  .carousel .carousel-item{
+    width: 300px;
+    height: 300px;
   }
