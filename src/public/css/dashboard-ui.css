@@ -80,3 +80,9 @@ table.font-frecke-face.responsive-table.bordered.striped {
 
 .pagination li a {
   font-size: 1.5rem;}
+
+.dashboard-footer {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+  }
