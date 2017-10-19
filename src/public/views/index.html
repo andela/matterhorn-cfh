@@ -5,13 +5,13 @@
       <div class="container">
         <div class="nav-wrapper" ng-controller="IndexController">
           <a href="#" class="left navbar-brand font-luminari">cfh</a>
-
+          
           <div ng-controller="GameController" class="landing-notification">
             <a href="" class='dropdown-button' data-activates='dropdown1'  ng-show="isUser()">
               <i class="material-icons">notifications</i>
               <span ng-hide="notifications.length === 0">{{notifications.length}}</span>
             </a>
-
+            
             <!-- Dropdown Structure -->
             <ul id='dropdown1' class='dropdown-content'>
               <li ng-repeat="item in notifications">
@@ -24,7 +24,7 @@
               </li>
             </ul>
           </div>
-
+          
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/#!/">Home</a></li>
             <li><a ng-click="scrollTo('main-how-play')">How to play</a></li>
@@ -48,9 +48,9 @@
       </div>
     </nav>
   </header>
-
+  
   <!-- Fixed Logo & Menu Bar End -->
-
+  
   <div id="main-desc">
     <div class="container">
       <div class="main-desc-text">
@@ -68,7 +68,7 @@
       </div>
     </div>
   </div>
-
+  
   <div id="main-cfh-definition">
     <img src="/img/small-card.png" class="small-card one" />
     <img src="/img/small-card.png" class="small-card two" />
@@ -79,7 +79,7 @@
       <p class="text-justify">Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.</p>
     </div>
   </div>
-
+  
   <div id="main-how-play">
     <div class="container">
       <h2 class="font-freckle-face mt-0">How to play</h2>
@@ -90,21 +90,21 @@
             <p>Each player begins with, and will always have, 10 white answer cards.</p>
           </div>
         </div>
-
+        
         <div class="col s6 l3 m6 text-center">
           <div class="cfh-htp-50">
             <h4>2</h4>
             <p>For each round, one player is randomly chosen as the Card Czar.</p>
           </div>
         </div>
-
+        
         <div class="col s6 l3 mt-1 m6 text-center">
           <div class="cfh-htp-75">
             <h4>3</h4>
             <p>Everyone else answers the black question card by clicking on the answer card they want to use.</p>
           </div>
         </div>
-
+        
         <div class="col s6 l3 mt-1 m6 text-center">
           <div class="cfh-htp-100">
             <h4>4</h4>
@@ -117,7 +117,7 @@
       </div>
     </div>
   </div>
-
+  
   <div id="main-donation">
     <div class="container">
       <div class="row">
@@ -153,15 +153,11 @@
       </div>
     </div>
   </div>
-
-  <div id="main-avatars-warning">
-    <div class="container">
-      <img src="/img/avatars.png" />
-      <p class="text-center font-arial-rounded red-text mt-sm-5">Warning! This game contains offensive, profane, explicit content created by Cards Against Humanity and provided here,
-        uncensored and complete, in digital form. </p>
-      <p class="text-center font-arial-rounded red-text">
-        Human Resources made us say that.
-      </p>
+  
+  <div class="container mt-3 mb-3">
+    <p class="black-text text-center">Redesigned by
+      <strong>Team Matterhorn:</strong> Temitayo Fadojutimi, Temitope Joloko, Sofiat Abioye, Emmanuel Ogunbo, Abiona Ekundayo,
+      Nasirudeen Abdulrasaq</p>
     </div>
   </div>
   <div class='row' ng-show="donors.length > 0" ng-controller="LogController">
@@ -203,19 +199,31 @@
             <div class="col s6">
               <img src="/img/social/twitter.png" />
             </div>
-            <div class="col s6">
-              <img src="/img/social/facebook.png" />
+            <div class="col s4 text-right main-social">
+              <div class="row">
+                <div class="col s3">
+                  <img src="/img/social/mail.png" />
+                </div>
+                <div class="col s3">
+                  <img src="/img/social/gmail.png" />
+                </div>
+                <div class="col s3">
+                  <img src="/img/social/twitter.png" />
+                </div>
+                <div class="col s3">
+                  <img src="/img/social/facebook.png" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </footer>
     </div>
-  </footer>
-</div>
 
 
 <script>
   $(document).ready(function () {
+    $('.dropdown-button').dropdown();
     setTimeout(function(){
       $('.carousel').carousel();
       autoplay()
