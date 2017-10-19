@@ -51,11 +51,13 @@
     <!-- Start of signup with email option -->
     <div class="col s12 m8 l9 sidebar-content">
       <div class="col m10 offset-m1 s12">
-        <div class="welcome-text center-align">Desperately trying to do some good?</div>
-        <div class="welcome-text2 center-align">Just Sign Up!</div>
+        <div class="welcome-text center-align" ng-hide="displayIntro">Desperately trying to do some good?</div>
+        <div class="welcome-text2 center-align" ng-hide="displayIntro">Just Sign Up!</div>
         <div class="row" ng-controller="authController">
           <form class="col s12" class="signup form-horizontal">
-            <p class="error-message red-text">{{errorMessage}}</p>
+            <p class="error-message red-text center">
+              <h5 class="red-text">{{errorMessage}}</h5>
+            </p>
             <div class="row">
               <div class="input-field col s12">
                 <i class="material-icons md-18 prefix">account_circle</i>

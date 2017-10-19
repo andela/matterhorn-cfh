@@ -334,7 +334,7 @@ footer {
     color: rgba(0,0,0,0.87) !important;
   }
 
-  .carousel .carousel-item{
-    width: 300px;
-    height: 300px;
-  }
+.donor-carousel {
+  background-color: #009688 !important;
+  width: 300px !important;
+}
