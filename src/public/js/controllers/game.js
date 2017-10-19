@@ -575,5 +575,4 @@ angular.module('mean.system')
     $scope.goHome = () => {
       $location.path('/');
     }
-    
   }]);
