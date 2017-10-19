@@ -165,7 +165,7 @@ export default () => {
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
-        google: profile.id
+        $or: [{ google: profile.id }, { email: profile.emails[0].value }]
       }, (err, user) => {
         if (err) {
           return done(err);

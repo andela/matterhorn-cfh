@@ -4,6 +4,8 @@ import _ from 'underscore';
 import { allQuestionsForGame } from '../../app/controllers/questions';
 import { allAnswersForGame } from '../../app/controllers/answers';
 
+import { create as createLeaderBoard } from '../../app/controllers/leaderboard';
+
 const guestNames = [
   'Disco Potato',
   'Silver Blister',
@@ -291,6 +293,15 @@ class Game {
   stateEndGame(winner) {
     this.state = 'game ended';
     this.gameWinner = winner;
+
+    const gameWinnerId =
+    this.players[winner].userID; // winner ID
+
+    const gamewinnerName =
+    this.players[winner].username; // winner name
+    console.log(gameWinnerId, '-----------', gamewinnerName, '================');
+    createLeaderBoard({ gameWinnerId, gamewinnerName });
+
     this.sendUpdate();
   }
 

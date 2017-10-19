@@ -199,45 +199,46 @@ export const getRankData = (req, res) => {
     }));
 };
 
-export const saveGameRank = (req, res) => {
+export const saveGameRank = (req, res) =>
   User.findOne({
     name: req.body.username
   })
     .then((user) => {
-      const rank = new Rank();
-      rank.location = user.location;
-      Rank.find({
-        location: user.location
-      })
-        .then((region) => {
-          if (region.length > 0) {
-            Rank.update(
-              {
-                location: user.location
-              },
-              { $inc: { wins: 1 } },
-              () => {
-                res.json({
-                  message: 'Updated successfully!'
-                });
-              }
-            );
-          } else {
-            rank.save((error) => {
-              if (error) {
-                return error;
-              }
-              res.json(rank);
-            });
-          }
+      if (user) {
+        const rank = new Rank();
+        rank.location = user.location;
+        Rank.find({
+          location: user.location
         })
-        .catch(() => {
-          res.status(500).send({
-            message: 'Internal Server Error'
+          .then((region) => {
+            if (region.length > 0) {
+              Rank.update(
+                {
+                  location: user.location
+                },
+                { $inc: { wins: 1 } },
+                () => {
+                  res.json({
+                    message: 'Updated successfully!'
+                  });
+                }
+              );
+            } else {
+              rank.save((error) => {
+                if (error) {
+                  return error;
+                }
+                res.json(rank);
+              });
+            }
+          })
+          .catch(() => {
+            res.status(500).send({
+              message: 'Internal Server Error'
+            });
           });
-        });
+      }
     });
-};
 
 export const saveGameData = (req, res) => {
   const token = req.headers.authorization;
@@ -269,6 +270,13 @@ export const donations = (req, res) => {
       // Confirm that this object hasn't already been entered
       res.status(200).send({ donations: user.donations });
     });
+};
+
+export const donors = (req, res) => {
+  User.find((err, users) => {
+    if (err) return console.error(err);
+    return res.status(200).send(users);
+  });
 };
 
 export const getGameData = (req, res) => {

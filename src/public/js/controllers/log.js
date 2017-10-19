@@ -4,6 +4,8 @@ angular.module('mean.system')
   $scope.games = [];
   $scope.gameRank = [];
   $scope.donations = [];
+  $scope.donors = [];
+  $scope.leaderboardData = [];
 
   $scope.abandonGame = () => {
     console.log($location.path('/'))
@@ -21,6 +23,23 @@ angular.module('mean.system')
       $scope.donations.push(donation[i]);
     }
     console.log($scope.donations);
+  });
+
+  $http.get('/api/donors')
+  .then((res) => {
+    const donors = res.data;
+    for (let i=0; i < donors.length; i++) {
+      // if (donors[i].donor_consent === true) {
+      //   $scope.donors.push(donors[i]);
+      // }
+      donorsDonations = donors[i].donations;
+      for (let i=0; i < donorsDonations.length; i++) {
+        if (donorsDonations[i].donor_consent === true) {
+          $scope.donors.push(donorsDonations[i])
+        }
+      }
+    }
+    $scope.loadCarousel = true;
   });
 
 
@@ -48,4 +67,9 @@ angular.module('mean.system')
     const formattedStamp = new Date(getStamp);
     return formattedStamp.toUTCString({ hour12: true });
   }
+
+  $http.get('/api/leaderboard').then((response) => {
+    $scope.leaderboardData = (response.data);
+     });
+
 }]);
