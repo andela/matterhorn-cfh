@@ -77,10 +77,15 @@ angular.module('mean.system')
       setChatNotification();
     });
     socket.on('maxPlayerReached', () => {
-      const maxModal = $('#maxPlayerModal');
-      setTimeout(() => {
-        maxModal.modal('open');
-      }, 300);
+      swal({
+        title: 'Hey! No more players needed for this game',
+        showCancelButton: false,
+        allowOutsideClick: false,
+        confirmButtonColor: '#009688',
+        confirmButtonText: 'Click to start your own game'
+      }).then(function () {
+        $window.location.href = '/';
+      })
     });
 
     socket.on('prepareGame', function (data) {
