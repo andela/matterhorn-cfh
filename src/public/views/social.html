@@ -49,12 +49,10 @@
     <!-- Start of signup with email option -->
     <div class="col s12 m8 l9 sidebar-content">
       <div class="col m10 offset-m1 s12">
-        <div class="welcome-text center-align">Desperately trying to do some good?</div>
-        <div class="welcome-text2 center-align">Just Sign Up!</div>
         <div class="row" ng-controller="authController">
           <form class="col s12" class="signup form-horizontal">
             <p class="error-message red-text center">
-              <h5 style="color: red">{{errorMessage}}</h5>
+              <h5 class="red-text center">{{socialMessage}}</h5>
             </p>
             <div class="row">
               <div class="input-field col s12">
@@ -63,19 +61,6 @@
                 <label for="name">Username</label>
               </div>
             </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <i class="material-icons prefix">email</i>
-                <input id="email" type="email" class="validate" ng-model="email" name="email" required novalidate>
-                <label for="email">Email</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <i class="material-icons prefix">vpn_key</i>
-                <input id="password" type="password" class="validate" ng-model="password" name="password" required novalidate>
-                <label for="password">Password</label>
-              </div>
               <div class="row">
                 <label>Choose an avatar:</label>
                 <div id="contain-avatars">
