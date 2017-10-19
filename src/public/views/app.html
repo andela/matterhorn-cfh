@@ -53,17 +53,18 @@
         <br>
       </div>
       <div class="col l2 m2 s12 social-bar-container">
+          <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInRight', leave:'animated fadeOut'}" class="notification-player">{{game.notification}}</div>
         <div class="game-actions-container">
           <div id="leave-game" class="abandon-game-btn center-align" ng-click="abandonGame()">
             <p>Leave &nbsp;
               <img src='../img/exit.svg' style="width: 30px;" alt=''>
             </p>
           </div>
-          <div id="play-game" class='play-game-btn center-align' ng-click="showRegionModal()" ng-show="game.state === 'awaiting players'">
+          <div id="play-game" class='play-game-btn center-align' ng-click="startGame()" ng-show="game.state === 'awaiting players'">
             <p>Play &nbsp;&nbsp;&nbsp;
               <img src='../img/play.svg' style="width: 30px;" alt=''>
             </p>
-          </div>
+          </div>   
         </div>
       </div>
     </div>

@@ -1,30 +1,30 @@
 <div class='row'>
-  <div  class="col offset-m2 m8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
+  <div class="col offset-m2 m8 cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
     <div class='row'>
       <div class="cards" class='hand'>
 
         <span ng-show="winnerPicked()"></span>
 
         <div ng-style="{'cursor':'pointer'}" class="col l2 m2 s12 game-card" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
-        ng-repeat="card in game.players[game.playerIndex].hand track by $index" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
-            <span ng-bind-html-unsafe="card.text"></span>
-            <span id='selection-number' ng-show="showFirst(card)"> 1 </span>
-            <span id='selection-number' ng-show="showSecond(card)"> 2 </span>
+          ng-repeat="card in game.players[game.playerIndex].hand track by $index" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
+          <span ng-bind-html-unsafe="card.text"></span>
+          <span id='selection-number' ng-show="showFirst(card)"> 1 </span>
+          <span id='selection-number' ng-show="showSecond(card)"> 2 </span>
         </div>
 
         <span ng-repeat="answer in game.table">
             <div class="game-card col l2 m2 s12" ng-style="pointerCursorStyle()" id='table' ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
             ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
                 <span ng-bind-html-unsafe="card.text"></span>
-                <span id='selection-number' ng-show="firstAnswer($index)"> 1 </span>
-                <span id='selection-number' ng-show="secondAnswer($index)"> 2 </span>
-            </div>
-        </span>
-
+        <span id='selection-number' ng-show="firstAnswer($index)"> 1 </span>
+        <span id='selection-number' ng-show="secondAnswer($index)"> 2 </span>
       </div>
+      </span>
+
     </div>
   </div>
-  </span>
+</div>
+</span>
 
 </div>
 </div>
@@ -48,9 +48,10 @@
     <div id="inner-info-exit">
       <div class="game-end-answer-text center-align" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
         <h2>What would you like to do now?</h2>
-        You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely crown on your avatar's head.
+        You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely
+        crown on your avatar's head.
         <div>
-            Why not invite your friends from social media?
+          Why not invite your friends from social media?
         </div><br/>
         <div class="row">
           <span class="share-button">
@@ -68,16 +69,16 @@
         <h2>What would you like to do now?</h2>
         Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
         <div>
-            Why not invite your friends from social media?
+          Why not invite your friends from social media?
         </div><br/>
         <div class="row">
-            <span class="share-button">
+          <span class="share-button">
                 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoo.gl%2FdYZ8uM" class="waves-effect waves-light btn-floating blue-darken-4 social facebook"> <i class="fa fa-facebook fa-face"></i></a>
               </span>
-              <span class="share-button">
+          <span class="share-button">
                 <a class="waves-effect waves-light btn-floating blue social twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgoo.gl%2FdYZ8uM&text=Find%20out%20what%20a%20GOOD%20person%20you%20are!%20Join%20me%20and%20let's%20play%20Cards%20for%20Humanity"><i class="fa fa-twitter fa-tweet"></i> </a>
               </span>
-              <span class="share-button">
+          <span class="share-button">
                 <a target="_blank" class="waves-effect waves-light btn-floating red social google" href="https://plus.google.com/share?url=https%3A%2F%2Fgoo.gl%2FdYZ8uM"> <i class="fa fa-google fa-goog"></i></a>
               </span>
         </div>
@@ -86,7 +87,7 @@
     <div class='row'>
       <div class='col m4 s12'>
         <div class="center-align join-block" ng-click="game.joinGame('joinNewGame')">
-            <a href='/#!/app' class="waves-effect waves-light btn cfh-green">Join a New Game</a>
+          <a href='/#!/app' class="waves-effect waves-light btn cfh-green">Join a New Game</a>
         </div>
       </div>
       <div class='col m4 s12'>
@@ -95,12 +96,12 @@
         </div>
       </div>
       <div id="charity-widget-container" class="col m4 s12">
-          <!-- This is real -->
-          <a href="http://www.crowdrise.com" id="crowdriseStaticLink-fundraiser-121142" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a>
-          <script type="text/javascript" src="https://www.crowdrise.com/widgets/donate/fundraiser/121142/?callback=userDonationCb"></script>
-          <!-- This is for testing -->
-          <!-- <a href="http://www.crowdrise.com" id="crowdriseStaticLink-project-36715" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a> -->
-          <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
+        <!-- This is real -->
+        <a href="http://www.crowdrise.com" id="crowdriseStaticLink-fundraiser-121142" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a>
+        <script type="text/javascript" src="https://www.crowdrise.com/widgets/donate/fundraiser/121142/?callback=userDonationCb"></script>
+        <!-- This is for testing -->
+        <!-- <a href="http://www.crowdrise.com" id="crowdriseStaticLink-project-36715" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a> -->
+        <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
       </div>
     </div>
   </div>
@@ -115,11 +116,11 @@
       <div id='charity-fact-tagline'>Did you know?</div>
 
       <div id='charity-fact'>
-         {{ makeAWishFact }}
+        {{ makeAWishFact }}
       </div>
 
       <div id='charity-logo-container'>
-        <img src='/img/make-a-wish-logo.png'/>
+        <img src='/img/make-a-wish-logo.png' />
       </div>
 
     </div>
@@ -133,3 +134,21 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Structure for maximum player -->
+<div id="maxPlayerModal" class="max-player modal open" role="dialog">
+  <div class="modal-content">
+    <p>Hey! No more players needed for this game.</p>
+  </div>
+  <div class="modal-footer">
+    <a ng-click="goHome()" class="max-link modal-close">Would you like to start your own game?</a>
+  </div>
+</div>
+
+<script>
+  setTimeout(function() {
+    $('.modal').modal({
+          dismissible: false
+        });
+  }, 200);
+</script>

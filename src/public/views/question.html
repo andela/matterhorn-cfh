@@ -2,8 +2,6 @@
   <div class="cards longBlacks">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
-    <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
-
     <div class="row" id="startGame" ng-show="game.state === 'awaiting players'">
       <div class="col m12 center-align finding-players">Finding Players</div>
       <div class="col m4" id="player-count-container">
