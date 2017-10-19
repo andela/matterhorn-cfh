@@ -1,11 +1,43 @@
 angular.module('mean.system')
 .controller('LogController', ['$scope', 'Global', 'game', '$timeout', '$http', '$window', '$location','$dialog', function ($scope, Global, game, $timeout, $http, $window, $location, $dialog) {
   $scope.show = 1;
+  $scope.currentPage =0;
+  $scope.dataLimit = 3;
+  $scope.pageSize = 3;
+  $scope.pageStart = 0;
+  $scope.pageEnd = 3;
   $scope.games = [];
+  $scope.mags = [];
   $scope.gameRank = [];
   $scope.donations = [];
   $scope.donors = [];
+  $scope.paginationCounters = [];
   $scope.leaderboardData = [];
+
+  $scope.showNextItems = () => {
+    if ($scope.pageEnd < $scope.games.length) {
+      $scope.currentPage === $scope.pageStart ? $scope.currentPage +=2 : $scope.currentPage +=1
+      $scope.pageStart = ($scope.currentPage - 1) * $scope.dataLimit;
+      $scope.pageEnd = ($scope.currentPage * $scope.dataLimit);
+      $scope.mags = $scope.games.slice($scope.pageStart, $scope.pageEnd);
+    }
+  }
+
+  $scope.showPrevItems = () => {
+    if ($scope.pageStart > 1) {
+      $scope.currentPage === $scope.pageStart ? $scope.currentPage -=2 : $scope.currentPage -=1
+      $scope.pageStart = ($scope.currentPage - 1) * $scope.dataLimit;
+      $scope.pageEnd = $scope.currentPage * $scope.dataLimit;
+      $scope.mags = $scope.games.slice($scope.pageStart, $scope.pageEnd);
+    }
+  }
+
+  $scope.pageNavigation = (numCounter) => {
+    $scope.pageStart = (numCounter - 1) * $scope.dataLimit;
+    $scope.pageEnd = numCounter * $scope.dataLimit;
+    $scope.mags = $scope.games.slice($scope.pageStart, $scope.pageEnd);
+    $scope.currentPage = numCounter;
+  }
 
   $scope.abandonGame = () => {
     console.log($location.path('/'))
@@ -42,14 +74,19 @@ angular.module('mean.system')
     $scope.loadCarousel = true;
   });
 
-
+  let pageNumber = 0
   $http.get('/api/games/logs')
   .then((res) => {
     for (let i = 0; i < res.data.length; i += 1) {
       $scope.games.push(res.data[i]);
+      if (i % 3 === 0) {
+        pageNumber += 1;
+        $scope.paginationCounters.push(pageNumber);
+      }
     }
+    $scope.mags = $scope.games.slice($scope.pageStart, $scope.pageEnd);
   });
-  
+
   $http.get('/api/leaderboard')
   .success((data) => {
     $scope.leaderBoard = data;

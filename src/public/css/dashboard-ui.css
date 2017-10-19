@@ -46,3 +46,21 @@
   font-family: "Helvetica";
   font-size: 18px;
   color: rgba(0, 0, 0, 0.54); }
+
+.dashboard .material-icons {
+  color: #000 !important;
+  margin-top: 0 !important;
+}
+
+.dashboard .pagination li a:hover{
+  color: #000 !important;
+  font-weight: bold;
+}
+
+.dashboard .pagination li.active {
+  background-color: #17afa0 !important;
+}
+
+.dashboard .pagination li a.active {
+  color: #fff !important;
+}
