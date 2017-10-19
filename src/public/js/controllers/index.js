@@ -88,9 +88,9 @@ angular.module('mean.system')
       $window.location.href = '/';
     }
 
-    $scope.avatars = [];
-    AvatarService.getAvatars()
-      .then(function (data) {
-        $scope.avatars = data;
-      });
+    // $scope.avatars = [];
+    // AvatarService.getAvatars()
+    //   .then(function (data) {
+    //     $scope.avatars = data;
+    //   });
   }]);

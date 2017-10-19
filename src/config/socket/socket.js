@@ -106,11 +106,13 @@ module.exports = (io) => {
         // socket.broadcast.to('game').emit('message', 'nice game');
         game.sendNotification(`${player.username} has joined the game!`);
         if (game.players.length >= game.playerMaxLimit) {
+          game.sendNotification('Players complete! Game starting now...');
           gamesNeedingPlayers.shift();
           game.prepareGame();
         }
       } else {
         // TODO: Send an error message back to this user saying the game has already started
+        socketGame.emit('maxPlayerReached');
       }
     } else {
       // Put players into the general queue
