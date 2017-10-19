@@ -84,7 +84,7 @@ angular.module('mean.system')
         confirmButtonColor: '#009688',
         confirmButtonText: 'Click to start your own game'
       }).then(function () {
-        $window.location.href = '/';
+        $window.location.href = '/play?custom';
       })
     });
 
