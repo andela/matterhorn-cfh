@@ -48,7 +48,11 @@ angular.module('mean', ['ngCookies', 'firebase', 'ngResource', 'ui.bootstrap', '
     };
   }]).run(['DonationService', function (DonationService) {
     window.userDonationCb = function (donationObject) {
+      if (window.localStorage.getItem('donorConsent') !== null ) {
+        donationObject.donor_consent = window.localStorage.getItem('donorConsent');
+      }
       DonationService.userDonated(donationObject);
+      window.localStorage.removeItem('donorConsent');
     };
   }]);
 
