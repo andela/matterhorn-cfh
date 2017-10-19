@@ -10,6 +10,7 @@
   position: relative;
   overflow: hidden;
   display: flex;
+  margin-bottom: 50px;
 }
 
 .dashboard-header .main-desc-text {
@@ -64,3 +65,18 @@
 .dashboard .pagination li a.active {
   color: #fff !important;
 }
+
+table.font-frecke-face.responsive-table.bordered.striped {
+  margin-top: 50px;
+}
+
+.row.card-panel.white.lighten-2 {
+  margin-bottom: 50px;
+}
+
+.pagination .disabled .material-icons{
+  color: #999 !important;
+}
+
+.pagination li a {
+  font-size: 1.5rem;}
