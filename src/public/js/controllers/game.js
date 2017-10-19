@@ -42,18 +42,11 @@ angular.module('mean.system')
       })
         .then((regionId) => {
           if (regionId) {
-            if (game.players.length < game.playerMinLimit) {
-              return swal({
-                title: 'You cannot start a game now!',
-                text: `You need ${game.playerMinLimit - game.players.length} more players`
-              });
-            } else {
-              $window.sessionStorage.setItem('userRegion', regionId);
-              $scope.regionName = regions(regionId);
-              $scope.showRegionName = true;
-              game.startGame();
-            }
-          }
+            $window.sessionStorage.setItem('userRegion', regionId);
+            $scope.regionName = regions(regionId);
+            $scope.showRegionName = true;
+            game.startGame();
+            } 
         })
         .catch(() => { })
     };
@@ -240,7 +233,7 @@ angular.module('mean.system')
         })
           .then((willPlay) => {
             if (willPlay) {
-              game.startGame();
+              $scope.showRegionModal();
             }
           })
           .catch(() => swal("Game was not started"))
