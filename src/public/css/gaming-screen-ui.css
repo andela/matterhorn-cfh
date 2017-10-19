@@ -486,3 +486,15 @@ input[type=search]:not(.browser-default) {
 .card-text {
   font-size: 22px;
 }
+.max-player {
+width: 50% !important;
+margin-bottom: 35% !important;
+border-radius: 10px !important;
+margin-left: 300px !important;
+margin-top: 200px !important;
+font-size: 22px;
+background: rgba(31, 149, 156, 1);
+}
+.max-link:hover{
+ color: rgba(31, 149, 156, 1) !important;
+}

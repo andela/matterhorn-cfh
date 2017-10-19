@@ -299,7 +299,6 @@ class Game {
 
     const gamewinnerName =
     this.players[winner].username; // winner name
-    console.log(gameWinnerId, '-----------', gamewinnerName, '================');
     createLeaderBoard({ gameWinnerId, gamewinnerName });
 
     this.sendUpdate();
