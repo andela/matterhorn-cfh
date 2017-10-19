@@ -320,7 +320,8 @@ footer {
   align-items: center; }
 
 .main-social img {
-  margin-top: 1em; }
+  height: 40px;
+ }
 
 .footer-red {
   min-height: 16px; }
