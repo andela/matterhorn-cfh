@@ -81,11 +81,17 @@
     </div>
 
     <div id="invite-friends">
-      <div class="col s12 search row z-depth-3">
-        <input id="search" type="search" autocomplete="off" placeholder="Search for users by usernames...." ng-model="searchTerm" ng-change="searchusers()"
-        />
+      <div class="col s12 search z-depth-3">
+        <div class="col s10">
+          <input id="search" type="search" autocomplete="off" placeholder="Search for users by usernames...." ng-model="searchTerm"
+            ng-change="searchusers()" />
+        </div>
+        <div class=" search-icon col s2 center-align">
+          <i class="material-icons">search</i>
+        </div>
       </div>
-      <h5 class="center-align" ng-hide="searchResults.length > 0">No users found</h5>
+
+      <h5 class="center-align" ng-show="searchResults.length === 0">No users found</h5>
       <div class="row" ng-show="searchResults.length > 0">
         <div ng-repeat="x in searchResults">
           <div class="row">
@@ -101,6 +107,9 @@
               <a class="col s5 m5 l5 waves-effect waves-light btn action-btn" ng-click="sendNotification(x)" ng-hide="inviteList.includes(x._id)">
                 INVITE
               </a>
+            </div>
+            <div class="col s12 m6 l4 grey-text" ng-show="inviteList.includes(x._id)">
+              <h6>INVITE SENT</h6>
             </div>
           </div>
           <div class="divider"></div>
@@ -120,14 +129,21 @@
         <div class="col s12 list">
           <ul class="collection" ng-show="friendsList.length > 0">
             <li class="collection-item" ng-repeat="x in friendsList">
+              <div class="user-initials">
+                <h6>
+                  {{ getInitials(x.friendName) }}
+                </h6>
+              </div>
               <div>
-                {{x.friendName}}
+                <span>
+                  {{x.friendName}}
+                </span>
               </div>
             </li>
           </ul>
-          <h6 class="center-align" ng-show="friendsList.length === 0">
+          <h5 class="center-align" ng-show="friendsList.length === 0">
             You have not added any friends
-          </h6>
+          </h5>
         </div>
       </div>
     </div>

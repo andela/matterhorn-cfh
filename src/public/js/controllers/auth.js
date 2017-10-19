@@ -1,9 +1,21 @@
 angular.module('mean.system')
-  .controller('authController', ['$rootScope', '$scope', '$cookies', '$location', '$http', '$window',
-    function ($rootScope, $scope, $cookies, $location, $http, $window) {
+  .controller('authController', ['$rootScope', '$scope', '$cookies', '$location', '$http', '$window', 'AvatarService',
+    function ($rootScope, $scope, $cookies, $location, $http, $window, AvatarService) {
       $scope.errorMessage = ''
+      $scope.avatar = '';
+      
       $scope.country = geoplugin_countryName();
 
+      $scope.myAvatar = (avatar) => {
+        $scope.avatar = avatar;
+      }
+      
+      $scope.avatars = [];
+      AvatarService.getAvatars()
+      .then(function (data) {
+        $scope.avatars = data;
+      });
+      
       $scope.signUp = () => {
         let payload;
 
@@ -16,7 +28,8 @@ angular.module('mean.system')
             password: $scope.password,
             location: $scope.country,
             [mainId.provider]: mainId._id,
-            provider: $cookies.provider
+            provider: $cookies.provider,
+            avatar: $scope.avatar
           }
         } else {
           payload = {
@@ -24,6 +37,7 @@ angular.module('mean.system')
             email: $scope.email,
             password: $scope.password,
             location: $scope.country,
+            avatar: $scope.avatar
           }
         }
 
