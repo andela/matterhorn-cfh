@@ -53,6 +53,7 @@
         <br>
       </div>
       <div class="col l2 m2 s12 social-bar-container">
+          <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInRight', leave:'animated fadeOut'}" class="notification-player">{{game.notification}}</div>
         <div class="game-actions-container">
           <div id="leave-game" class="abandon-game-btn center-align" ng-click="abandonGame()">
             <p>Leave &nbsp;
@@ -63,7 +64,7 @@
             <p>Play &nbsp;&nbsp;&nbsp;
               <img src='../img/play.svg' style="width: 30px;" alt=''>
             </p>
-          </div>
+          </div>   
         </div>
       </div>
     </div>

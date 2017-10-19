@@ -1467,4 +1467,17 @@ i.fa.fa-face {
 i.fa.fa-goog {
   background-color:  #dd4b39;
 }
+
+.notification-player {
+  position: fixed;
+  top: 300px;
+  bottom: 0;
+  right: 20px;
+  text-overflow: hidden;
+  height: 50px;
+  border-radius: 2px;
+  padding: 10px;
+  background: #fff;
+  color: #009688;
+}
 /**** End of authentication screen ****/
