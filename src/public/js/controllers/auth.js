@@ -2,7 +2,15 @@ angular.module('mean.system')
   .controller('authController', ['$rootScope', '$scope', '$cookies', '$location', '$http', '$window',
     function ($rootScope, $scope, $cookies, $location, $http, $window) {
       $scope.errorMessage = ''
+      $scope.displayIntro = true;
+
       $scope.country = geoplugin_countryName();
+
+      if ($cookies.provider) {
+        $scope.displayIntro = false;
+        $scope.errorMessage = "There is no CFH account linked to this account." + " "
+        + "Are you trying to create a new CFH account?"
+      }
 
       $scope.signUp = () => {
         let payload;
