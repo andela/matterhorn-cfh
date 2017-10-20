@@ -12,15 +12,6 @@ import config from './config';
 
 const User = mongoose.model('User');
 
-const setUser = (user, provider, profile, done, err) => {
-  user = new User();
-  user.newUser = true;
-  user.profileId = profile.id;
-  user.email = profile.emails[0].value;
-  user.provider = provider;
-  done(err, user);
-};
-
 dotenv.load();
 
 export default () => {
@@ -82,18 +73,21 @@ export default () => {
       consumerKey: process.env.CONSUMER_KEY || config.twitter.clientID,
       consumerSecret:
       process.env.CONSUMER_SECRET || config.twitter.clientSecret,
-      callbackURL: config.twitter.callbackURL,
-      profileFields: ['email'],
+      callbackURL: config.twitter.callbackURL
     },
     ((token, tokenSecret, profile, done) => {
       User.findOne({
-        $or: [{ twitter: profile.id }, { email: profile.emails[0].value }]
+        twitter: profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          setUser(user, 'twitter', profile, done, err);
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'twitter';
+          done(err, user);
         } else {
           user.profileId = profile.id;
           user.provider = 'twitter';
@@ -109,18 +103,21 @@ export default () => {
       clientID: process.env.FB_CLIENT_ID || config.facebook.clientID,
       clientSecret: process.env.FB_CLIENT_SECRET
       || config.facebook.clientSecret,
-      callbackURL: config.facebook.callbackURL,
-      profileFields: ['email'],
+      callbackURL: config.facebook.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
-        $or: [{ facebook: profile.id }, { email: profile.emails[0].value }]
+        facebook: profile.id
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          setUser(user, 'facebook', profile, done, err);
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'facebook';
+          done(err, user);
         } else {
           user.facebook = null;
           return done(err, user);
@@ -135,19 +132,22 @@ export default () => {
       clientID: process.env.GITHUB_CLIENT_ID || config.github.clientID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET ||
       config.github.clientSecret,
-      callbackURL: config.github.callbackURL,
-      scope: ['email'],
+      callbackURL: config.github.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
       const githubId = profile.id.toString();
       User.findOne({
-        $or: [{ github: githubId }, { email: profile.emails[0].value }]
+        github: githubId
       }, (err, user) => {
         if (err) {
           return done(err);
         }
         if (!user) {
-          setUser(user, 'github', profile, done, err);
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'github';
+          done(err, user);
         } else {
           return done(err, user);
         }
@@ -161,8 +161,7 @@ export default () => {
       clientID: process.env.APP_ID || config.google.clientID,
       clientSecret:
       process.env.APP_SECRET || config.google.clientSecret,
-      callbackURL: config.google.callbackURL,
-      profileFields: ['email'],
+      callbackURL: config.google.callbackURL
     },
     ((accessToken, refreshToken, profile, done) => {
       User.findOne({
@@ -172,7 +171,11 @@ export default () => {
           return done(err);
         }
         if (!user) {
-          setUser(user, 'google', profile, done, err);
+          user = new User();
+          user.newUser = true;
+          user.profileId = profile.id;
+          user.provider = 'google';
+          done(err, user);
         } else {
           return done(err, user);
         }
