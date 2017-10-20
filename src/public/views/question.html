@@ -93,7 +93,7 @@
       <div class="row" ng-show="searchResults.length > 0">
         <div ng-repeat="x in searchResults">
           <div class="row">
-            <div class="col s12 m6 l8">
+            <div class="col s12 m6 l8 friends-name">
               <h6>{{x.name}}</h6>
             </div>
             <div class="col s12 m6 l4 search-results-btn">
@@ -106,43 +106,53 @@
                 INVITE
               </a>
             </div>
-            <div class="col s12 m6 l4 grey-text" ng-show="inviteList.includes(x._id)">
+            <div class="col s12 m6 l4 grey-text invite-sent" ng-show="inviteList.includes(x._id) &&  friendsId.includes(x._id)">
               <h6>INVITE SENT</h6>
             </div>
           </div>
-          <div class="divider"></div>
+          <div class="divider friends-divider"></div>
         </div>
       </div>
     </div>
 
     <div id="your-friends" class="friends-info">
       <div class="row">
+        <div class="col s12 list">
+          <ul class="collection" ng-show="friendsList.length > 0">
+            <li class="collection-item row" ng-repeat="x in friendsList">
+              <div class="user-initials col s3 m2 l1">
+                <h6>
+                  {{ getInitials(x.friendName) }}
+                </h6>
+              </div>
+              <div class="col s9 m7 l8">
+                <span>
+                  {{x.friendName}}
+                </span>
+              </div>
+              <div class="each-friend col s4 m3 l3 push-s8">
+                <a class="waves-effect waves-light btn action-btn" ng-click="sendNotification(x)" ng-hide="inviteList.includes(x.friendId)">
+                  INVITE
+                </a>
+                <h6 class="grey-text" ng-show="inviteList.includes(x.friendId)">INVITE SENT</h6>
+              </div>
+            </li>
+          </ul>
+
+          <h5 class="center-align" ng-show="friendsList.length === 0">
+            You have not added any friends
+          </h5>
+        </div>
+
         <div class="col s12 friends">
           <h6 class="col s6 m6 l6">
             Friends: {{friendsList.length}}
           </h6>
           <div class="col m3 l3 waves-effect waves-light"></div>
-          <a class="col s6 m3 l3 waves-effect waves-light invite-friends-btn btn" ng-show="friendsList.length > 0" ng-click="sendNotification()">INVITE FRIENDS</a>
+          <a class="col s6 m3 l3 waves-effect waves-light invite-friends-btn btn" ng-show="friendsList.length > 0" ng-click="sendNotification()">INVITE ALL</a>
         </div>
-        <div class="col s12 list">
-          <ul class="collection" ng-show="friendsList.length > 0">
-            <li class="collection-item" ng-repeat="x in friendsList">
-              <div class="user-initials">
-                <h6>
-                  {{ getInitials(x.friendName) }}
-                </h6>
-              </div>
-              <div>
-                <span>
-                  {{x.friendName}}
-                </span>
-              </div>
-            </li>
-          </ul>
-          <h5 class="center-align" ng-show="friendsList.length === 0">
-            You have not added any friends
-          </h5>
-        </div>
+
+
       </div>
     </div>
   </div>

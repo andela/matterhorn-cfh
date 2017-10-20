@@ -89,8 +89,8 @@ col.l8.m8.s12.question-container-outer {
 
 .invite-players {
   height: 70%;
-  overflow: auto;
-  border-radius: 50px 0px;
+  border-radius: 20px;
+
 }
 
 input[type=search]:not(.browser-default) {
@@ -166,15 +166,22 @@ input[type=search]:not(.browser-default) {
   padding: 0 !important;
 }
 
+.list {
+  margin-top: 15px;
+  margin-bottom:20px;
+  max-height: 400px;
+  overflow: auto;
+}
+
 .list h5 {
   padding-top: 20px;
 }
 
 .user-initials {
-  width: 40px;
   height: 40px;
   border-radius: 30px;
   background-color: #2b353d ;
+  margin-left: 0px !important;
 }
 
 .user-initials h6 {
@@ -191,7 +198,36 @@ input[type=search]:not(.browser-default) {
   margin-left: 20px;
   margin-top: 10px;
   position: absolute;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+}
+
+.friends-divider {
+  margin: 5px 0px;
+}
+
+.friends-name h6 {
+  margin-top: 10px;
+}
+
+.invite-sent h6 {
+margin-left: 70px;
+}
+
+.each-friend a {
+  position: absolute;
+  right: 0;
+  width:70px;
+  margin: 5px 20px 0px 0px;
+}
+
+.each-friend h6 {
+  margin: 14px 0px 0px 55px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .list {
+    height: 350px;
+  }
 }
 
 @media only screen and (min-width: 993px) and (max-width: 1200px) {
