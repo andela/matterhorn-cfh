@@ -134,3 +134,21 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Structure for maximum player -->
+<div id="maxPlayerModal" class="max-player modal open" role="dialog">
+  <div class="modal-content">
+    <p>Hey! No more players needed for this game.</p>
+  </div>
+  <div class="modal-footer">
+    <a ng-click="goHome()" class="max-link modal-close">Would you like to start your own game?</a>
+  </div>
+</div>
+
+<script>
+  setTimeout(function() {
+    $('.modal').modal({
+          dismissible: false
+        });
+  }, 200);
+</script>

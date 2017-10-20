@@ -26,7 +26,8 @@ import {
   isLoggedIn,
   isAuthenticated,
   saveGameRank,
-  getRankData
+  getRankData,
+  socialSignUp
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -74,6 +75,7 @@ export default () => {
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
+  app.post('/api/auth/social', socialSignUp);
 
 
   // Save ended game data
@@ -107,11 +109,11 @@ export default () => {
 
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
-    failureRedirect: '/signin'
+    failureRedirect: '/signin',
   }), authCallback);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
-    failureRedirect: '/signin'
+    failureRedirect: '/signin',
   }), authCallback);
 
   // Setting the twitter oauth routes
