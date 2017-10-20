@@ -5,13 +5,13 @@
       <div class="container">
         <div class="nav-wrapper" ng-controller="IndexController">
           <a href="#" class="left navbar-brand font-luminari">cfh</a>
-
+          
           <div ng-controller="GameController" class="landing-notification">
             <a href="" class='dropdown-button' data-activates='dropdown1'  ng-show="isUser()">
               <i class="material-icons">notifications</i>
               <span ng-hide="notifications.length === 0">{{notifications.length}}</span>
             </a>
-
+            
             <!-- Dropdown Structure -->
             <ul id='dropdown1' class='dropdown-content'>
               <li ng-repeat="item in notifications">
@@ -24,7 +24,7 @@
               </li>
             </ul>
           </div>
-
+          
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/#!/">Home</a></li>
             <li><a ng-click="scrollTo('main-how-play')">How to play</a></li>
@@ -48,9 +48,9 @@
       </div>
     </nav>
   </header>
-
+  
   <!-- Fixed Logo & Menu Bar End -->
-
+  
   <div id="main-desc">
     <div class="container">
       <div class="main-desc-text">
@@ -68,7 +68,7 @@
       </div>
     </div>
   </div>
-
+  
   <div id="main-cfh-definition">
     <img src="/img/small-card.png" class="small-card one" />
     <img src="/img/small-card.png" class="small-card two" />
@@ -79,7 +79,7 @@
       <p class="text-justify">Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.</p>
     </div>
   </div>
-
+  
   <div id="main-how-play">
     <div class="container">
       <h2 class="font-freckle-face mt-0">How to play</h2>
@@ -90,21 +90,21 @@
             <p>Each player begins with, and will always have, 10 white answer cards.</p>
           </div>
         </div>
-
+        
         <div class="col s6 l3 m6 text-center">
           <div class="cfh-htp-50">
             <h4>2</h4>
             <p>For each round, one player is randomly chosen as the Card Czar.</p>
           </div>
         </div>
-
+        
         <div class="col s6 l3 mt-1 m6 text-center">
           <div class="cfh-htp-75">
             <h4>3</h4>
             <p>Everyone else answers the black question card by clicking on the answer card they want to use.</p>
           </div>
         </div>
-
+        
         <div class="col s6 l3 mt-1 m6 text-center">
           <div class="cfh-htp-100">
             <h4>4</h4>
@@ -113,11 +113,11 @@
         </div>
       </div>
       <div class="mt-3 mt-sm-1 mb-1 text-center">
-        <a href="/#!app" class="waves-effect waves-light btn red">Play as guest</a> 
-      </div>     
+        <a href="/#!app" class="waves-effect waves-light btn red">Play as guest</a>
+      </div>
     </div>
   </div>
-
+  
   <div id="main-donation">
     <div class="container">
       <div class="row">
@@ -143,8 +143,7 @@
           </p>
           <div class="mt-5 main-donation-actions row">
             <div class="col l7 m7 s12 text-center">
-              <a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&amp;redirect_to=http%3A%2F%2Fmatterhorn-cfh-staging.herokuapp.com%2F%23!%2F&amp;stylesheet=&amp;amounts="
-                class="waves-effect waves-light btn cfh-green">Make a donation</a>
+              <button class="waves-effect waves-light btn cfh-green" ng-click="seekConsent()">Make a donation</button>
             </div>
             <div class="col l5 m5 s12">
               <img class="ml-3" src="/svg/make-a-wish.svg" />
@@ -154,33 +153,21 @@
       </div>
     </div>
   </div>
-
-  <div id="main-avatars-warning">
-    <div class="container">
-      <img src="/img/avatars.png" />
-      <p class="text-center font-arial-rounded red-text mt-sm-5">Warning! This game contains offensive, profane, explicit content created by Cards Against Humanity and provided here,
-        uncensored and complete, in digital form. </p>
-      <p class="text-center font-arial-rounded red-text">
-        Human Resources made us say that.
-      </p>
+  
+  <div class="container mt-3 mb-3">
+    <p class="black-text text-center">Redesigned by
+      <strong>Team Matterhorn:</strong> Temitayo Fadojutimi, Temitope Joloko, Sofiat Abioye, Emmanuel Ogunbo, Abiona Ekundayo,
+      Nasirudeen Abdulrasaq</p>
     </div>
-  </div>
-
-  <div class='row'>
+  
+  <div class='row' ng-show="donors.length > 0" ng-controller="LogController">
     <div class='col s12 m12 l12'>
-        <div class="owl-carousel owl-theme">
-          <div class="item"><h4>1</h4></div>
-          <div class="item"><h4>2</h4></div>
-          <div class="item"><h4>3</h4></div>
-          <div class="item"><h4>4</h4></div>
-          <div class="item"><h4>5</h4></div>
-          <div class="item"><h4>6</h4></div>
-          <div class="item"><h4>7</h4></div>
-          <div class="item"><h4>8</h4></div>
-          <div class="item"><h4>9</h4></div>
-          <div class="item"><h4>10</h4></div>
-          <div class="item"><h4>11</h4></div>
-          <div class="item"><h4>12</h4></div>
+        <h4 class="font-freckle-face mt-0 center-align">Oh Look! Our Awesome Donors</h4>
+        <div class="carousel" data-indicators="true">
+          <div class="carousel-item red white-text center-align donor-carousel" ng-repeat="donor in donors">
+            <h2>{{donor.donor_name}}</h2>
+            <p class="white-text">${{donor.amount}}</p>
+          </div>
         </div>
     </div>
   </div>
@@ -188,61 +175,54 @@
   <footer class="cfh-green">
     <div class="container">
       <div class="row mb-0">
-        <div class="col s6 white-text">
-          <p class="white-text">Redesigned by
-            <strong>Team Matterhorn:</strong> Temitayo Fadojutimi, Temitope Joloko, Sofiat Abioye, Emmanuel Ogunbo, Abiona Ekundayo,
-            Nasirudeen Abdulrasaq</p>
-          <p>
-            Based on Cards Against Humanity.
-            <br/> Licensed under CC licensed (BY-NC-SA).
-            <br/> Cards for Humanity is not affiliated with Cards Against Humanity.
-          </p>
-          <p>
-            All proceeds from donations go directly to charity, as managed by crowdrise.
-          </p>
-        </div>
-        <div class="col s6 text-right main-social">
-          <div class="row">
-            <div class="col s6">
-              <img src="/img/social/mail.png" />
-            </div>
-            <div class="col s6">
-              <img src="/img/social/gmail.png" />
-            </div>
-            <div class="col s6">
-              <img src="/img/social/twitter.png" />
-            </div>
-            <div class="col s6">
-              <img src="/img/social/facebook.png" />
+        <div class="col s8 white-text">
+          <p class="font-arial-rounded red-text mt-0">Warning! This game contains offensive, profane, explicit content created by Cards Against Humanity and provided here,
+            uncensored and complete, in digital form. </p>
+            <p class="font-arial-rounded red-text">
+              Human Resources made us say that.
+            </p>
+            <p>
+              Based on Cards Against Humanity.
+              <br/> Licensed under CC licensed (BY-NC-SA).
+              <br/> Cards for Humanity is not affiliated with Cards Against Humanity.
+            </p>
+            <p>
+              All proceeds from donations go directly to charity, as managed by crowdrise.
+            </p>
+          </div>
+          <div class="col s4 text-right main-social">
+            <div class="row">
+              <div class="col s3">
+                <img src="/img/social/mail.png" />
+              </div>
+              <div class="col s3">
+                <img src="/img/social/gmail.png" />
+              </div>
+              <div class="col s3">
+                <img src="/img/social/twitter.png" />
+              </div>
+              <div class="col s3">
+                <img src="/img/social/facebook.png" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </footer>
-</div>
+    </footer>
+  </div>
 
 
 <script>
   $(document).ready(function () {
     $('.dropdown-button').dropdown();
-
-    $('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:10,
-    nav:true,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:3
-        },
-        1000:{
-            items:5
-        }
-    }
-})
+    setTimeout(function(){
+      $('.carousel').carousel();
+      autoplay()
+      function autoplay() {
+          $('.carousel').carousel('next');
+          setTimeout(autoplay, 4000);
+      }
+    }, 300);
   });
 
 </script>
