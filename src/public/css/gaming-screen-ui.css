@@ -89,8 +89,8 @@ col.l8.m8.s12.question-container-outer {
 
 .invite-players {
   height: 70%;
-  overflow: auto;
-  border-radius: 50px 0px;
+  border-radius: 20px;
+
 }
 
 input[type=search]:not(.browser-default) {
@@ -166,6 +166,13 @@ input[type=search]:not(.browser-default) {
   padding: 0 !important;
 }
 
+.list {
+  margin-top: 15px;
+  margin-bottom:20px;
+  max-height: 400px;
+  overflow: auto;
+}
+
 .list h5 {
   padding-top: 20px;
 }
@@ -192,6 +199,24 @@ input[type=search]:not(.browser-default) {
   margin-top: 10px;
   position: absolute;
   font-size: 1.2rem;
+}
+
+.friends-divider {
+  margin: 5px 0px;
+}
+
+.friends-name h6 {
+  margin-top: 10px;
+}
+
+.invite-sent h6 {
+margin-left: 70px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .list {
+    height: 350px;
+  }
 }
 
 @media only screen and (min-width: 993px) and (max-width: 1200px) {
