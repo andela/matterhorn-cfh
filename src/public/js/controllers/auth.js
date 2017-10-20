@@ -1,15 +1,19 @@
-angular
-  .module('mean.system')
-  .controller('authController', [
-    '$rootScope',
-    '$scope',
-    '$cookies',
-    '$location',
-    '$http',
-    '$window',
-    function ($rootScope, $scope, $cookies, $location, $http, $window) {
+angular.module('mean.system')
+  .controller('authController', ['$rootScope', '$scope', '$cookies', '$location', '$http', '$window', 'AvatarService',
+    function ($rootScope, $scope, $cookies, $location, $http, $window, AvatarService) {
       $scope.errorMessage = ''
       $scope.displayIntro = true;
+      $scope.avatar = '';
+      
+      $scope.myAvatar = (avatar) => {
+        $scope.avatar = avatar;
+      }
+      
+      $scope.avatars = [];
+      AvatarService.getAvatars()
+      .then(function (data) {
+        $scope.avatars = data;
+      });
 
       $scope.country = geoplugin_countryName();
 
@@ -32,7 +36,8 @@ angular
             email: $cookies.email,
             location: $scope.country,
             [mainId.provider]: mainId._id,
-            provider: $cookies.provider
+            provider: $cookies.provider,
+            avatar: $scope.avatar
           }
           $http
             .post('/api/auth/social', payload)
@@ -57,7 +62,8 @@ angular
             name: $scope.name,
             email: $scope.email,
             password: $scope.password,
-            location: $scope.country
+            location: $scope.country,
+            avatar: $scope.avatar
           }
 
           $http

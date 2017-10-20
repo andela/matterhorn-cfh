@@ -76,7 +76,15 @@ a:hover, .waves-light:hover{
 .mt-3 {
   margin-top: 3em; }
 
-@media (max-width: 767px) {
+  .mb-3 {
+    margin-bottom: 3em;
+   }
+
+   .mb-1{
+     margin-bottom: 1em;
+   }
+  
+    @media (max-width: 767px) {
   .mt-1 {
     margin-top: 1em; } 
     .mb-1{
@@ -311,12 +319,15 @@ a:hover, .waves-light:hover{
     height: 300px; } }
 
 footer {
-  min-height: 305px;
+  min-height: 200px;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  padding: 20px 0;
+}
 
 .main-social img {
-  margin-top: 1em; }
+  height: 40px;
+ }
 
 .footer-red {
   min-height: 16px; }
@@ -329,3 +340,50 @@ footer {
   .side-nav li>a:hover {
     color: rgba(0,0,0,0.87) !important;
   }
+
+.donor-carousel {
+  background-color: #009688 !important;
+  width: 300px !important;
+}
+
+#team-container > .row > .col{
+  margin-bottom: 20px;
+}
+
+#team-container > .row > .col:last-child{
+  margin-bottom: 0;
+}
+
+
+#team-container .team{
+  box-shadow: 0px 0px 9px 1px #000;
+  background-color: rgba(0,0,0,0.02);
+  padding: 10px;
+}
+
+#team-container .team > .row{
+  display: flex;
+}
+
+#team-container .team > .row > .col{
+  align-self: center;
+}
+
+#team-container .team h5{
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+#team-container .team .icon-github{
+  width: 40px;
+  height: 40px;
+}
+
+#team-container .team img.avatar{
+  width: 60px;
+  height: 60px;
+}
+
+#footer-warning{
+  padding: 20px;
+}
