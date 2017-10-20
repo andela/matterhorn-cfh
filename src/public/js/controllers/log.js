@@ -10,7 +10,6 @@ angular.module('mean.system')
   $scope.mags = [];
   $scope.gameRank = [];
   $scope.donations = [];
-  $scope.donors = [];
   $scope.paginationCounters = [];
   $scope.leaderboardData = [];
 
@@ -54,20 +53,6 @@ angular.module('mean.system')
     for (let i = 0; i < donation.length; i += 1) {
       $scope.donations.push(donation[i]);
     }
-  });
-
-  $http.get('/api/donors')
-  .then((res) => {
-    const donors = res.data;
-    for (let i=0; i < donors.length; i++) {
-      donorsDonations = donors[i].donations;
-      for (let i=0; i < donorsDonations.length; i++) {
-        if (donorsDonations[i].donor_consent === true) {
-          $scope.donors.push(donorsDonations[i])
-        }
-      }
-    }
-    $scope.loadCarousel = true;
   });
 
   let pageNumber = 0
