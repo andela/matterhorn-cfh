@@ -1,3 +1,7 @@
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
 a:hover, .waves-light:hover{
   color: #fff !important;
 }
@@ -202,7 +206,6 @@ a:hover, .waves-light:hover{
 }
 
 .main-motto {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: normal; }
 
 #main-cfh-definition {
@@ -237,7 +240,6 @@ a:hover, .waves-light:hover{
 }
 
 #main-cfh-definition p {
-  font-family: Helvetica;
   font-size: 20px;
   color: rgba(0, 0, 0, 0.54); }
 
@@ -270,10 +272,12 @@ a:hover, .waves-light:hover{
   align-items: center; }
 
 #main-how-play p {
-  font-family: Helvetica, Arial, sans-serif; }
+  
+}
 
 #main-how-play h4 {
-  font-family: "Freckle Face"; }
+  
+}
 
 #main-how-play .col > div {
   padding: 10px; }
@@ -292,7 +296,8 @@ a:hover, .waves-light:hover{
   height: 170px; }
 
 #main-donation p {
-  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif; }
+  
+ }
 
 #main-donation {
   background-image: url(../svg/donation.svg);
@@ -303,8 +308,6 @@ a:hover, .waves-light:hover{
   align-items: center;
   background-size: cover; }
 
-.main-donation-actions {
-  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif; }
 
 #main-avatars-warning img {
   width: 100%; }
