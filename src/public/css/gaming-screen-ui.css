@@ -178,10 +178,10 @@ input[type=search]:not(.browser-default) {
 }
 
 .user-initials {
-  width: 40px;
   height: 40px;
   border-radius: 30px;
   background-color: #2b353d ;
+  margin-left: 0px !important;
 }
 
 .user-initials h6 {
@@ -198,7 +198,7 @@ input[type=search]:not(.browser-default) {
   margin-left: 20px;
   margin-top: 10px;
   position: absolute;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .friends-divider {
@@ -211,6 +211,17 @@ input[type=search]:not(.browser-default) {
 
 .invite-sent h6 {
 margin-left: 70px;
+}
+
+.each-friend a {
+  position: absolute;
+  right: 0;
+  width:70px;
+  margin: 5px 20px 0px 0px;
+}
+
+.each-friend h6 {
+  margin: 14px 0px 0px 55px;
 }
 
 @media only screen and (max-width: 1300px) {

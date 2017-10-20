@@ -298,13 +298,12 @@ angular.module('mean.system')
     $scope.sendNotification = (friend) => {
       let myFriends;
       if (friend) {
-        myFriends = [friend._id];
+        myFriends = [friend._id || friend.friendId];
       } else {
         myFriends = $scope.friendsList.map(friend => friend.friendId)
       }
 
       $scope.inviteList = [...$scope.inviteList, ...myFriends];
-
       const payload = {
         link: $location.url(),
         myFriends
