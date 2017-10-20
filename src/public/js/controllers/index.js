@@ -11,7 +11,6 @@ angular.module('mean.system')
 
     $http.get('/api/donors')
     .then((res) => {
-      console.log(res, 'responses');
       const data = res.data.reduce((acc, val) => acc.concat(val.donations), []);
       $scope.donors = data.filter((val) => val.donor_consent === "true");
       if ($scope.donors.length > 0) {
