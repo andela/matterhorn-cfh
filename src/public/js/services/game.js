@@ -79,13 +79,17 @@ angular.module('mean.system')
     socket.on('maxPlayerReached', () => {
       swal({
         title: 'Hey! No more players needed for this game',
-        showCancelButton: false,
+        showCancelButton: true,
         allowOutsideClick: false,
         confirmButtonColor: '#009688',
+        cancelButtonColor: '#ff0000',
+        cancelButtonText: 'No, thanks',
         confirmButtonText: 'Click to start your own game'
-      }).then(function () {
-        $window.location.href = '/play?custom';
-      })
+      }).then(function (yes) {
+        if (yes) {
+          $window.location.href = '/play?custom';
+        }
+      }).catch(() =>  $window.location.href = '/')
     });
 
     socket.on('prepareGame', function (data) {
