@@ -1,11 +1,30 @@
 angular.module('mean.system')
   .controller('IndexController', ['$scope', 'Global', '$cookieStore', '$cookies', '$location', '$http', '$window', 'socket', 'game', 'AvatarService', function ($scope, Global, $cookieStore, $cookies, $location, $http, $window, socket, game, AvatarService) {
 
+    $scope.donors = [];
+
     $scope.scrollTo = function (id) {
       // Scroll
     $('html,body').animate({
         scrollTop: $(`#${id}`).offset().top}, 'slow');
     }
+
+    $http.get('/api/donors')
+    .then((res) => {
+      const data = res.data.reduce((acc, val) => acc.concat(val.donations), []);
+      $scope.donors = data.filter((val) => val.donor_consent === "true");
+      if ($scope.donors.length > 0) {
+        $(document).ready(function () {
+          $('.carousel').carousel('destroy');
+          $('.carousel').carousel();
+          autoplay()
+          function autoplay() {
+              $('.carousel').carousel('next');
+              setTimeout(autoplay, 4000);
+          }
+        });
+      }
+    });
 
     $scope.seekConsent = () => {
       return swal({
