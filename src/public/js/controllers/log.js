@@ -1,7 +1,7 @@
 angular.module('mean.system')
 .controller('LogController', ['$scope', 'Global', 'game', '$timeout', '$http', '$window', '$location','$dialog', function ($scope, Global, game, $timeout, $http, $window, $location, $dialog) {
   $scope.show = 1;
-  $scope.currentPage =0;
+  $scope.currentPage =1;
   $scope.dataLimit = 3;
   $scope.pageSize = 3;
   $scope.pageStart = 0;
@@ -54,16 +54,12 @@ angular.module('mean.system')
     for (let i = 0; i < donation.length; i += 1) {
       $scope.donations.push(donation[i]);
     }
-    console.log($scope.donations);
   });
 
   $http.get('/api/donors')
   .then((res) => {
     const donors = res.data;
     for (let i=0; i < donors.length; i++) {
-      // if (donors[i].donor_consent === true) {
-      //   $scope.donors.push(donors[i]);
-      // }
       donorsDonations = donors[i].donations;
       for (let i=0; i < donorsDonations.length; i++) {
         if (donorsDonations[i].donor_consent === true) {
