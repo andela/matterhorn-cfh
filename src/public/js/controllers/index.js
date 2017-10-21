@@ -12,7 +12,8 @@ angular.module('mean.system')
     $http.get('/api/donors')
     .then((res) => {
       const data = res.data.reduce((acc, val) => acc.concat(val.donations), []);
-      $scope.donors = data.filter((val) => val.donor_consent === "true");
+      $scope.donors = data.filter((val) => val.donor_consent === "true" || val.donor_consent === true);
+      console.log($scope.donors);
       if ($scope.donors.length > 0) {
         $(document).ready(function () {
           $('.carousel').carousel('destroy');
