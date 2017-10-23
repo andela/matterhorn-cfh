@@ -38,6 +38,24 @@ angular.module('mean.system')
             provider: $cookies.provider,
             avatar: $scope.avatar
           }
+          $http
+            .post('/api/auth/social', payload)
+            .then((response) => {
+              $scope.errorMessage = ''
+              $window
+                .localStorage
+                .setItem('userId', response.data.user.id);
+              $window
+                .localStorage
+                .setItem('token', response.data.token)
+              $location.path('/app')
+              $rootScope.$broadcast('newUser');
+            }, (error) => {
+              if (error.status === 409) {
+                $scope.socialMessage = error.data.message
+              }
+            })
+
         } else {
           payload = {
             name: $scope.name,
