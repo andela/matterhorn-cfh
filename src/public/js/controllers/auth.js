@@ -19,8 +19,8 @@ angular.module('mean.system')
 
       if ($cookies.provider) {
         $scope.displayIntro = false;
-        $scope.socialMessage = "There is no CFH account linked to this account." + " "
-        + "Are you trying to create a new CFH account?"
+        $scope.socialMessage = "No CFH account linked." + " "
+        + "Do you want to create an account instead?"
       }
 
       $scope.signUp = () => {

@@ -15,6 +15,7 @@
 
 }
 
+
 @media (max-width: 400px) {
   .main-wrapper {
     display: flex;
@@ -134,6 +135,11 @@
 
 #twitter-facebook{
    display: block;
+}
+
+.signupSocial {
+  padding: 3px !important;
+  background-color: #c54242 !important;
 }
 
 #send-link{
