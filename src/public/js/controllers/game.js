@@ -46,7 +46,7 @@ angular.module('mean.system')
             $scope.regionName = regions(regionId);
             $scope.showRegionName = true;
             game.startGame();
-            } 
+          }
         })
         .catch(() => { })
     };
@@ -151,7 +151,7 @@ angular.module('mean.system')
     $scope.showSecond = function (card) {
       return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
     };
-    
+
     // model that triggers czar modal
     $scope.shuffleCards = () => {
       const card = $(`#${event.target.id}`);
@@ -298,13 +298,12 @@ angular.module('mean.system')
     $scope.sendNotification = (friend) => {
       let myFriends;
       if (friend) {
-        myFriends = [friend._id];
+        myFriends = [friend._id || friend.friendId];
       } else {
         myFriends = $scope.friendsList.map(friend => friend.friendId)
       }
 
       $scope.inviteList = [...$scope.inviteList, ...myFriends];
-
       const payload = {
         link: $location.url(),
         myFriends
@@ -375,8 +374,8 @@ angular.module('mean.system')
 
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function () {
-       // POp up program for modal
-       if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+      // POp up program for modal
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
         const cardModal = $('#cardModal')
         cardModal.modal({
           dismissible: false
@@ -401,7 +400,7 @@ angular.module('mean.system')
           gameID: game.gameID,
           gameWinnerPoint: game.players[game.playerIndex].points
         }
-         $http.post('/api/leaderboard', leaderData);
+        $http.post('/api/leaderboard', leaderData);
       }
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
@@ -567,5 +566,9 @@ angular.module('mean.system')
 
     $scope.goHome = () => {
       $location.path('/');
+    }
+
+    $scope.getInitials = (name) => {
+      return name.slice(0, 2).toUpperCase();
     }
   }]);

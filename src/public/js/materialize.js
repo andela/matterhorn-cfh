@@ -30,5 +30,5 @@ $(document).ready(function(){
     $parent.sideNav({
       closeOnClick: true
     });
-  })  
+  })
 });

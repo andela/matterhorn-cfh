@@ -154,75 +154,186 @@
     </div>
   </div>
   
-  <div class="container mt-3 mb-3">
-    <p class="black-text text-center">Redesigned by
-      <strong>Team Matterhorn:</strong> Temitayo Fadojutimi, Temitope Joloko, Sofiat Abioye, Emmanuel Ogunbo, Abiona Ekundayo,
-      Nasirudeen Abdulrasaq</p>
-    </div>
-  
-  <div class='row' ng-show="donors.length > 0" ng-controller="LogController">
-    <div class='col s12 m12 l12'>
-        <h4 class="font-freckle-face mt-0 center-align">Oh Look! Our Awesome Donors</h4>
-        <div class="carousel" data-indicators="true">
-          <div class="carousel-item red white-text center-align donor-carousel" ng-repeat="donor in donors">
-            <h2>{{donor.donor_name}}</h2>
-            <p class="white-text">${{donor.amount}}</p>
-          </div>
+  <div class="mt-3 mb-3">
+    <div class="container">
+      <h4 class="font-freckle-face mt-0 mb-1">Redesigned with love by:</h4>
+      <div id="team-container">
+        <div class="row">
+          <div class="col s12 m6 l4">
+            <div class="team">
+              <div class="row">
+                <div class="col s3">
+                  <img class="avatar" src="../img/chosen/E01.png" />
+                </div>
+                <div class="col s6">
+                  <h5>Temitayo Fadojutimi</h5>
+                </div>
+                <div class="col s3">
+                  <a href="http://github.com/adesege">
+                    <img class="icon-github" src="../img/icons/github.png" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div><!-- col .team -->
+          
+          <div class="col s12 m6 l4">
+            <div class="team">
+              <div class="row">
+                <div class="col s3">
+                  <img class="avatar" src="../img/chosen/FH03.png" />
+                </div>
+                <div class="col s6">
+                  <h5>Sofiat <br/> Abioye</h5>
+                </div>
+                <div class="col s3">
+                  <a href="http://github.com/kidah">
+                    <img class="icon-github" src="../img/icons/github.png" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div><!-- col .team -->
+          
+          <div class="col s12 m6 l4">
+            <div class="team">
+              <div class="row">
+                <div class="col s3">
+                  <img class="avatar" src="../img/chosen/F01.png" />
+                </div>
+                <div class="col s6">
+                  <h5>Ekundayo Abiona </h5>
+                </div>
+                <div class="col s3">
+                  <a href="http://github.com/ekundayo-ab">
+                    <img class="icon-github" src="../img/icons/github.png" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div><!-- col .team -->
+          
+          <div class="col s12 m6 l4">
+            <div class="team">
+              <div class="row">
+                <div class="col s3">
+                  <img class="avatar" src="../img/chosen/M05.png" />
+                </div>
+                <div class="col s6">
+                  <h5>Emmanuel Ogunbo</h5>
+                </div>
+                <div class="col s3">
+                  <a href="http://github.com/Temmyogunbo">
+                    <img class="icon-github" src="../img/icons/github.png" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div><!-- col .team -->
+          
+          <div class="col s12 m6 l4">
+            <div class="team">
+              <div class="row">
+                <div class="col s3">
+                  <img class="avatar" src="../img/chosen/FC01.png" />
+                </div>
+                <div class="col s6">
+                  <h5>Temitope Joloko</h5>
+                </div>
+                <div class="col s3">
+                  <a href="http://github.com/temiooo">
+                    <img class="icon-github" src="../img/icons/github.png" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div><!-- col .team -->
+          
+          <div class="col s12 m6 l4">
+            <div class="team">
+              <div class="row">
+                <div class="col s3">
+                  <img class="avatar" src="../img/chosen/J01.png" />
+                </div>
+                <div class="col s6">
+                  <h5>Nasirudeen Abdulrasaq</h5>
+                </div>
+                <div class="col s3">
+                  <a href="http://github.com/nosisky">
+                    <img class="icon-github" src="../img/icons/github.png" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div><!-- col .team -->
+          
         </div>
+      </div>
+      
     </div>
   </div>
-
+  
+  <div class='row' ng-show="donors.length > 0">
+    <div class='col s12 m12 l12'>
+      <h4 class="font-freckle-face mt-0 center-align">Oh Look! Our Awesome Donors</h4>
+      <div class="carousel" data-indicators="true">
+        <div class="carousel-item red white-text center-align donor-carousel" ng-repeat="donor in donors">
+          <h2>{{donor.donor_name}}</h2>
+          <p class="white-text">${{donor.amount}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <footer class="cfh-green">
     <div class="container">
       <div class="row mb-0">
-        <div class="col s8 white-text">
-          <p class="font-arial-rounded red-text mt-0">Warning! This game contains offensive, profane, explicit content created by Cards Against Humanity and provided here,
-            uncensored and complete, in digital form. </p>
-            <p class="font-arial-rounded red-text">
-              Human Resources made us say that.
-            </p>
-            <p>
-              Based on Cards Against Humanity.
-              <br/> Licensed under CC licensed (BY-NC-SA).
-              <br/> Cards for Humanity is not affiliated with Cards Against Humanity.
-            </p>
-            <p>
-              All proceeds from donations go directly to charity, as managed by crowdrise.
-            </p>
-          </div>
-          <div class="col s4 text-right main-social">
-            <div class="row">
-              <div class="col s3">
-                <img src="/img/social/mail.png" />
-              </div>
-              <div class="col s3">
-                <img src="/img/social/gmail.png" />
-              </div>
-              <div class="col s3">
-                <img src="/img/social/twitter.png" />
-              </div>
-              <div class="col s3">
-                <img src="/img/social/facebook.png" />
-              </div>
+        <div class="col s6 l8 white-text">
+          <p class="mt-0">
+            Based on Cards Against Humanity.
+            <br/> Licensed under CC licensed (BY-NC-SA).
+            <br/> Cards for Humanity is not affiliated with Cards Against Humanity.
+          </p>
+          <p>
+            All proceeds from donations go directly to charity, as managed by crowdrise.
+          </p>
+        </div>
+        <div class="col s6 l4 text-right main-social">
+          <div class="row">
+            <div class="col s6 m6 l3">
+              <img src="/img/social/mail.png" />
+            </div>
+            <div class="col s6 m6 l3">
+              <img src="/img/social/gmail.png" />
+            </div>
+            <div class="col s6 m6 l3">
+              <img src="/img/social/twitter.png" />
+            </div>
+            <div class="col s6 m6 l3">
+              <img src="/img/social/facebook.png" />
             </div>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
+  
+  <div class="container">
+    <div id="footer-warning" class="text-center">
+      <p class="red-text mt-0">
+        Warning! This game contains offensive, profane, 
+        explicit content created by Cards Against Humanity and provided here,
+        uncensored and complete, in digital form. 
+        <br/>
+        Human Resources made us say that.
+      </p>
+    </div>
   </div>
+</div>
 
 
 <script>
   $(document).ready(function () {
     $('.dropdown-button').dropdown();
-    setTimeout(function(){
-      $('.carousel').carousel();
-      autoplay()
-      function autoplay() {
-          $('.carousel').carousel('next');
-          setTimeout(autoplay, 4000);
-      }
-    }, 300);
   });
-
 </script>

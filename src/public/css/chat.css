@@ -4,11 +4,8 @@ h4, h5 {
     margin: 0;
 }
 
-
-p { margin: 0; }
-
-    .clearfix { *zoom: 1; } /* For IE 6/7 */
-    .clearfix:before, .clearfix:after {
+.clearfix { *zoom: 1; } /* For IE 6/7 */
+.clearfix:before, .clearfix:after {
     content: "";
     display: table;
 }
