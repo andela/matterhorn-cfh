@@ -4,7 +4,7 @@ angular.module('mean.system')
       $scope.errorMessage = ''
       $scope.displayIntro = true;
       $scope.avatar = '';
-      
+      $scope.socialMessage = '';
       $scope.myAvatar = (avatar) => {
         $scope.avatar = avatar;
       }
@@ -19,8 +19,8 @@ angular.module('mean.system')
 
       if ($cookies.provider) {
         $scope.displayIntro = false;
-        $scope.errorMessage = "There is no CFH account linked to this account." + " "
-        + "Are you trying to create a new CFH account?"
+        $scope.socialMessage = "No CFH account linked." + " "
+        + "Do you want to create an account instead?"
       }
 
       $scope.signUp = () => {
@@ -31,7 +31,7 @@ angular.module('mean.system')
           mainId._id = $cookies.profileId
           payload = {
             name: $scope.name,
-            email: $scope.email,
+            email: $cookies.email,
             password: $scope.password,
             location: $scope.country,
             [mainId.provider]: mainId._id,

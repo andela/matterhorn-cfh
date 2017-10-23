@@ -9,6 +9,9 @@ angular.module('mean', ['ngCookies', 'firebase', 'ngResource', 'ui.bootstrap', '
           when('/app', {
             templateUrl: '/views/app.html',
           }).
+          when('/social', {
+            templateUrl: '/views/social.html',
+          }).
           when('/privacy', {
             templateUrl: '/views/privacy.html',
           }).

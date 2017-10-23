@@ -59,6 +59,13 @@ angular.module('mean.directives', [])
       link: function(scope, elem, attr) {}
     };
   })
+  .directive('social', function() {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/social.html',
+      link: function(scope, elem, attr) {}
+    };
+  })
   .directive('question', function() {
     return {
       restrict: 'EA',

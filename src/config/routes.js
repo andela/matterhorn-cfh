@@ -26,7 +26,8 @@ import {
   isLoggedIn,
   isAuthenticated,
   saveGameRank,
-  getRankData
+  getRankData,
+  socialSignup
 } from '../app/controllers/users';
 
 import { allJSON } from '../app/controllers/avatars';
@@ -74,7 +75,8 @@ export default () => {
   app.post('/api/auth/login', login);
   app.post('/users/avatars', avatars);
   app.post('/api/auth/signup', register);
-
+  app.post('/api/auth/social', socialSignup);
+  
 
   // Save ended game data
   app.post('/api/games/:id/start', isLoggedIn, saveGameData);
