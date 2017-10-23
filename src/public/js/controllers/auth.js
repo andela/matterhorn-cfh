@@ -31,7 +31,7 @@ angular.module('mean.system')
           mainId._id = $cookies.profileId
           payload = {
             name: $scope.name,
-            email: $scope.email,
+            email: $cookies.email,
             password: $scope.password,
             location: $scope.country,
             [mainId.provider]: mainId._id,
