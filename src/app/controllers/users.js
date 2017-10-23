@@ -67,11 +67,10 @@ exports.getLeaderBoard = (req, res) => {
 export const authCallback = (req, res) => {
   const { TOKEN_SECRET } = process.env;
   if (req.user && req.user.newUser) {
-    const { profileId, provider, email } = req.user;
-    res.cookie('email', email);
+    const { profileId, provider } = req.user;
     res.cookie('profileId', profileId);
     res.cookie('provider', provider);
-    res.redirect('/#!/social');
+    res.redirect('/#!/signup');
   } else if (!req.user) {
     res.redirect('/#!/signin?error=emailRequired');
   } else {
@@ -491,68 +490,6 @@ export const register = (req, res) => {
       });
     });
 };
-
-
-// Create new account with social authentication
-export const socialSignUp = (req, res) => {
-  User.findOne({
-    $or: [
-      {
-        name: req.body.name
-      }
-    ]
-  }).then((existingUser) => {
-    if (existingUser) {
-      if (existingUser.name === req.body.name) {
-        return res
-          .status(409)
-          .send({ message: 'Sorry, that name is in use already!' });
-      }
-      if (existingUser.email === req.body.email) {
-        return res
-          .status(409)
-          .send({ message: 'Sorry, that email is in use already!' });
-      }
-    }
-    const user = new User(req.body);
-    // Switch the user's avatar index to an actual avatar url
-    user.avatar = avatarsAll[user.avatar];
-    user.provider = req.body.provider;
-    user
-      .save()
-      .then(() => {
-        const token = jwt.sign({
-          user: user._id,
-          name: user.name,
-          email: user.email
-        }, process.env.TOKEN_SECRET, {
-          expiresIn: 72 * 60 * 60
-        });
-        req.headers.authorization = `Bearer ${token}`;
-        res
-          .status(201)
-          .send({
-            token,
-            user: {
-              id: user._id,
-              name: user.name,
-              email: user.email
-            },
-            message: 'Welcome to Matterhorn CFH'
-          });
-      })
-      .catch(() => {
-        res
-          .status(500)
-          .send({ message: 'Internal Server Error' });
-      });
-  }).catch(() => {
-    res
-      .status(500)
-      .send({ message: 'Internal Server Error' });
-  });
-};
-
 
 /**
  * Create user
