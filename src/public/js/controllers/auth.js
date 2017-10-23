@@ -48,7 +48,6 @@ angular
               $rootScope.$broadcast('newUser');
             }, (error) => {
               if (error.status === 409) {
-                console.log(error.data.message, '===========')
                 $scope.socialMessage = error.data.message
               }
             })
