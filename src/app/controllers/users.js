@@ -70,7 +70,7 @@ export const authCallback = (req, res) => {
     const { profileId, provider } = req.user;
     res.cookie('profileId', profileId);
     res.cookie('provider', provider);
-    res.redirect('/#!/signup');
+    res.redirect('/#!/social');
   } else if (!req.user) {
     res.redirect('/#!/signin?error=emailRequired');
   } else {
